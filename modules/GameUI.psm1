@@ -20,17 +20,17 @@ function Show-MainMenu {
             }
 
             "2" {
-                    # Function to load game here
+                    # Function to start game here
                 Pause
             }
 
             "3" {
-                Write-Host "Avslutar spelet..."
+                Write-Host "Exiting game..."
                 return
             }
 
             default {
-                Write-Host "Ogiltigt val. Försök igen." -ForegroundColor Red
+                Write-Host "Invalid choice. Please try again." -ForegroundColor Red
                 Start-Sleep -Seconds 2
             }
         }
