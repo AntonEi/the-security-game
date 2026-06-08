@@ -59,3 +59,5 @@ function Complete-Room {
 
     return $GameState
 }
+
+Export-ModuleMember -Function Update-Score, Set-CurrentRoom, Use-Hint, Add-Mistake, Complete-Room
