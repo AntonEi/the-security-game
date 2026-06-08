@@ -6,12 +6,12 @@ function Show-MainMenu {
         Write-Host "DARKWEB ESCAPE: TERMINAL LOCKDOWN"
         Write-Host "===================================="
         Write-Host ""
-        Write-Host "1. Starta nytt spel"
-        Write-Host "2. Ladda sparat spel"
-        Write-Host "3. Avsluta"
+        Write-Host "1. Start new game"
+        Write-Host "2. Load "
+        Write-Host "3. Exit"
         Write-Host ""
 
-        $choice = Read-Host "Välj alternativ"
+        $choice = Read-Host "Choose an option"
 
         switch ($choice) {
             "1" {
