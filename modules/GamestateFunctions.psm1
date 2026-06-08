@@ -22,3 +22,12 @@ function Set-CurrentRoom {
     $GameState.CurrentRoom = $RoomNumber
     return $GameState
 }
+function Use-Hint {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    $GameState.HintsUsed++
+    return $GameState
+}
