@@ -34,4 +34,22 @@ function Save-GameState {
         Set-Content -Path $SavePath -Encoding UTF8
 }
 
-Export-ModuleMember -Function New-GameState, Save-GameState
+function Load-GameState {
+    param (
+        [string]$SavePath = "$PSScriptRoot/../saves/savegame.json"
+    )
+
+    if (-not (Test-Path -Path $SavePath)) {
+        return $null
+    }
+
+    $json = Get-Content -Path $SavePath -Raw
+
+    if ([string]::IsNullOrWhiteSpace($json)) {
+        return $null
+    }
+
+    return $json | ConvertFrom-Json
+}
+
+Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState
