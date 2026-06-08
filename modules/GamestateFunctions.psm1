@@ -10,6 +10,7 @@ function Update-Score {
     $GameState.Score += $Points
     return $GameState
 }
+
 function Set-CurrentRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -22,6 +23,7 @@ function Set-CurrentRoom {
     $GameState.CurrentRoom = $RoomNumber
     return $GameState
 }
+
 function Use-Hint {
     param (
         [Parameter(Mandatory = $true)]
@@ -31,6 +33,7 @@ function Use-Hint {
     $GameState.HintsUsed++
     return $GameState
 }
+
 function Add-Mistake {
     param (
         [Parameter(Mandatory = $true)]
@@ -38,5 +41,21 @@ function Add-Mistake {
     )
 
     $GameState.Mistakes++
+    return $GameState
+}
+
+function Complete-Room {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState,
+
+        [Parameter(Mandatory = $true)]
+        [string]$RoomName
+    )
+
+    if ($GameState.CompletedRooms -notcontains $RoomName) {
+        $GameState.CompletedRooms += $RoomName
+    }
+
     return $GameState
 }
