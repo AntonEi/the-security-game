@@ -1,6 +1,8 @@
 # Main function for playing the phising room
 Phishing-Room
 function Start-PhishingRoom {
+    # TODO: pass param gamestate here?
+    # TODO: add hints
         Clear-Host
 
         Start-Room
@@ -8,18 +10,68 @@ function Start-PhishingRoom {
 
 # The start point of the room, introducing it
 function Start-Room {
-        Write-Host "========================================================"
-        Write-Host "Before you is a mailbox, filled with 3 emails:"
-        Write-Host "1 -  Important notice"
-        Write-Host "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13.."
-        Write-Host "3 - Someone tried to log in to your account"
-        Write-Host "========================================================"
-        Write-Host ""
-        Write-Host "1. Look at email 1"
-        Write-Host "2. Look at email 2 "
-        Write-Host "3. Look at email 3"
-        Write-Host "4. Pick"
-        Write-Host ""
+    Write-Host "========================================================"
+    Write-Host "Before you is a mailbox, filled with 3 emails:"
+    Write-Host "1 -  Important notice"
+    Write-Host "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13.."
+    Write-Host "3 - Someone tried to log in to your account"
+    Write-Host "========================================================"
+    Write-Host ""
+    Write-Host "1. Look at email 1"
+    Write-Host "2. Look at email 2 "
+    Write-Host "3. Look at email 3"
+    Write-Host "4. Hint"
+    Write-Host ""
+
+    $choice = Read-Host "Choose an option"
+    switch ($choice) {
+        "1" {
+            # Email 1
+            Show-Email1
+        }
+        "2" {
+            # Email 2
+            Show-Email2
+        }
+        "3" {
+            # Email 3
+            Show-Email3
+        }
+        "4" {
+            # Hint
+
+        }
+    }
 }
 
+
+Function Show-Email1 {
+    Write-Host "========================================================"
+    Write-Host "Before you is a mailbox, filled with 3 emails:"
+    Write-Host "1 -  Important notice"
+    Write-Host "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13.."
+    Write-Host "3 - Someone tried to log in to your account"
+    Write-Host "========================================================"
+    Write-Host ""
+    Write-Host "1. Look at email 1"
+    Write-Host "2. Look at email 2 "
+    Write-Host "3. Look at email 3"
+    Write-Host "4. Hint"
+    Write-Host ""
+}
+
+Function Show-Email2 {
+
+}
+
+Function Show-Email3 {
+
+}
+
+Function Show-Hint{
+
+}
+
+# Just put this here now so that I can test run this function. 
+# When integrated later, just call this function to start the room
 Start-PhishingRoom
