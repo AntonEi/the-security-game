@@ -131,4 +131,4 @@ class PhishingRoom {
 # Just put this here now so that I can test run this function. 
 # When integrated later, just call this function to start the room
 $phishingRoom = [PhishingRoom]::New()
-$phishingRoom.StartPhishingRoom
+$phishingRoom.StartPhishingRoom()
