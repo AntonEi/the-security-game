@@ -46,6 +46,7 @@ function Start-Room {
 
 
 Function Show-Email1 {
+    # TODO: update email text
     Write-Host "========================================================"
     Write-Host "Important notice"
     Write-Host "From: example@mail.com"
@@ -56,14 +57,64 @@ Function Show-Email1 {
     Write-Host "1. Click on the link"
     Write-Host "2. Go back"
     Write-Host ""
+
+    $choice = Read-Host "Choose an option"
+    switch ($choice) {
+        "1" {
+            # Click link
+        }
+        "2" {
+            return
+        }
+    }
 }
 
 Function Show-Email2 {
+    # TODO: update email text
+    Write-Host "========================================================"
+    Write-Host "[External] [Urgent]: Domain Renewal Failure - Mon 13 June 2026"
+    Write-Host "From: example@mail.com"
+    Write-Host "Text text text"
+    Write-Host "<link> Click here to stop removal"
+    Write-Host "========================================================"
+    Write-Host ""
+    Write-Host "1. Click on the link"
+    Write-Host "2. Go back"
+    Write-Host ""
 
+    $choice = Read-Host "Choose an option"
+    switch ($choice) {
+        "1" {
+            # Click link
+        }
+        "2" {
+            return
+        }
+    }
 }
 
 Function Show-Email3 {
+    # TODO: update email text
+    Write-Host "========================================================"
+    Write-Host "Someone tried to log in to your account"
+    Write-Host "From: example@mail.com"
+    Write-Host "Text text text"
+    Write-Host "<link> Click here to stop removal"
+    Write-Host "========================================================"
+    Write-Host ""
+    Write-Host "1. Click on the link"
+    Write-Host "2. Go back"
+    Write-Host ""
 
+    $choice = Read-Host "Choose an option"
+    switch ($choice) {
+        "1" {
+            # Click link
+        }
+        "2" {
+            return
+        }
+    }
 }
 
 Function Show-Hint{
