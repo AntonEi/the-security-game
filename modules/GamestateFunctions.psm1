@@ -31,3 +31,12 @@ function Use-Hint {
     $GameState.HintsUsed++
     return $GameState
 }
+function Add-Mistake {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    $GameState.Mistakes++
+    return $GameState
+}
