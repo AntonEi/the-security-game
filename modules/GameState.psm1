@@ -52,4 +52,20 @@ function Load-GameState {
     return $json | ConvertFrom-Json
 }
 
-Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState
+function Add-CompletedRoom {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState,
+
+        [Parameter(Mandatory = $true)]
+        [string]$RoomName
+    )
+
+    if ($GameState.CompletedRooms -notcontains $RoomName) {
+        $GameState.CompletedRooms += $RoomName
+    }
+
+    return $GameState
+}
+
+Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState, Add-CompletedRoom
