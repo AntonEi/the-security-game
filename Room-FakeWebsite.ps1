@@ -241,7 +241,7 @@ elseif ($Val.Trim() -eq "3") {
 elseif ($i -eq 4) {
 
                 Write-Slow "You land on an internal login page. The address bar displays:" "Yellow"
-                Write-Host "`n👉 http://secure-login.sediment.com 👈" -ForegroundColor Yellow
+                Write-Host "`n👉 http://secure-login.sediment.com 👈" -ForegroundColor Red
                 Write-Slow "`nWhat is the primary security concern here?" "Yellow"
                 Write-Host "`n1. The site name is too long."
                 Write-Host "2. HTTP is unencrypted, exposing your credentials."
@@ -303,7 +303,7 @@ elseif ($i -eq 4) {
     Write-Host " STAGE CLEARED: Well done! All 4 security checks bypassed successfully!" -ForegroundColor Green
     Write-Host "==========================================================================" -ForegroundColor Green
 
-    Read-Host "`nYou can now proceed to the next room. Press Enter to continue."
+    Read-Host "`nYou can now proceed to the next room. Press Enter to continue"
 
     return $true
 }
