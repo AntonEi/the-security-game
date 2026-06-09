@@ -93,18 +93,17 @@ if ($Val.Trim().ToUpper() -eq "HINT") {
     Read-Host "`nPress Enter to try again"
     $Global:SkipTyping = $true
 }
-
-# Award points for the correct answer
 elseif ($Val.Trim() -eq "3") {
+    # Award points for the correct answer
     Write-Host "`n✔ You are correct!" -ForegroundColor Green
     $GameState.Score += 50
     $Correct = $true
     Read-Host "Press Enter to continue"
 }
-else {
 
     # Give feedback based on the selected incorrect answer
-    switch ($Val.Trim()) {
+    else {
+        switch ($Val.Trim()) {
         "1" {
             Write-Host "`n❌ Incorrect. The certificate is self-signed and expired. A familiar company name alone does not prove a site is trustworthy." -ForegroundColor Red
         }
@@ -125,8 +124,7 @@ else {
     Read-Host "Press Enter to try again"
     $Global:SkipTyping = $true
 }
-
-            }
+        }
 
             # Security check 2: identify a phishing URL disguised as a trusted company domain
             elseif ($i -eq 2) {
@@ -148,9 +146,8 @@ else {
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
-
-                # Award points for the correct answer
                 elseif ($Val.Trim() -eq "3") {
+                    # Award points for the correct answer
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
                     $GameState.Score += 50
                     $Correct = $true
@@ -203,9 +200,8 @@ else {
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
-
-                # Award points for the correct answer
                 elseif ($Val.Trim() -eq "3") {
+                    # Award points for the correct answer
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
                     $GameState.Score += 50
                     $Correct = $true
@@ -215,7 +211,6 @@ else {
                 # Give feedback based on the selected incorrect answer
                 else {
     switch ($Val.Trim()) {
-
         "1" {
             Write-Host "`n❌ Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." -ForegroundColor Red
         }
@@ -262,9 +257,8 @@ elseif ($i -eq 4) {
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
-
-                # Award points for the correct answer
                 elseif ($Val.Trim() -eq "2") {
+                    # Award points for the correct answer
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
                     $GameState.Score += 50
                     $Correct = $true
@@ -274,7 +268,6 @@ elseif ($i -eq 4) {
             # Give feedback based on the selected incorrect answer
             else {
     switch ($Val.Trim()) {
-
         "1" {
             Write-Host "`n❌ Incorrect. The length of a website address does not determine whether it is secure." -ForegroundColor Red
         }
@@ -298,8 +291,7 @@ elseif ($i -eq 4) {
     Read-Host "Press Enter to try again"
     $Global:SkipTyping = $true
 }
-
-}
+    }
 
         # Repeat the current security check until the player answers correctly
         } until ($Correct -eq $true)
