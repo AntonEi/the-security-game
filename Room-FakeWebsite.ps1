@@ -1,20 +1,24 @@
+# Starts the fake website room
 Function Start-RoomFakeWebsite ($GameState) {
 
+    # Displays text with typewriter effect
     Function Write-Slow ($Text, $Color = "White", $Delay = 40, $LinePause = 600) {
         if ($Global:SkipTyping) {
             Write-Host $Text -ForegroundColor $Color
             return
         }
-
+        # Print the text one character at a time
         foreach ($Char in $Text.ToCharArray()) {
             Write-Host $Char -NoNewline -ForegroundColor $Color
             Start-Sleep -Milliseconds $Delay
         }
 
+        # Pause before continuing and move to the next line
         Start-Sleep -Milliseconds $LinePause
         Write-Host ""
     }
 
+    # Create a default game state if none was provided
     if (-not $GameState) {
         $GameState = [PSCustomObject]@{
             CluesUsed = 0
@@ -23,6 +27,7 @@ Function Start-RoomFakeWebsite ($GameState) {
         }
     }
 
+    # Clear the console and display the game title screen
     Clear-Host
 
     $Header = @"
@@ -40,8 +45,10 @@ Function Start-RoomFakeWebsite ($GameState) {
 
     Write-Host $Header -ForegroundColor Cyan
 
+    # Enable the typewriter effect for room dialogue
     $Global:SkipTyping = $false
 
+    # Introduce the room scenario and explain the challenge
     Write-Slow "`nYou have proceeded to the next room." "White"
     Write-Slow "`nYou need to clear 4 security checks to bypass the lock." "White"
     Write-Slow "`nIn front of you is an active IT terminal." "White"
@@ -52,6 +59,7 @@ Function Start-RoomFakeWebsite ($GameState) {
     
     Read-Host "`nPress Enter to continue"
 
+    # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
         $Correct = $false
@@ -61,6 +69,7 @@ Function Start-RoomFakeWebsite ($GameState) {
             Clear-Host
             Write-Host "--- SECURITY CHECK $i OF 4 ---`n" -ForegroundColor Cyan
 
+            # Security check 1: identify risks with an expired self-signed certificate
             if ($i -eq 1) {
                 Write-Slow "Security Alert!" "Red"
                 Write-Slow "`nA portal requires your admin login, but your browser flags the connection." "Yellow"
@@ -75,14 +84,17 @@ Function Start-RoomFakeWebsite ($GameState) {
                 Write-Host "3. An expired, self-signed certificate means the connection is untrusted and could be intercepted."
                 Write-Host "4. The website is just performing a scheduled database backup."
 
-                $Val = Read-Host "`nEnter your choice (1-4) or CLUE"
+                $Val = Read-Host "`nEnter your choice (1-4) or HINT"
 
-if ($Val.Trim().ToUpper() -eq "CLUE") {
-    $GameState.CluesUsed++
-    Write-Host "`n[CLUE] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." -ForegroundColor Magenta
+# Handle hint request, correct answer, and incorrect answers
+if ($Val.Trim().ToUpper() -eq "HINT") {
+    $GameState.HintsUsed++
+    Write-Host "`n[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." -ForegroundColor Magenta
     Read-Host "`nPress Enter to try again"
     $Global:SkipTyping = $true
 }
+
+# Award points for the correct answer
 elseif ($Val.Trim() -eq "3") {
     Write-Host "`n✔ You are correct!" -ForegroundColor Green
     $GameState.Score += 50
@@ -90,6 +102,8 @@ elseif ($Val.Trim() -eq "3") {
     Read-Host "Press Enter to continue"
 }
 else {
+
+    # Give feedback based on the selected incorrect answer
     switch ($Val.Trim()) {
         "1" {
             Write-Host "`n❌ Incorrect. The certificate is self-signed and expired. A familiar company name alone does not prove a site is trustworthy." -ForegroundColor Red
@@ -105,6 +119,7 @@ else {
         }
     }
 
+    # Apply penalty and redisplay the question without the typing effect
     $GameState.Mistakes++
     $GameState.Score -= 20
     Read-Host "Press Enter to try again"
@@ -113,6 +128,7 @@ else {
 
             }
 
+            # Security check 2: identify a phishing URL disguised as a trusted company domain
             elseif ($i -eq 2) {
 
                 Write-Slow "You are analyzing a link sent to the finance team." "Yellow"
@@ -125,18 +141,23 @@ else {
 
                 $Val = Read-Host "`nEnter your choice (1-4) or CLUE"
 
+                # Handle hint request, correct answer, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     $GameState.HintsUsed++
                     Write-Host "`n[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
+
+                # Award points for the correct answer
                 elseif ($Val.Trim() -eq "3") {
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
                     $GameState.Score += 50
                     $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
+
+                # Give feedback based on the selected incorrect answer
                 else {
     switch ($Val.Trim()) {
         "1" {
@@ -153,6 +174,7 @@ else {
         }
     }
 
+    # Apply penalty and redisplay the question without the typing effect
     $GameState.Mistakes++
     $GameState.Score -= 20
     Read-Host "Press Enter to try again"
@@ -161,6 +183,7 @@ else {
 
 }
 
+            # Security check 3: identify a suspicious document requesting macros or scripts
             elseif ($i -eq 3) {
 
                 Write-Slow "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal." "Yellow"
@@ -173,18 +196,23 @@ else {
 
                 $Val = Read-Host "`nEnter your choice (1-4) or HINT"
 
+                # Handle hint request, correct answer, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     $GameState.HintsUsed++
-                    Write-Host "`n[CLUE] Macros are automated scripts. A simple document shouldn't need them to display text." -ForegroundColor Magenta
+                    Write-Host "`n[HINT] Macros are automated scripts. A simple document shouldn't need them to display text." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
+
+                # Award points for the correct answer
                 elseif ($Val.Trim() -eq "3") {
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
                     $GameState.Score += 50
                     $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
+                
+                # Give feedback based on the selected incorrect answer
                 else {
     switch ($Val.Trim()) {
 
@@ -205,6 +233,7 @@ else {
         }
     }
 
+    # Apply penalty and redisplay the question without the typing effect
     $GameState.Mistakes++
     $GameState.Score -= 20
     Read-Host "Press Enter to try again"
@@ -213,6 +242,7 @@ else {
 
 }
 
+# Security check 4: identify the risk of using HTTP on a login page
 elseif ($i -eq 4) {
 
                 Write-Slow "You land on an internal login page. The address bar displays:" "Yellow"
@@ -225,12 +255,15 @@ elseif ($i -eq 4) {
 
                 $Val = Read-Host "`nEnter your choice (1-4) or HINT"
 
+                # Handle hint requests, correct answers, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     $GameState.HintsUsed++
-                    Write-Host "`n[CLUE] HTTPS encrypts your data. Without the 'S', any password you type can be read by others on the network." -ForegroundColor Magenta
+                    Write-Host "`n[HINT] HTTPS encrypts your data. Without the 'S', any password you type can be read by others on the network." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
+
+                # Award points for the correct answer
                 elseif ($Val.Trim() -eq "2") {
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
                     $GameState.Score += 50
@@ -238,6 +271,7 @@ elseif ($i -eq 4) {
                     Read-Host "Press Enter to continue"
                 }
 
+            # Give feedback based on the selected incorrect answer
             else {
     switch ($Val.Trim()) {
 
@@ -258,6 +292,7 @@ elseif ($i -eq 4) {
         }
     }
 
+    # Apply penalty and redisplay the question without the typing effect
     $GameState.Mistakes++
     $GameState.Score -= 20
     Read-Host "Press Enter to try again"
@@ -266,9 +301,11 @@ elseif ($i -eq 4) {
 
 }
 
+        # Repeat the current security check until the player answers correctly
         } until ($Correct -eq $true)
     }
 
+    # Display the completion message after all security checks are cleared
     Clear-Host
     Write-Host "==========================================================================" -ForegroundColor Green
     Write-Host " STAGE CLEARED: Well done! All 4 security checks bypassed successfully!" -ForegroundColor Green
