@@ -1,3 +1,6 @@
+# Module for handling GameState updates such as score, room progression, hints and mistakes
+
+# Function for updating the player's score by adding the specified number of points
 function Update-Score {
     param (
         [Parameter(Mandatory = $true)]
@@ -11,6 +14,7 @@ function Update-Score {
     return $GameState
 }
 
+# Function for setting the current room the player is in
 function Set-CurrentRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -24,6 +28,7 @@ function Set-CurrentRoom {
     return $GameState
 }
 
+# Function for increasing the number of hints used by the player
 function Use-Hint {
     param (
         [Parameter(Mandatory = $true)]
@@ -34,6 +39,7 @@ function Use-Hint {
     return $GameState
 }
 
+# Function for increasing the number of mistakes made by the player
 function Add-Mistake {
     param (
         [Parameter(Mandatory = $true)]
@@ -44,6 +50,7 @@ function Add-Mistake {
     return $GameState
 }
 
+# Function for marking a room as completed if it has not already been completed
 function Complete-Room {
     param (
         [Parameter(Mandatory = $true)]
