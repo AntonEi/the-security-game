@@ -1,12 +1,12 @@
 # Main function for playing the phising room
 # TODO: this probs has to return gamestate object
-Function Start-PhishingRoom ($GameState) {
-    # TODO: do things with the game state
-    Clear-Host
-    Start-Room ($GameState)
-}
+Function Start-PhishingRoom {
+    param (
+        $GameState
+    )
 
-Function Start-Room ($GameState) {
+    Clear-Host
+
     # TODO: make it so you can quit/save from here
         Write-Host "========================================================"
         Write-Host "Before you is a mailbox, filled with 3 emails:"
@@ -25,19 +25,19 @@ Function Start-Room ($GameState) {
         switch ($choice) {
             "1" {
                 # Email 1
-                Show-Email1 ($GameState)
+                Show-Email1 $GameState
             }
             "2" {
                 # Email 2
-                Show-Email2 ($GameState)
+                Show-Email2 $GameState
             }
             "3" {
                 # Email 3
-                Show-Email3 ($GameState)
+                Show-Email3 $GameState
             }
             "4" {
                 # Hint
-                Show-Hint ($GameState)
+                Show-Hint $GameState
             }
             default {
                 Write-Host "Invalid choice. Please try again." -ForegroundColor Red
@@ -46,7 +46,13 @@ Function Start-Room ($GameState) {
         }
 }
 
-Function Show-Email1 ($GameState) {
+Function Show-Email1 {
+    param (
+        $GameState
+    )
+
+    Clear-Host
+
     # TODO: update email text
     Write-Host "========================================================"
     Write-Host "Important notice"
@@ -62,18 +68,24 @@ Function Show-Email1 ($GameState) {
     $choice = Read-Host "Choose an option"
     switch ($choice) {
         "1" {
+            Clear-Host
             Write-Host "DANGER! You have clicked on a phising link" -ForegroundColor Red
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
             # TODO: add a thing about why its a phising mail?? like multi choice
         }
         "2" {
-            Start-Room ($GameState)
+            Start-Room $GameState
         }
     }
 }
 
-Function Show-Email2 ($GameState) {
+Function Show-Email2 {
+    param (
+        $GameState
+    )
+
+    Clear-Host
     # TODO: update email text
     Write-Host "========================================================"
     Write-Host "[External] [Urgent]: Domain Renewal Failure - Mon 13 June 2026"
@@ -89,18 +101,24 @@ Function Show-Email2 ($GameState) {
     $choice = Read-Host "Choose an option"
     switch ($choice) {
         "1" {
+            Clear-Host
             Write-Host "DANGER! You have clicked on a phising link" -ForegroundColor Red
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
             # TODO: add a thing about why its a phising mail?? like multi choice
         }
         "2" {
-            Start-Room ($GameState)
+            Start-Room $GameState
         }
     }
 }
 
-Function Show-Email3 ($GameState) {
+Function Show-Email3 {
+    param (
+        $GameState
+    )
+
+    Clear-Host
         # TODO: update email text
     Write-Host "========================================================"
     Write-Host "Someone tried to log in to your account"
@@ -117,35 +135,42 @@ Function Show-Email3 ($GameState) {
     switch ($choice) {
         "1" {
             # Click link - CORRECT
-            Write-Host "========================================================"
-            Write-Host "GOOD JOB!" -ForegroundColor Red
-            Write-Host "The link you clicked on saved your account from a hacker."
-            Write-Host "Now redirecting to the next room..."
-            Write-Host "========================================================"
+            Clear-Host
+            Write-Host "========================================================" -ForegroundColor Green
+            Write-Host "GOOD JOB!" -ForegroundColor Green
+            Write-Host "The link you clicked on saved your account from a hacker." -ForegroundColor Green
+            Write-Host "Now redirecting to the next room..." -ForegroundColor Green
+            Write-Host "========================================================" -ForegroundColor Green
             Start-Sleep -Seconds 2
             $GameState.Score += 1 # Idk if it's meant to be used like this
+            return $true
         }
         "2" {
-            Start-Room ($GameState)
+            Start-Room $GameState
         }
     }
 }
 
-Function Show-Hint ($GameState) {
+Function Show-Hint {
+    param (
+        $GameState
+    )
+    Clear-Host
     # TODO: add hints
     Write-Host "========================================================"
     Write-Host "HINT:"
     Write-Host "Check the sender's email address closely"
     Write-Host "========================================================"
-    Write-Host ""
-    Write-Host "1. Click on the link"
-    Write-Host "2. Go back"
-    Write-Host ""
+
+    $GameState.HintsUsed += 1
+    Start-Sleep -Seconds 6
+
+    Start-Room $GameState
 }
 
 # Just put this here now so that I can test run this function. 
 # When integrated later, just call this function to start the room
-$testGameState = return [PSCustomObject]@{
+$testGameState = [PSCustomObject]@{
         PlayerName     = "test"
         Difficulty     = "Medel"
         CurrentRoom    = 1
@@ -154,4 +179,4 @@ $testGameState = return [PSCustomObject]@{
         Mistakes       = 0
         CompletedRooms = @()
     }
-Start-PhishingRoom ($testGameState)
+Start-PhishingRoom $testGameState
