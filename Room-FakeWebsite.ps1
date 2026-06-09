@@ -21,7 +21,7 @@ Function Start-RoomFakeWebsite ($GameState) {
     # Create a default game state if none was provided
     if (-not $GameState) {
         $GameState = [PSCustomObject]@{
-            CluesUsed = 0
+            HintsUsed = 0
             Score = 100
             Mistakes = 0
         }
@@ -52,7 +52,7 @@ Function Start-RoomFakeWebsite ($GameState) {
     Write-Slow "`nYou have proceeded to the next room." "White"
     Write-Slow "`nYou need to clear 4 security checks to bypass the lock." "White"
     Write-Slow "`nIn front of you is an active IT terminal." "White"
-    Write-Slow "On the screen you see your companys internal portal." "White"
+    Write-Slow "On the screen you see your company´s internal portal." "White"
     Write-Slow "The logo is crisp and everything seems authentic." "White"
     Write-Slow "However, you have a strange feeling." "White"
     Write-Slow "Maybe it is best to double-check the technical details before proceeding..." "White"
@@ -137,7 +137,7 @@ elseif ($Val.Trim() -eq "3") {
                 Write-Host "3. No, the actual main domain is 'financial-portal.net'."
                 Write-Host "4. No, the link is too short to be dangerous."
 
-                $Val = Read-Host "`nEnter your choice (1-4) or CLUE"
+                $Val = Read-Host "`nEnter your choice (1-4) or HINT"
 
                 # Handle hint request, correct answer, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
