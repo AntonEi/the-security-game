@@ -1,10 +1,8 @@
 # Main function for playing the phising room
 # TODO: this probs has to return gamestate object
-Function Start-PhishingRoom {
-    # TODO: pass param gamestate here?
-    # TODO: add hints
+Function Start-PhishingRoom ($GameState) {
+    # TODO: do things with the game state
     Clear-Host
-
     Start-Room
 }
 
@@ -120,7 +118,7 @@ Function Show-Email3 {
 }
 
 Function Show-Hint {
-
+    # TODO: add hints
 }
 
 # Just put this here now so that I can test run this function. 
