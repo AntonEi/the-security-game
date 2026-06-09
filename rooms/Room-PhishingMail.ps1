@@ -1,22 +1,14 @@
 # Main function for playing the phising room
-class PhishingRoom {
-    # True if player is still in the room
-    [boolean]$playing
+# TODO: this probs has to return gamestate object
+Function Start-PhishingRoom {
+    # TODO: pass param gamestate here?
+    # TODO: add hints
+    Clear-Host
 
-    # Initialize the PhishingRoom object
-    PhisingRoom() {
-        $this.playing = true
-    }
+    Start-Room
+}
 
-    [void]StartPhishingRoom() {
-        # TODO: pass param gamestate here?
-        # TODO: add hints
-        Clear-Host
-
-        Start-Room
-    }
-
-    [void]StartRoom() {
+Function Start-Room {
         Write-Host "========================================================"
         Write-Host "Before you is a mailbox, filled with 3 emails:"
         Write-Host "1 -  Important notice"
@@ -34,72 +26,76 @@ class PhishingRoom {
         switch ($choice) {
             "1" {
                 # Email 1
-                $this.ShowEmail1()
+                Show-Email1
             }
             "2" {
                 # Email 2
-                $this.ShowEmail2()
+                Show-Email2
             }
             "3" {
                 # Email 3
-                $this.ShowEmail3()
+                Show-Email3
             }
             "4" {
                 # Hint
-                $this.ShowHint()
+                Show-Hint
+            }
+            default {
+                Write-Host "Invalid choice. Please try again." -ForegroundColor Red
+                Start-Sleep -Seconds 2
             }
         }
-    }
+}
 
-    [void]ShowEmail1() {
-        # TODO: update email text
-        Write-Host "========================================================"
-        Write-Host "Important notice"
-        Write-Host "From: example@mail.com"
-        Write-Host "Text text text"
-        Write-Host "<link> Click here to stop removal"
-        Write-Host "========================================================"
-        Write-Host ""
-        Write-Host "1. Click on the link"
-        Write-Host "2. Go back"
-        Write-Host ""
+Function Show-Email1 {
+    # TODO: update email text
+    Write-Host "========================================================"
+    Write-Host "Important notice"
+    Write-Host "From: example@mail.com"
+    Write-Host "Text text text"
+    Write-Host "<link> Click here to stop removal"
+    Write-Host "========================================================"
+    Write-Host ""
+    Write-Host "1. Click on the link"
+    Write-Host "2. Go back"
+    Write-Host ""
 
-        $choice = Read-Host "Choose an option"
-        switch ($choice) {
-            "1" {
-                # Click link
-            }
-            "2" {
-                return
-            }
+    $choice = Read-Host "Choose an option"
+    switch ($choice) {
+        "1" {
+            # Click link
+        }
+        "2" {
+            Start-Room
         }
     }
+}
 
-    [void]ShowEmail2() {
-        # TODO: update email text
-        Write-Host "========================================================"
-        Write-Host "[External] [Urgent]: Domain Renewal Failure - Mon 13 June 2026"
-        Write-Host "From: example@mail.com"
-        Write-Host "Text text text"
-        Write-Host "<link> Click here to stop removal"
-        Write-Host "========================================================"
-        Write-Host ""
-        Write-Host "1. Click on the link"
-        Write-Host "2. Go back"
-        Write-Host ""
+Function Show-Email2 {
+    # TODO: update email text
+    Write-Host "========================================================"
+    Write-Host "[External] [Urgent]: Domain Renewal Failure - Mon 13 June 2026"
+    Write-Host "From: example@mail.com"
+    Write-Host "Text text text"
+    Write-Host "<link> Click here to stop removal"
+    Write-Host "========================================================"
+    Write-Host ""
+    Write-Host "1. Click on the link"
+    Write-Host "2. Go back"
+    Write-Host ""
 
-        $choice = Read-Host "Choose an option"
-        switch ($choice) {
-            "1" {
-                # Click link
-            }
-            "2" {
-                return
-            }
+    $choice = Read-Host "Choose an option"
+    switch ($choice) {
+        "1" {
+            # Click link
+        }
+        "2" {
+            Start-Room
         }
     }
+}
 
-    [void]ShowEmail3() {
+Function Show-Email3 {
         # TODO: update email text
     Write-Host "========================================================"
     Write-Host "Someone tried to log in to your account"
@@ -118,17 +114,15 @@ class PhishingRoom {
             # Click link
         }
         "2" {
-            return
+            Start-Room
         }
     }
-    }
+}
 
-    [void]ShowHint() {
+Function Show-Hint {
 
-    }
 }
 
 # Just put this here now so that I can test run this function. 
 # When integrated later, just call this function to start the room
-$phishingRoom = [PhishingRoom]::New()
-$phishingRoom.StartPhishingRoom()
+Start-PhishingRoom
