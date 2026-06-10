@@ -51,6 +51,7 @@ function Show-TerminalBox {
     Write-Host $bottomLine -ForegroundColor $BorderColor
     Write-Host ""
 }
+
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -119,9 +120,14 @@ function Start-SavedRoom {
     Write-Host "Continuing from room $($GameState.CurrentRoom)..."
 
     switch ($GameState.CurrentRoom) {
-        1 {
-            Start-RoomFakeWebsite -GameState $GameState
-        }
+1 {
+    $roomCompleted = Start-RoomFakeWebsite -GameState $GameState
+
+    if ($roomCompleted -eq $true) {
+        $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Fake Website"
+        Save-GameState -GameState $GameState
+    }
+}
 
         2 {
             # Start-RoomPassword -GameState $GameState

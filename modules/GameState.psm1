@@ -71,16 +71,16 @@ function Add-CompletedRoom {
 function Import-SavedGame {
     $gameState = Load-GameState
 
-if ($null -eq $gameState) {
-    Write-Host "No saved game found." -ForegroundColor Yellow
-    return $null
-}
+    if ($null -eq $gameState) {
+        Write-Host "No saved game found." -ForegroundColor Yellow
+        return $null
+    }
 
     Write-Host "Saved game found." -ForegroundColor Green
-    Write-Host "Welcome back, $($GameState.PlayerName)."
-    Write-Host "You continue from room $($GameState.CurrentRoom)."
+    Write-Host "Welcome back, $($gameState.PlayerName)."
+    Write-Host "You continue from room $($gameState.CurrentRoom)."
 
-    return $GameState
+    return $gameState
 }
 
-Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState, Import-SavedGame, Add-CompletedRoomcls
+Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState, Import-SavedGame, Add-CompletedRoom
