@@ -53,6 +53,7 @@ if ($Val.Trim().ToUpper() -eq "HINT") {
 }
 elseif ($Val.Trim() -eq "3") {
     Write-Host "`n✔ You are correct!" 
+    $Correct = $true
     Read-Host "Press Enter to continue"
 }
 
@@ -100,6 +101,7 @@ elseif ($Val.Trim() -eq "3") {
                 }
                 elseif ($Val.Trim() -eq "3") {
                     Write-Host "`n✔ You are correct!" 
+                    $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
 
@@ -148,6 +150,7 @@ elseif ($Val.Trim() -eq "3") {
                 }
                 elseif ($Val.Trim() -eq "3") {
                     Write-Host "`n✔ You are correct!" 
+                    $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
                 
@@ -199,6 +202,7 @@ elseif ($i -eq 4) {
                 }
                 elseif ($Val.Trim() -eq "2") {
                     Write-Host "`n✔ You are correct!" 
+                    $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
 
