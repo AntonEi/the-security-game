@@ -1,24 +1,9 @@
 # Starts the fake website room
 Function Start-RoomFakeWebsite ($GameState) {
 
-    # Displays text with typewriter effect
-    Function Write-Slow ($Text, $Color = "White", $Delay = 40, $LinePause = 600) {
-        if ($Global:SkipTyping) {
-            Write-Host $Text -ForegroundColor $Color
-            return
-        }
-        # Print the text one character at a time
-        foreach ($Char in $Text.ToCharArray()) {
-            Write-Host $Char -NoNewline -ForegroundColor $Color
-            Start-Sleep -Milliseconds $Delay
-        }
+ }
 
-        # Pause before continuing and move to the next line
-        Start-Sleep -Milliseconds $LinePause
-        Write-Host ""
-    }
-
-    # Run four security checks until each one is answered correctly
+# Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
         $Correct = $false
@@ -76,11 +61,9 @@ elseif ($Val.Trim() -eq "3") {
         }
     }
 
-    # Redisplay the question without the typing effect
-    Read-Host "Press Enter to try again"
-    $Global:SkipTyping = $true
+Read-Host "Press Enter to try again"
 }
-        }
+}
 
 # Security check 2: identify a phishing URL disguised as a trusted company domain
 elseif ($i -eq 2) {
@@ -128,11 +111,8 @@ elseif ($i -eq 2) {
         }
     }
 
-    # Redisplay the question without the typing effect
-    Read-Host "Press Enter to try again"
-    $Global:SkipTyping = $true
+Read-Host "Press Enter to try again"
 }
-
 }
 
 # Security check 3: identify a suspicious document requesting macros or scripts    
@@ -184,11 +164,8 @@ elseif ($i -eq 3) {
         }
     }
 
-    # Redisplay the question without the typing effect
-    Read-Host "Press Enter to try again"
-    $Global:SkipTyping = $true
+Read-Host "Press Enter to try again"
 }
-
 }
 
 # Security check 4: identify the risk of using HTTP on a login page
@@ -240,11 +217,9 @@ elseif ($i -eq 4) {
         }
     }
 
-    # Redisplay the question without the typing effect
-    Read-Host "Press Enter to try again"
-    $Global:SkipTyping = $true
+Read-Host "Press Enter to try again"   
 }
-    }
+}
 
         # Repeat the current security check until the player answers correctly
         } until ($Correct -eq $true)
