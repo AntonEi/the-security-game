@@ -37,3 +37,4 @@ Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar. Spelaren n
 - [Projektets wiki](https://github.com/AntonEi/the-security-game/wiki)
 - [Sprint 0 - Uppstart](https://github.com/AntonEi/the-security-game/wiki/Sprint-0-%E2%80%90-Uppstart)
 - [Sprint 1](https://github.com/AntonEi/the-security-game/wiki/Sprint-1)
+- [Sprint 2](https://github.com/AntonEi/the-security-game/wiki/Sprint-2)
