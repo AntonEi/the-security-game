@@ -11,7 +11,7 @@ function Show-MainMenu {
         Write-Host "===================================="
         Write-Host ""
         Write-Host "1. Start new game"
-        Write-Host "2. Load "
+        Write-Host "2. Load saved game"
         Write-Host "3. Exit"
         Write-Host ""
 
@@ -40,16 +40,10 @@ function Show-MainMenu {
             }
 
             "2" {
-                $gameState = Load-GameState
+                $gameState = Import-SavedGame
 
-                if (-not $gameState) {
+                if ($null -ne $gameState) {
                     Write-Host ""
-                    Write-Host "No saved game found." -ForegroundColor Yellow
-                    Read-Host "Press Enter to return to menu"
-                }
-                else {
-                    Write-Host ""
-                    Write-Host "Loaded game."
                     Write-Host "Player: $($gameState.PlayerName)"
                     Write-Host "Difficulty: $($gameState.Difficulty)"
                     Write-Host "Current room: $($gameState.CurrentRoom)"
@@ -57,9 +51,13 @@ function Show-MainMenu {
                     Write-Host "Hints used: $($gameState.HintsUsed)"
                     Write-Host "Mistakes: $($gameState.Mistakes)"
                     Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
+                    Write-Host ""
 
-                    Read-Host "Press Enter to return to menu"
+                    # TODO: Connect CurrentRoom to actual room scripts when all rooms are implemented.
+
                 }
+
+                Read-Host "Press Enter to return to menu"
             }
 
             "3" {
