@@ -22,11 +22,6 @@ Function Start-RoomPassword ($GameState) {
 
         $Password = Read-Host "Enter password or HINT"
 
-    } until ($PasswordAccepted -eq $true)
-
-    return $true
-}
-
         # Give the player a hint without ending the room
         if ($Password.Trim().ToUpper() -eq "HINT") {
             Write-Host "Hint: A strong password is long, unique, and hard to guess."
@@ -79,7 +74,7 @@ Function Start-RoomPassword ($GameState) {
             continue
         }
 
-         # Accept the password when all requirements are met
+        # Accept the password when all requirements are met
         Show-TerminalBox -Label "PASSWORD ACCEPTED" -Lines @(
             "The password meets all security requirements.",
             "",
@@ -88,3 +83,8 @@ Function Start-RoomPassword ($GameState) {
 
         $PasswordAccepted = $true
         Read-Host "Press Enter to continue"
+
+    } until ($PasswordAccepted -eq $true)
+
+    return $true
+}
