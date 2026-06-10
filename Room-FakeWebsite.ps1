@@ -18,15 +18,6 @@ Function Start-RoomFakeWebsite ($GameState) {
         Write-Host ""
     }
 
-    # Create a default game state if none was provided
-    if (-not $GameState) {
-        $GameState = [PSCustomObject]@{
-            HintsUsed = 0
-            Score = 100
-            Mistakes = 0
-        }
-    }
-
     # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
@@ -43,9 +34,9 @@ Function Start-RoomFakeWebsite ($GameState) {
                 Write-Slow "`nA portal requires your admin login, but your browser flags the connection." "Yellow"
                 Write-Slow "`nYou inspect the SSL/TLS certificate. It says:" "Yellow"
                 Write-Host ""
-                Write-Slow "   Issued to: internal.sediment.com" "White"
-                Write-Slow "   Issued by: Unknown CA / Self-Signed" "White"
-                Write-Slow "   Validity: EXPIRED 2025-12-31" "White"
+                Write-Host "   Issued to: internal.sediment.com" -ForegroundColor White
+                Write-Host "   Issued by: Unknown CA / Self-Signed" -ForegroundColor White
+                Write-Host "   Validity: EXPIRED 2025-12-31" -ForegroundColor White
                 Write-Slow "`nWhat is the main danger here?" "Yellow"
                 Write-Host "`n1. None. Since it is issued to 'sediment.com' it is safe to proceed."
                 Write-Host "2. The encryption is too strong for your current browser version."
@@ -56,15 +47,12 @@ Function Start-RoomFakeWebsite ($GameState) {
 
 # Handle hint request, correct answer, and incorrect answers
 if ($Val.Trim().ToUpper() -eq "HINT") {
-    $GameState.HintsUsed++
     Write-Host "`n[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." -ForegroundColor Magenta
     Read-Host "`nPress Enter to try again"
     $Global:SkipTyping = $true
 }
 elseif ($Val.Trim() -eq "3") {
-    # Award points for the correct answer
     Write-Host "`n✔ You are correct!" -ForegroundColor Green
-    $GameState.Score += 50
     $Correct = $true
     Read-Host "Press Enter to continue"
 }
@@ -86,13 +74,11 @@ elseif ($Val.Trim() -eq "3") {
         }
     }
 
-    # Apply penalty and redisplay the question without the typing effect
-    $GameState.Mistakes++
-    $GameState.Score -= 20
+    # Redisplay the question without the typing effect
     Read-Host "Press Enter to try again"
     $Global:SkipTyping = $true
 }
-        }
+}
 
             # Security check 2: identify a phishing URL disguised as a trusted company domain
             elseif ($i -eq 2) {
@@ -109,15 +95,12 @@ elseif ($Val.Trim() -eq "3") {
 
                 # Handle hint request, correct answer, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
-                    $GameState.HintsUsed++
                     Write-Host "`n[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
                 elseif ($Val.Trim() -eq "3") {
-                    # Award points for the correct answer
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
-                    $GameState.Score += 50
                     $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
@@ -139,9 +122,7 @@ elseif ($Val.Trim() -eq "3") {
         }
     }
 
-    # Apply penalty and redisplay the question without the typing effect
-    $GameState.Mistakes++
-    $GameState.Score -= 20
+    # Redisplay the question without the typing effect
     Read-Host "Press Enter to try again"
     $Global:SkipTyping = $true
 }
@@ -163,15 +144,12 @@ elseif ($Val.Trim() -eq "3") {
 
                 # Handle hint request, correct answer, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
-                    $GameState.HintsUsed++
                     Write-Host "`n[HINT] Macros are automated scripts. A simple document shouldn't need them to display text." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
                 elseif ($Val.Trim() -eq "3") {
-                    # Award points for the correct answer
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
-                    $GameState.Score += 50
                     $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
@@ -196,9 +174,7 @@ elseif ($Val.Trim() -eq "3") {
         }
     }
 
-    # Apply penalty and redisplay the question without the typing effect
-    $GameState.Mistakes++
-    $GameState.Score -= 20
+    # Redisplay the question without the typing effect
     Read-Host "Press Enter to try again"
     $Global:SkipTyping = $true
 }
@@ -220,15 +196,12 @@ elseif ($i -eq 4) {
 
                 # Handle hint requests, correct answers, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
-                    $GameState.HintsUsed++
                     Write-Host "`n[HINT] HTTPS encrypts your data. Without the 'S', any password you type can be read by others on the network." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }
                 elseif ($Val.Trim() -eq "2") {
-                    # Award points for the correct answer
                     Write-Host "`n✔ You are correct!" -ForegroundColor Green
-                    $GameState.Score += 50
                     $Correct = $true
                     Read-Host "Press Enter to continue"
                 }
@@ -253,9 +226,7 @@ elseif ($i -eq 4) {
         }
     }
 
-    # Apply penalty and redisplay the question without the typing effect
-    $GameState.Mistakes++
-    $GameState.Score -= 20
+    # Redisplay the question without the typing effect
     Read-Host "Press Enter to try again"
     $Global:SkipTyping = $true
 }
