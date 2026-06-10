@@ -1,14 +1,11 @@
 # Starts the fake website room
 Function Start-RoomFakeWebsite ($GameState) {
 
- }
-
-# Run four security checks until each one is answered correctly
+    # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
         $Correct = $false
-        $Global:SkipTyping = $false
-
+        
         do {
             
 # Security check 1: identify risks with an expired self-signed certificate
@@ -16,11 +13,15 @@ if ($i -eq 1) {
 
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "Security Alert!"
-        "`A portal requires your admin login, but your browser flags the connection."
+        ""
+        "A portal requires your admin login, but your browser flags the connection."
+        ""
         "You inspect the SSL/TLS certificate. It says:"
+        ""
         "   Issued to: internal.sediment.com" 
         "   Issued by: Unknown CA / Self-Signed" 
         "   Validity: EXPIRED 2025-12-31" 
+        ""
         "What is the main danger here?" 
 
     ) -Clear
@@ -29,8 +30,9 @@ if ($i -eq 1) {
     Write-Host "2. The encryption is too strong for your current browser version."
     Write-Host "3. An expired, self-signed certificate means the connection is untrusted and could be intercepted."
     Write-Host "4. The website is just performing a scheduled database backup."
+    Write-Host ""
 
-                $Val = Read-Host "`nEnter your choice (1-4) or HINT"
+                $Val = Read-Host "Enter your choice (1-4) or HINT"
 
 # Handle hint request, correct answer, and incorrect answers
 if ($Val.Trim().ToUpper() -eq "HINT") {
@@ -70,7 +72,9 @@ elseif ($i -eq 2) {
 
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "You are analyzing a link sent to the finance team."
+        ""
         "https://sediment.com.financial-portal.net/login" 
+        ""
         "Is this website legitimate for your company (sediment.com)?"
 
      ) -Clear   
@@ -79,6 +83,7 @@ elseif ($i -eq 2) {
     Write-Host "2. It is a secure connection so it must be safe."
     Write-Host "3. No, the actual main domain is 'financial-portal.net'."
     Write-Host "4. No, the link is too short to be dangerous."
+    Write-Host ""
 
                 $Val = Read-Host "Enter your choice (1-4) or HINT"
 
@@ -120,7 +125,9 @@ elseif ($i -eq 3) {
 
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
+        ""
         "When you open it, a popup says: 'To view this document, please enable Macros/Scripts'."
+        ""
         "What should your security instinct tell you about this document?"
 
     ) -Clear
@@ -129,6 +136,7 @@ elseif ($i -eq 3) {
     Write-Host "2. Enable them only if the sender is verified by email."
     Write-Host "3. Decline; standard PDF files do not require active macros."
     Write-Host "4. Disable your antivirus temporarily to view the content."
+    Write-Host ""
 
                 $Val = Read-Host "Enter your choice (1-4) or HINT"
 
@@ -173,7 +181,9 @@ elseif ($i -eq 4) {
 
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "You land on an internal login page. The address bar displays:"
+        ""
         "http://secure-login.sediment.com" 
+        ""
         "What is the primary security concern here?"
 
     ) -Clear
@@ -182,6 +192,7 @@ elseif ($i -eq 4) {
     Write-Host "2. HTTP is unencrypted, exposing your credentials."
     Write-Host "3. It uses a secure protocol but the port is blocked."
     Write-Host "4. Nothing; it is an internal page so it does not need encryption."
+    Write-Host ""
 
                 $Val = Read-Host "Enter your choice (1-4) or HINT"
 
