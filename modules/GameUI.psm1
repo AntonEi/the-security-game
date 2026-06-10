@@ -160,4 +160,4 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Show-TerminalBox, Start-SavedRoom
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom

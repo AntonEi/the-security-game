@@ -83,4 +83,4 @@ if ($null -eq $gameState) {
     return $GameState
 }
 
-Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState, Import-SavedGame, Add-CompletedRoom
+Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState, Import-SavedGame, Add-CompletedRoomcls
