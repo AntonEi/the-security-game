@@ -34,9 +34,9 @@ Function Start-RoomFakeWebsite ($GameState) {
                 Write-Slow "`nA portal requires your admin login, but your browser flags the connection." "Yellow"
                 Write-Slow "`nYou inspect the SSL/TLS certificate. It says:" "Yellow"
                 Write-Host ""
-                Write-Slow "   Issued to: internal.sediment.com" "White"
-                Write-Slow "   Issued by: Unknown CA / Self-Signed" "White"
-                Write-Slow "   Validity: EXPIRED 2025-12-31" "White"
+                Write-Host "   Issued to: internal.sediment.com" -ForegroundColor White
+                Write-Host "   Issued by: Unknown CA / Self-Signed" -ForegroundColor White
+                Write-Host "   Validity: EXPIRED 2025-12-31" -ForegroundColor White
                 Write-Slow "`nWhat is the main danger here?" "Yellow"
                 Write-Host "`n1. None. Since it is issued to 'sediment.com' it is safe to proceed."
                 Write-Host "2. The encryption is too strong for your current browser version."
