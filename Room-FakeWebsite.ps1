@@ -27,38 +27,6 @@ Function Start-RoomFakeWebsite ($GameState) {
         }
     }
 
-    # Clear the console and display the game title screen
-    Clear-Host
-
-    $Header = @"
-+--------------------------------------------------------------------------+
-|          ██████╗████████╗ █████╗  ██████╗ ███████╗    ██████╗            |
-|         ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██╔════╝    ╚════██╗           |
-|         ╚█████╗     ██║   ███████║██║  ███╗█████╗        █████╔╝         |
-|          ╚═══██╗    ██║   ██╔══██║██║   ██║██╔══╝       ██╔═══╝          |
-|         ██████╔╝    ██║   ██║  ██║╚██████╔╝███████╗     ███████╗         |
-|         ╚═════╝     ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝     ╚══════╝         |
-+--------------------------------------------------------------------------+
-|                            THE CRYPTO VAULT                              |
-+--------------------------------------------------------------------------+
-"@
-
-    Write-Host $Header -ForegroundColor Cyan
-
-    # Enable the typewriter effect for room dialogue
-    $Global:SkipTyping = $false
-
-    # Introduce the room scenario and explain the challenge
-    Write-Slow "`nYou have proceeded to the next room." "White"
-    Write-Slow "`nYou need to clear 4 security checks to bypass the lock." "White"
-    Write-Slow "`nIn front of you is an active IT terminal." "White"
-    Write-Slow "On the screen you see your company´s internal portal." "White"
-    Write-Slow "The logo is crisp and everything seems authentic." "White"
-    Write-Slow "However, you have a strange feeling." "White"
-    Write-Slow "Maybe it is best to double-check the technical details before proceeding..." "White"
-    
-    Read-Host "`nPress Enter to continue"
-
     # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
