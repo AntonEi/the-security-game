@@ -61,3 +61,20 @@ Function Start-RoomPassword ($GameState) {
         if ($Password -notmatch "[^a-zA-Z0-9]") {
             $MissingRequirements += "At least one special character"
         }
+
+        # Reject weak passwords and show which requirements are missing
+        if ($MissingRequirements.Count -gt 0) {
+
+            Show-TerminalBox -Label "PASSWORD REJECTED" -Lines @(
+                "The password does not meet all requirements.",
+                "",
+                "Missing requirements:"
+            ) -Clear
+
+            foreach ($Requirement in $MissingRequirements) {
+                Write-Host "- $Requirement"
+            }
+
+            Read-Host "Press Enter to try again"
+            continue
+        }
