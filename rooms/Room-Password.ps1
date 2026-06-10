@@ -33,3 +33,31 @@ Function Start-RoomPassword ($GameState) {
             Read-Host "Press Enter to try again"
             continue
         }
+
+        # Stores all password requirements that are not met
+        $MissingRequirements = @()
+
+        # Check if password is at least 12 characters long
+        if ($Password.Length -lt 12) {
+            $MissingRequirements += "At least 12 characters"
+        }
+
+        # Check if password contains at least one uppercase letter
+        if ($Password -notmatch "[A-Z]") {
+            $MissingRequirements += "At least one uppercase letter"
+        }
+
+        # Check if password contains at least one lowercase letter
+        if ($Password -notmatch "[a-z]") {
+            $MissingRequirements += "At least one lowercase letter"
+        }
+
+        # Check if password contains at least one number
+        if ($Password -notmatch "\d") {
+            $MissingRequirements += "At least one number"
+        }
+
+        # Check if password contains at least one special character
+        if ($Password -notmatch "[^a-zA-Z0-9]") {
+            $MissingRequirements += "At least one special character"
+        }
