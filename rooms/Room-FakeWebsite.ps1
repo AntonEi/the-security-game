@@ -131,7 +131,7 @@ elseif ($Val.Trim() -eq "3") {
 
                 Write-Slow "You are analyzing a link sent to the finance team." "Yellow"
                 Write-Host "`n👉 https://sediment.com.financial-portal.net/login 👈" -ForegroundColor Red -BackgroundColor Black
-                Write-Slow "`nIs this website legitimate for your company?" "Yellow"
+                Write-Slow "`nIs this website legitimate for your company (sediment.com)?" "Yellow"
                 Write-Host "`n1. Yes, because 'sediment.com' is written at the beginning."
                 Write-Host "2. It is a secure connection so it must be safe."
                 Write-Host "3. No, the actual main domain is 'financial-portal.net'."
