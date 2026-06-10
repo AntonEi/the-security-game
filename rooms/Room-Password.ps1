@@ -78,3 +78,13 @@ Function Start-RoomPassword ($GameState) {
             Read-Host "Press Enter to try again"
             continue
         }
+
+         # Accept the password when all requirements are met
+        Show-TerminalBox -Label "PASSWORD ACCEPTED" -Lines @(
+            "The password meets all security requirements.",
+            "",
+            "The lock opens."
+        ) -Clear
+
+        $PasswordAccepted = $true
+        Read-Host "Press Enter to continue"
