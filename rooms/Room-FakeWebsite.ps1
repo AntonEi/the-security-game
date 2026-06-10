@@ -246,14 +246,14 @@ elseif ($i -eq 4) {
                 Write-Host "`n1. The site name is too long."
                 Write-Host "2. HTTP is unencrypted, exposing your credentials."
                 Write-Host "3. It uses a secure protocol but the port is blocked."
-                Write-Host "4. Nothing; it is an internal page so it doesn't need encryption."
+                Write-Host "4. Nothing; it is an internal page so it does not need encryption."
 
                 $Val = Read-Host "`nEnter your choice (1-4) or HINT"
 
                 # Handle hint requests, correct answers, and incorrect answers
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     $GameState.HintsUsed++
-                    Write-Host "`n[HINT] HTTPS encrypts your data. Without the 'S', any password you type can be read by others on the network." -ForegroundColor Magenta
+                    Write-Host "`n[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." -ForegroundColor Magenta
                     Read-Host "`nPress Enter to try again"
                     $Global:SkipTyping = $true
                 }

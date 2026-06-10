@@ -1,3 +1,7 @@
+Import-Module "$PSScriptRoot\GameState.psm1" -Force
+
+. "$PSScriptRoot\..\rooms\Room-FakeWebsite.ps1"
+
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -15,8 +19,23 @@ function Show-MainMenu {
 
         switch ($choice) {
             "1" {
-                # Function to start game here
-                Pause
+                $gameState = New-GameState -PlayerName "Test Player" -Difficulty "Medel"
+
+                $roomCompleted = Start-RoomFakeWebsite -GameState $gameState
+
+                if ($roomCompleted -eq $true) {
+                    $gameState = Add-CompletedRoom -GameState $gameState -RoomName "Fake Website"
+                    Save-GameState -GameState $gameState
+                }
+
+                Write-Host ""
+                Write-Host "Game saved."
+                Write-Host "Score: $($gameState.Score)"
+                Write-Host "Hints used: $($gameState.HintsUsed)"
+                Write-Host "Mistakes: $($gameState.Mistakes)"
+                Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
+
+                Read-Host "Press Enter to return to menu"
             }
 
             "2" {
