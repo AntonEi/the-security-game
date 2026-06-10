@@ -38,7 +38,6 @@ if ($i -eq 1) {
 if ($Val.Trim().ToUpper() -eq "HINT") {
     Write-Host "[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." 
     Read-Host "Press Enter to try again"
-    $Global:SkipTyping = $true
 }
 elseif ($Val.Trim() -eq "3") {
     Write-Host "You are correct!" 
@@ -91,7 +90,6 @@ elseif ($i -eq 2) {
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
                     Read-Host "Press Enter to try again"
-                    $Global:SkipTyping = $true
                 }
                 elseif ($Val.Trim() -eq "3") {
                     Write-Host "You are correct!" 
@@ -144,7 +142,6 @@ elseif ($i -eq 3) {
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
                     Read-Host "Press Enter to try again"
-                    $Global:SkipTyping = $true
                 }
                 elseif ($Val.Trim() -eq "3") {
                     Write-Host "You are correct!" 
@@ -200,7 +197,6 @@ elseif ($i -eq 4) {
                 if ($Val.Trim().ToUpper() -eq "HINT") {
                     Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
                     Read-Host "Press Enter to try again"
-                    $Global:SkipTyping = $true
                 }
                 elseif ($Val.Trim() -eq "2") {
                     Write-Host "You are correct!" 
