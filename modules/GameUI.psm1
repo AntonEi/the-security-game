@@ -36,25 +36,13 @@ function Show-MainMenu {
                 Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
 
                 Read-Host "Press Enter to return to menu"
-                Pause
             }
 
             "2" {
                 $gameState = Import-SavedGame
 
                 if ($null -ne $gameState) {
-                    Write-Host ""
-                    Write-Host "Player: $($gameState.PlayerName)"
-                    Write-Host "Difficulty: $($gameState.Difficulty)"
-                    Write-Host "Current room: $($gameState.CurrentRoom)"
-                    Write-Host "Score: $($gameState.Score)"
-                    Write-Host "Hints used: $($gameState.HintsUsed)"
-                    Write-Host "Mistakes: $($gameState.Mistakes)"
-                    Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
-                    Write-Host ""
-
-                    # TODO: Connect CurrentRoom to actual room scripts when all rooms are implemented.
-
+                    Start-SavedRoom -GameState $gameState
                 }
 
                 Read-Host "Press Enter to return to menu"
@@ -73,4 +61,54 @@ function Show-MainMenu {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu
+function Start-SavedRoom {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    Write-Host "Continuing from room $($GameState.CurrentRoom)..."
+
+    switch ($GameState.CurrentRoom) {
+        1 {
+            Start-RoomFakeWebsite -GameState $GameState
+        }
+
+        2 {
+            # Start-RoomPassword -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        3 {
+            # Start-RoomPhishingMail -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        4 {
+            # Start-RoomTeamsInvite -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        5 {
+            # Start-RoomTrojan -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        6 {
+            # Start-RoomRansomware -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        default {
+            Write-Host "Invalid room number in save file." -ForegroundColor Red
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+    }
+}
+
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
