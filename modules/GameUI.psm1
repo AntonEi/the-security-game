@@ -2,6 +2,55 @@ Import-Module "$PSScriptRoot\GameState.psm1" -Force
 
 . "$PSScriptRoot\..\rooms\Room-FakeWebsite.ps1"
 
+
+function Show-TerminalBox {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$Label,
+
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string[]]$Lines,
+
+        [int]$Width = 58,
+
+        [string]$BorderColor = "Cyan",
+
+        [string]$TextColor = "White",
+
+        [switch]$Clear
+    )
+
+    if ($Clear) {
+        Clear-Host
+    }
+
+    $maxTextLength = $Width - 4
+
+    $topStart = "┌─[ $Label ]"
+    $dashCount = $Width - $topStart.Length - 1
+
+    if ($dashCount -lt 0) {
+        $dashCount = 0
+    }
+
+    $topLine = $topStart + ("─" * $dashCount) + "┐"
+    $bottomLine = "└" + ("─" * ($Width - 2)) + "┘"
+
+    Write-Host $topLine -ForegroundColor $BorderColor
+
+    foreach ($line in $Lines) {
+        if ($line.Length -gt $maxTextLength) {
+            $line = $line.Substring(0, $maxTextLength - 3) + "..."
+        }
+
+        $formattedLine = "│  " + $line.PadRight($maxTextLength) + "│"
+        Write-Host $formattedLine -ForegroundColor $TextColor
+    }
+
+    Write-Host $bottomLine -ForegroundColor $BorderColor
+    Write-Host ""
+}
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -75,4 +124,4 @@ function Show-MainMenu {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox
