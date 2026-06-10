@@ -36,11 +36,30 @@ function Show-MainMenu {
                 Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
 
                 Read-Host "Press Enter to return to menu"
+                Pause
             }
 
             "2" {
-                    # Function to start game here
-                Pause
+                $gameState = Load-GameState
+
+                if (-not $gameState) {
+                    Write-Host ""
+                    Write-Host "No saved game found." -ForegroundColor Yellow
+                    Read-Host "Press Enter to return to menu"
+                }
+                else {
+                    Write-Host ""
+                    Write-Host "Loaded game."
+                    Write-Host "Player: $($gameState.PlayerName)"
+                    Write-Host "Difficulty: $($gameState.Difficulty)"
+                    Write-Host "Current room: $($gameState.CurrentRoom)"
+                    Write-Host "Score: $($gameState.Score)"
+                    Write-Host "Hints used: $($gameState.HintsUsed)"
+                    Write-Host "Mistakes: $($gameState.Mistakes)"
+                    Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
+
+                    Read-Host "Press Enter to return to menu"
+                }
             }
 
             "3" {
