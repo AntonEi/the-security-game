@@ -590,7 +590,7 @@ function TeamsInviteOutro {
     Start-Sleep -Milliseconds 1000
 }
 
-function Show-TrojanIntro {
+function TrojanIntro {
     $trojanArt = @(
         "              /\",
         "             /  \",
@@ -621,4 +621,56 @@ function Show-TrojanIntro {
     Write-Host ""
 
     Start-Sleep -Milliseconds 2200
+}
+
+function TrojanOutro {
+    $offset = 16
+
+    $frames = @(
+        @(
+            "              /\",
+            "             /  \",
+            "       _____/____\_____",
+            "      /  File.PDF.EXE  \",
+            " ____/__________________\____",
+            "   (O)                (O)"
+        ),
+        @(
+            "              /\",
+            "             /  \",
+            "       _____/____\_____",
+            "      /   File.PDF.E   \",
+            " ____/__________________\____",
+            "                         "
+        ),
+        @(
+            "                         ",
+            "                         ",
+            "                         ",
+            "      /    File.PDF    \",
+            " ____/__________________\____",
+            "                         "
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host ((" " * $offset) + $line) -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 500
+    }
+
+    
+    Write-Host ""
+    Write-Host ((" " * $offset) + "ROOM CLEARED") -ForegroundColor Green
+    Write-Host ((" " * $offset) + "Trojan threat contained.") -ForegroundColor Green
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 1500
 }
