@@ -20,16 +20,15 @@ Function Start-TeamsInviteRoom {
             "What will you do?"
             ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-            $choice = Read-Host "1: preview the message, 2: block, 3: accept or HINT"
+            $choice = Read-Host "1: preview the message, 2: block, 3: accept, or HINT"
 
             switch ($choice) {
                 "1" {
                     # Preview the message
-
+                    Show-Message $GameState
                 }
                 "2" {
                     # Block
-
                 }
                 "3" {
                     # Accept
@@ -45,6 +44,36 @@ Function Start-TeamsInviteRoom {
             }    
     }
 
+}
+
+Function Show-Message {
+     param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    Show-TerminalBox -Label "MESSAGE PREVIEW" -Lines @( # TODO: idk what room number this actually is
+            "Hi, this is the IT Department.",
+            "We see an issue with your account."
+            ) -BorderColor "Cyan" -TextColor "White" -Clear
+
+    Write-Host "What will you do?"
+    $choice = Read-Host "1: Accept, 2: Block, 3: Go back, or HINT"
+
+    switch ($choice) {
+        "1" {
+            # Accept
+        }
+        "2" {
+            # Block
+        }
+        "3" {
+            return
+        }
+        "HINT" {
+            Show-Hint
+        }
+    }
 }
 
 Function Show-Hint {
