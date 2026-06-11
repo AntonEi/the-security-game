@@ -4,10 +4,10 @@ function Start-RoomTrojan {
         [object]$GameState
     )
 
-     $questions = @(
+    $questions = @(
         [PSCustomObject]@{
-            Label = "TROJAN CHECK 1 OF 3"
-            Lines = @(
+            Label           = "TROJAN CHECK 1 OF 3"
+            Lines           = @(
                 "You find a file on the company computer.",
                 "",
                 "Filename:",
@@ -17,21 +17,21 @@ function Start-RoomTrojan {
                 "",
                 "What is suspicious about this file?"
             )
-            Options = @(
+            Options         = @(
                 "1. Nothing. It is just a PDF file.",
                 "2. The file name is too long.",
                 "3. The file has .exe at the end and may be disguised as a document.",
                 "4. The file should be opened to check the content."
             )
-            CorrectAnswer = "3"
-            Hint = "Look carefully at the last file extension, not only the icon."
+            CorrectAnswer   = "3"
+            Hint            = "Look carefully at the last file extension, not only the icon."
             CorrectFeedback = "Correct. A file ending with .exe can run code, even if it looks like a PDF."
-            WrongFeedback = "Incorrect. Attackers often disguise executable files as documents."
+            WrongFeedback   = "Incorrect. Attackers often disguise executable files as documents."
         },
 
         [PSCustomObject]@{
-            Label = "TROJAN CHECK 2 OF 3"
-            Lines = @(
+            Label           = "TROJAN CHECK 2 OF 3"
+            Lines           = @(
                 "You try to open the file.",
                 "",
                 "Windows shows a warning:",
@@ -41,21 +41,21 @@ function Start-RoomTrojan {
                 "",
                 "What should you do?"
             )
-            Options = @(
+            Options         = @(
                 "1. Click Yes because the file looks work-related.",
                 "2. Click Yes only if you are in a hurry.",
                 "3. Stop and verify the file before allowing it to run.",
                 "4. Disable security warnings so it does not happen again."
             )
-            CorrectAnswer = "3"
-            Hint = "Unknown publisher plus admin permission is a major warning sign."
+            CorrectAnswer   = "3"
+            Hint            = "Unknown publisher plus admin permission is a major warning sign."
             CorrectFeedback = "Correct. You should not allow unknown files to run with elevated permissions."
-            WrongFeedback = "Incorrect. Giving unknown files admin access can allow malware to install."
+            WrongFeedback   = "Incorrect. Giving unknown files admin access can allow malware to install."
         },
 
         [PSCustomObject]@{
-            Label = "TROJAN CHECK 3 OF 3"
-            Lines = @(
+            Label           = "TROJAN CHECK 3 OF 3"
+            Lines           = @(
                 "After investigating, you notice the file came from an unexpected email attachment.",
                 "",
                 "The sender address looks slightly wrong.",
@@ -63,18 +63,49 @@ function Start-RoomTrojan {
                 "",
                 "What is the safest next step?"
             )
-            Options = @(
+            Options         = @(
                 "1. Open the file on another computer.",
                 "2. Forward the file to a colleague and ask them to test it.",
                 "3. Rename the file so it becomes safe.",
                 "4. Do not open it. Report it and delete or quarantine the file."
             )
-            CorrectAnswer = "4"
-            Hint = "If a file looks suspicious, do not test it by opening it."
+            CorrectAnswer   = "4"
+            Hint            = "If a file looks suspicious, do not test it by opening it."
             CorrectFeedback = "Correct. Suspicious files should be reported and quarantined, not opened."
-            WrongFeedback = "Incorrect. Suspicious files should not be opened, renamed, or shared."
+            WrongFeedback   = "Incorrect. Suspicious files should not be opened, renamed, or shared."
         }
     )
+
+    foreach ($question in $questions) {
+        $answeredCorrectly = $false
+
+        do {
+            Show-TerminalBox `
+                -Label $question.Label `
+                -Lines $question.Lines `
+                -BorderColor "Cyan" `
+                -TextColor "White" `
+                -Clear
+
+            foreach ($option in $question.Options) {
+                Write-Host $option
+            }
+
+            Write-Host ""
+            $choice = Read-Host "Choose an option (1-4)"
+
+            if ($choice.Trim() -eq $question.CorrectAnswer) {
+                $answeredCorrectly = $true
+                Write-Host "Correct answer." -ForegroundColor Green
+                Read-Host "Press Enter to continue"
+            }
+            else {
+                Write-Host "Incorrect answer." -ForegroundColor Red
+                Read-Host "Press Enter to try again"
+            }
+
+        } until ($answeredCorrectly -eq $true)
+    }
 
     return $true
 }
