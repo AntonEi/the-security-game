@@ -1,3 +1,4 @@
+# Starts the ransomware room and handles the player's choice, timer, score, and result.
 function Start-RoomRansomware {
     param (
         [Parameter(Mandatory = $true)]
@@ -165,6 +166,7 @@ function Start-RoomRansomware {
     return $true
 }
 
+# Returns the time limit in seconds based on the selected difficulty.
 function Get-RansomwareTimeLimit {
     param (
         [string]$Difficulty
@@ -178,6 +180,7 @@ function Get-RansomwareTimeLimit {
     }
 }
 
+# Shows the ransomware scenario and the available choices.
 function Show-RansomwareIntro {
     param (
         [int]$TimeLimit
@@ -211,6 +214,7 @@ function Show-RansomwareIntro {
     Write-Host ""
 }
 
+# Shows a hint and then returns to the ransomware scenario.
 function Show-RansomwareHint {
     param (
         [int]$TimeLimit
@@ -228,6 +232,7 @@ function Show-RansomwareHint {
     Show-RansomwareIntro -TimeLimit $TimeLimit
 }
 
+# Shows feedback to the player and waits before continuing.
 function Show-RansomwareResult {
     param (
         [Parameter(Mandatory = $true)]
@@ -250,4 +255,3 @@ function Show-RansomwareResult {
 
     Read-Host "Press Enter to continue"
 }
-
