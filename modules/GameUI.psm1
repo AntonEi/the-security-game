@@ -138,6 +138,7 @@ function Show-MainMenu {
                 }
 
                 Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
+                    "Difficulty: $($gameState.Difficulty)",
                     "Score: $($gameState.Score)",
                     "Hints used: $($gameState.HintsUsed)",
                     "Mistakes: $($gameState.Mistakes)",
