@@ -133,6 +133,7 @@ function Start-RoomRansomware {
         }
     }
 
+    # Placeholder until the final results screen is implemented in issue #16.
     Show-TerminalBox -Label "FINAL ROOM CLEARED" -Lines @(
         "Ransomware incident contained.",
         "",
