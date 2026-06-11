@@ -7,145 +7,149 @@ function Start-RoomRansomware {
 
     $timeLimit = Get-RansomwareTimeLimit -Difficulty $GameState.Difficulty
 
-    Show-RansomwareIntro -TimeLimit $timeLimit
-
-    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-    $choice = Read-Host "Choose an option (1-4) or HINT"
-    $stopwatch.Stop()
-
-    if ($choice.Trim().ToUpper() -eq "HINT") {
-        $GameState.HintsUsed += 1
-        Show-RansomwareHint -TimeLimit $timeLimit
+    while ($true) {
+        Show-RansomwareIntro -TimeLimit $timeLimit
 
         $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
-        $choice = Read-Host "Choose an option (1-4)"
+        $choice = Read-Host "Choose an option (1-4) or HINT"
         $stopwatch.Stop()
+
+        if ($choice.Trim().ToUpper() -eq "HINT") {
+            $GameState.HintsUsed += 1
+            Show-RansomwareHint -TimeLimit $timeLimit
+            continue
+        }
+
+        if ($stopwatch.Elapsed.TotalSeconds -gt $timeLimit) {
+            $GameState.Mistakes += 1
+            $GameState.Score -= 10
+
+            Show-TerminalBox -Label "FILES ENCRYPTED" -Lines @(
+                "Your files have been encrypted.",
+                "",
+                "You took too long to react.",
+                "The ransomware spread before the device was isolated.",
+                "",
+                "-10 points",
+                "+1 mistake"
+            ) -BorderColor "Red" -TextColor "Red" -Clear
+
+            Read-Host "Press Enter to continue"
+            return $false
+        }
+
+        switch ($choice.Trim()) {
+            "1" {
+                $GameState.Mistakes += 1
+                $GameState.Score -= 10
+
+                Show-TerminalBox -Label "WRONG ACTION" -Lines @(
+                    "Paying the ransom is not the right first action.",
+                    "",
+                    "Payment does not guarantee recovery.",
+                    "It can also encourage further attacks.",
+                    "",
+                    "Try again.",
+                    "",
+                    "-10 points",
+                    "+1 mistake"
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+
+                Read-Host "Press Enter to try again"
+                continue
+            }
+
+            "2" {
+                $GameState.Score += 20
+
+                Show-TerminalBox -Label "CORRECT ACTION" -Lines @(
+                    "Correct.",
+                    "",
+                    "You disconnected the computer from the network",
+                    "and contacted IT/security staff.",
+                    "",
+                    "This helps prevent the ransomware from spreading.",
+                    "",
+                    "+20 points"
+                ) -BorderColor "Green" -TextColor "Green" -Clear
+
+                Read-Host "Press Enter to continue"
+
+                # Placeholder until the final results screen is implemented in issue #16.
+                Show-TerminalBox -Label "FINAL ROOM CLEARED" -Lines @(
+                    "Ransomware incident contained.",
+                    "",
+                    "You made the correct first response:",
+                    "isolate the device and contact IT.",
+                    "",
+                    "Final results screen will be handled in a separate issue."
+                ) -BorderColor "Green" -TextColor "Green" -Clear
+
+                Read-Host "Press Enter to continue"
+
+                return $true
+            }
+
+            "3" {
+                $GameState.Mistakes += 1
+                $GameState.Score -= 10
+
+                Show-TerminalBox -Label "WRONG ACTION" -Lines @(
+                    "Sending files to a colleague can spread the infection.",
+                    "",
+                    "Suspicious or encrypted files should not be shared.",
+                    "The incident should be reported instead.",
+                    "",
+                    "Try again.",
+                    "",
+                    "-10 points",
+                    "+1 mistake"
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+
+                Read-Host "Press Enter to try again"
+                continue
+            }
+
+            "4" {
+                $GameState.Mistakes += 1
+                $GameState.Score -= 10
+
+                Show-TerminalBox -Label "WRONG ACTION" -Lines @(
+                    "Restarting the computer does not solve ransomware.",
+                    "",
+                    "It may make investigation or recovery harder.",
+                    "The safest action is to isolate and report.",
+                    "",
+                    "Try again.",
+                    "",
+                    "-10 points",
+                    "+1 mistake"
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+
+                Read-Host "Press Enter to try again"
+                continue
+            }
+
+            default {
+                $GameState.Mistakes += 1
+                $GameState.Score -= 10
+
+                Show-TerminalBox -Label "INVALID CHOICE" -Lines @(
+                    "Invalid choice.",
+                    "",
+                    "In a real incident, unclear action wastes time.",
+                    "",
+                    "Try again.",
+                    "",
+                    "-10 points",
+                    "+1 mistake"
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+
+                Read-Host "Press Enter to try again"
+                continue
+            }
+        }
     }
-
-    if ($stopwatch.Elapsed.TotalSeconds -gt $timeLimit) {
-        $GameState.Mistakes += 1
-        $GameState.Score -= 10
-
-        Show-TerminalBox -Label "FILES ENCRYPTED" -Lines @(
-            "Your files have been encrypted.",
-            "",
-            "You took too long to react.",
-            "The ransomware spread before the device was isolated.",
-            "",
-            "-10 points",
-            "+1 mistake"
-        ) -BorderColor "Red" -TextColor "Red" -Clear
-
-        Read-Host "Press Enter to continue"
-        return $false
-    }
-
-    switch ($choice.Trim()) {
-        "1" {
-            $GameState.Mistakes += 1
-            $GameState.Score -= 10
-
-            Show-TerminalBox -Label "WRONG ACTION" -Lines @(
-                "Paying the ransom is not the right first action.",
-                "",
-                "Payment does not guarantee recovery.",
-                "It can also encourage further attacks.",
-                "",
-                "The first priority is to isolate the device",
-                "and contact IT or security staff.",
-                "",
-                "-10 points",
-                "+1 mistake"
-            ) -BorderColor "Red" -TextColor "Red" -Clear
-
-            Read-Host "Press Enter to continue"
-            return $false
-        }
-
-        "2" {
-            $GameState.Score += 20
-
-            Show-TerminalBox -Label "CORRECT ACTION" -Lines @(
-                "Correct.",
-                "",
-                "You disconnected the computer from the network",
-                "and contacted IT/security staff.",
-                "",
-                "This helps prevent the ransomware from spreading.",
-                "",
-                "+20 points"
-            ) -BorderColor "Green" -TextColor "Green" -Clear
-
-            Read-Host "Press Enter to continue"
-        }
-
-        "3" {
-            $GameState.Mistakes += 1
-            $GameState.Score -= 10
-
-            Show-TerminalBox -Label "WRONG ACTION" -Lines @(
-                "Sending files to a colleague can spread the infection.",
-                "",
-                "Suspicious or encrypted files should not be shared.",
-                "The incident should be reported instead.",
-                "",
-                "-10 points",
-                "+1 mistake"
-            ) -BorderColor "Red" -TextColor "Red" -Clear
-
-            Read-Host "Press Enter to continue"
-            return $false
-        }
-
-        "4" {
-            $GameState.Mistakes += 1
-            $GameState.Score -= 10
-
-            Show-TerminalBox -Label "WRONG ACTION" -Lines @(
-                "Restarting the computer does not solve ransomware.",
-                "",
-                "It may make investigation or recovery harder.",
-                "The safest action is to isolate and report.",
-                "",
-                "-10 points",
-                "+1 mistake"
-            ) -BorderColor "Red" -TextColor "Red" -Clear
-
-            Read-Host "Press Enter to continue"
-            return $false
-        }
-
-        default {
-            $GameState.Mistakes += 1
-            $GameState.Score -= 10
-
-            Show-TerminalBox -Label "INVALID CHOICE" -Lines @(
-                "Invalid choice.",
-                "",
-                "In a real incident, unclear action wastes time.",
-                "",
-                "-10 points",
-                "+1 mistake"
-            ) -BorderColor "Red" -TextColor "Red" -Clear
-
-            Read-Host "Press Enter to continue"
-            return $false
-        }
-    }
-
-    # Placeholder until the final results screen is implemented in issue #16.
-    Show-TerminalBox -Label "FINAL ROOM CLEARED" -Lines @(
-        "Ransomware incident contained.",
-        "",
-        "You made the correct first response:",
-        "isolate the device and contact IT.",
-        "",
-        "Final results screen will be handled in a separate issue."
-    ) -BorderColor "Green" -TextColor "Green" -Clear
-
-    Read-Host "Press Enter to continue"
-
-    return $true
 }
 
 # Returns the time limit in seconds based on the selected difficulty.
