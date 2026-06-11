@@ -222,3 +222,72 @@ function FishingIntro {
 
     Start-Sleep -Milliseconds 700
 }
+
+function FishingOutro {
+    $frames = @(
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          |',
+            '          |',
+            '          J ><(((o>',
+            ''
+        ),
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          |',
+            '          |',
+            '          J',
+            '               ><(((o>'
+        ),
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          |',
+            '          J',
+            '',
+            '                    ><(((o>'
+        ),
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          J',
+            '',
+            '',
+            '                         ><(((o>'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "FISHING ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Write-Host ""
+        Write-Host "The HACKER lost the catch..." -ForegroundColor Red
+
+        Start-Sleep -Milliseconds 600
+    }
+
+    Write-Host ""
+    Write-Host "FISHING ROOM CLEARED" -ForegroundColor Green
+    Write-Host "You escaped the bait." -ForegroundColor Green
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 1000
+}
