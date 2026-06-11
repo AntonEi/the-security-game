@@ -590,3 +590,35 @@ function TeamsInviteOutro {
     Start-Sleep -Milliseconds 1000
 }
 
+function Show-TrojanIntro {
+    $trojanArt = @(
+        "              /\",
+        "             /  \",
+        "       _____/____\_____",
+        "      /  File.PDF.EXE  \",
+        " ____/__________________\____",
+        "   (O)                (O)"
+    )
+
+    $finalOffset = 16
+
+    for ($offset = 0; $offset -le $finalOffset; $offset++) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host ""
+
+        foreach ($line in $trojanArt) {
+            Write-Host ((" " * $offset) + $line) -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 80
+    }
+    $finalOffset = 1
+    Write-Host ""
+    Write-Host (" " * $finalOffset + "Suspicious file detected...") -ForegroundColor Red
+    Write-Host (" " * $finalOffset + "Entering Trojan room...") -ForegroundColor DarkYellow
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 2200
+}
