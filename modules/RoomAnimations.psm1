@@ -291,3 +291,79 @@ function FishingOutro {
 
     Start-Sleep -Milliseconds 1000
 }
+
+
+function PasswordIntro {
+    $frames = @(
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD VAULT                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Username: admin                         |',
+            '|        Password: 123456                        |',
+            '|                                                |',
+            '|        Strength: [##--------]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD VAULT                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Username: admin                         |',
+            '|        Password: qwerty                        |',
+            '|                                                |',
+            '|        Strength: [###-------]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD VAULT                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Username: admin                         |',
+            '|        Password: Summer123                     |',
+            '|                                                |',
+            '|        Strength: [####------]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD WARNING                                |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Weak password detected.                 |',
+            '|                                                |',
+            '|        Strength: [####------]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "PASSWORD ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 1000
+    }
+
+    $finalOffset = 1
+
+    Write-Host ""
+    Write-Host (" " * $finalOffset + "Weak password detected...") -ForegroundColor Red
+    Write-Host (" " * $finalOffset + "Entering Password room...") -ForegroundColor Cyan
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 2000
+}
