@@ -6,9 +6,16 @@ function Add-Score {
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
+    # Default modifier (future difficulty scaling)
+    $modifier = 1
 
-    # Adds 20 points for a correct answer
-    $GameState.Score += 20
+    switch ($GameState.Difficulty) {
+        "Easy"   { $modifier = 1 }   # future: maybe 0.5
+        "Medium" { $modifier = 1 }   # future: stays 1
+        "Hard"   { $modifier = 1 }   # future: maybe 1.5
+    }
+
+    $GameState.Score += (20 * $modifier)
     return $GameState
 }
 
