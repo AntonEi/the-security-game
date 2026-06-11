@@ -1,6 +1,16 @@
 # Module for handling GameState updates such as score, room progression, hints and mistakes
 
+# Function for adding score for a correct answer
+function Add-Score {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
 
+    # Adds 20 points for a correct answer
+    $GameState.Score += 20
+    return $GameState
+}
 
 # Function for setting the current room the player is in
 function Set-CurrentRoom {
@@ -55,4 +65,4 @@ function Complete-Room {
     return $GameState
 }
 
-Export-ModuleMember -Function Set-CurrentRoom, Use-Hint, Add-Mistake, Complete-Room
+Export-ModuleMember -Function Add-Score, Set-CurrentRoom, Use-Hint, Add-Mistake, Complete-Room
