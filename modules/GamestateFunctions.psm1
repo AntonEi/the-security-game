@@ -37,6 +37,18 @@ function Use-Hint {
     return $GameState
 }
 
+# Function for removing score for an incorrect answer
+function Remove-Score {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    # Removes 5 points for an incorrect answer
+    $GameState.Score -= 5
+    return $GameState
+}
+
 # Function for increasing the number of mistakes made by the player
 function Add-Mistake {
     param (
@@ -65,4 +77,4 @@ function Complete-Room {
     return $GameState
 }
 
-Export-ModuleMember -Function Add-Score, Set-CurrentRoom, Use-Hint, Add-Mistake, Complete-Room
+Export-ModuleMember -Function Add-Score, Remove-Score, Set-CurrentRoom, Use-Hint, Add-Mistake, Complete-Room
