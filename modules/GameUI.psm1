@@ -51,6 +51,7 @@ function Show-TerminalBox {
     Write-Host $bottomLine -ForegroundColor $BorderColor
     Write-Host ""
 }
+
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -60,7 +61,7 @@ function Show-MainMenu {
         Write-Host "===================================="
         Write-Host ""
         Write-Host "1. Start new game"
-        Write-Host "2. Load "
+        Write-Host "2. Load saved game"
         Write-Host "3. Exit"
         Write-Host ""
 
@@ -85,30 +86,16 @@ function Show-MainMenu {
                 Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
 
                 Read-Host "Press Enter to return to menu"
-                Pause
             }
 
             "2" {
-                $gameState = Load-GameState
+                $gameState = Import-SavedGame
 
-                if (-not $gameState) {
-                    Write-Host ""
-                    Write-Host "No saved game found." -ForegroundColor Yellow
-                    Read-Host "Press Enter to return to menu"
+                if ($null -ne $gameState) {
+                    Start-SavedRoom -GameState $gameState
                 }
-                else {
-                    Write-Host ""
-                    Write-Host "Loaded game."
-                    Write-Host "Player: $($gameState.PlayerName)"
-                    Write-Host "Difficulty: $($gameState.Difficulty)"
-                    Write-Host "Current room: $($gameState.CurrentRoom)"
-                    Write-Host "Score: $($gameState.Score)"
-                    Write-Host "Hints used: $($gameState.HintsUsed)"
-                    Write-Host "Mistakes: $($gameState.Mistakes)"
-                    Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
 
-                    Read-Host "Press Enter to return to menu"
-                }
+                Read-Host "Press Enter to return to menu"
             }
 
             "3" {
@@ -124,4 +111,59 @@ function Show-MainMenu {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox
+function Start-SavedRoom {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    Write-Host "Continuing from room $($GameState.CurrentRoom)..."
+
+    switch ($GameState.CurrentRoom) {
+1 {
+    $roomCompleted = Start-RoomFakeWebsite -GameState $GameState
+
+    if ($roomCompleted -eq $true) {
+        $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Fake Website"
+        Save-GameState -GameState $GameState
+    }
+}
+
+        2 {
+            # Start-RoomPassword -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        3 {
+            # Start-RoomPhishingMail -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        4 {
+            # Start-RoomTeamsInvite -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        5 {
+            # Start-RoomTrojan -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        6 {
+            # Start-RoomRansomware -GameState $GameState
+            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+
+        default {
+            Write-Host "Invalid room number in save file." -ForegroundColor Red
+            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+        }
+    }
+}
+
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
