@@ -1,27 +1,28 @@
+Import-Module "$PSScriptRoot\modules\GamestateFunctions.psm1" -Force
+Import-Module "$PSScriptRoot\modules\GameUI.psm1" -Force
+
 # Main function for playing the phising room
 # TODO: this probs has to return gamestate object
 Function Start-PhishingRoom {
     param (
-        $GameState
+        [object]$GameState
     )
 
-    Clear-Host
+    while ($true) {
 
-    # TODO: make it so you can quit/save from here
-        Write-Host "========================================================"
-        Write-Host "Before you is a mailbox, filled with 3 emails:"
-        Write-Host "1 -  Important notice"
-        Write-Host "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13.."
-        Write-Host "3 - Someone tried to log in to your account"
-        Write-Host "========================================================"
-        Write-Host ""
-        Write-Host "1. Look at email 1"
-        Write-Host "2. Look at email 2 "
-        Write-Host "3. Look at email 3"
-        Write-Host "4. Hint"
-        Write-Host ""
+        Show-TerminalBox
+            - Label "ROOM 01"
+            - Lines @(
+                "Before you is a mailbox, filled with 3 emails:",
+                "1 -  Important notice",
+                "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13..",
+                "3 - Someone tried to log in to your account"
+                )
+            -BorderColor "Cyan"  
+            -TextColor "White" -Clear
 
-        $choice = Read-Host "Choose an option"
+
+        $choice = Read-Host "Choose an email to view (1-3) or HINT"
         switch ($choice) {
             "1" {
                 # Email 1
@@ -35,7 +36,7 @@ Function Start-PhishingRoom {
                 # Email 3
                 Show-Email3 $GameState
             }
-            "4" {
+            "HINT" {
                 # Hint
                 Show-Hint $GameState
             }
@@ -44,34 +45,43 @@ Function Start-PhishingRoom {
                 Start-Sleep -Seconds 2
             }
         }
+    }
 }
 
 Function Show-Email1 {
     param (
-        $GameState
+        [object]$GameState
     )
 
-    Clear-Host
+    Show-TerminalBox
+        - Label "EMAIL 01"
+        - Lines @(
+            "Important notice",
+            "From: support@gooogle.com",
+            "",
+            "Due to inactivity, your account will soon be DEACTIVATED !!",
+            "Click this link to prevent deactivation"
+            )
+        -BorderColor "Cyan"  
+        -TextColor "White" -Clear
 
-    # TODO: update email text
-    Write-Host "========================================================"
-    Write-Host "Important notice"
-    Write-Host "From: example@mail.com"
-    Write-Host "Text text text"
-    Write-Host "<link> Click here to stop removal"
-    Write-Host "========================================================"
-    Write-Host ""
-    Write-Host "1. Click on the link"
-    Write-Host "2. Go back"
-    Write-Host ""
-
-    $choice = Read-Host "Choose an option"
+    $choice = Read-Host "Click the link (1) or go back (2)"
     switch ($choice) {
         "1" {
-            Clear-Host
-            Write-Host "DANGER! You have clicked on a phising link" -ForegroundColor Red
+            Show-TerminalBox
+                - Label "DANGER"
+                - Lines @(
+                    "You have clicked on a phishing link!",
+                    "The account has been compromised",
+                    "",
+                    " -5 points"
+                    )
+                -BorderColor "Red"  
+                -TextColor "Red" -Clear
+
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
+            # TODO: update score here (once that function is created)
             # TODO: add a thing about why its a phising mail?? like multi choice
         }
         "2" {
@@ -82,29 +92,38 @@ Function Show-Email1 {
 
 Function Show-Email2 {
     param (
-        $GameState
+        [object]$GameState
     )
 
-    Clear-Host
-    # TODO: update email text
-    Write-Host "========================================================"
-    Write-Host "[External] [Urgent]: Domain Renewal Failure - Mon 13 June 2026"
-    Write-Host "From: example@mail.com"
-    Write-Host "Text text text"
-    Write-Host "<link> Click here to stop removal"
-    Write-Host "========================================================"
-    Write-Host ""
-    Write-Host "1. Click on the link"
-    Write-Host "2. Go back"
-    Write-Host ""
+    Show-TerminalBox
+        - Label "EMAIL 02"
+        - Lines @(
+            "[External] [Urgent]: Domain Renewal Failure - Mon 13 June 2026",
+            "From: dms@gmail.com",
+            "",
+            "Your domain renewal for company.com has failed.",
+            "Click the link below to prevent removal"
+            )
+        -BorderColor "Cyan"  
+        -TextColor "White" -Clear
 
-    $choice = Read-Host "Choose an option"
+    $choice = Read-Host "Click the link (1) or go back (2)"
     switch ($choice) {
         "1" {
-            Clear-Host
-            Write-Host "DANGER! You have clicked on a phising link" -ForegroundColor Red
+            Show-TerminalBox
+                - Label "DANGER"
+                - Lines @(
+                    "You have clicked on a phishing link!",
+                    "The account has been compromised",
+                    "",
+                    " -5 points"
+                    )
+                -BorderColor "Red"  
+                -TextColor "Red" ` -Clear
+
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
+            # TODO: update score here (once that function is created)
             # TODO: add a thing about why its a phising mail?? like multi choice
         }
         "2" {
@@ -115,34 +134,39 @@ Function Show-Email2 {
 
 Function Show-Email3 {
     param (
-        $GameState
+        [object]$GameState
     )
 
-    Clear-Host
-        # TODO: update email text
-    Write-Host "========================================================"
-    Write-Host "Someone tried to log in to your account"
-    Write-Host "From: example@mail.com"
-    Write-Host "Text text text"
-    Write-Host "<link> Click here to stop removal"
-    Write-Host "========================================================"
-    Write-Host ""
-    Write-Host "1. Click on the link"
-    Write-Host "2. Go back"
-    Write-Host ""
+    Show-TerminalBox
+        - Label "EMAIL 03"
+        - Lines @(
+            "Someone tried to log in to your account",
+            "From: no-reply@doodle.com",
+            "",
+            "We just noticed a failed login attempt for your Doodle account",
+            "Not you? Click this link to change your account password"
+            )
+        -BorderColor "Cyan"  
+        -TextColor "White" -Clear
 
-    $choice = Read-Host "Choose an option"
+    $choice = Read-Host "Click the link (1) or go back (2)"
     switch ($choice) {
         "1" {
-            # Click link - CORRECT
-            Clear-Host
-            Write-Host "========================================================" -ForegroundColor Green
-            Write-Host "GOOD JOB!" -ForegroundColor Green
-            Write-Host "The link you clicked on saved your account from a hacker." -ForegroundColor Green
-            Write-Host "Now redirecting to the next room..." -ForegroundColor Green
-            Write-Host "========================================================" -ForegroundColor Green
+            Show-TerminalBox
+                - Label "ROOM CLEARED!"
+                - Lines @(
+                    "Good job!",
+                    "The link you clicked on saved your account from a hacker.",
+                    "",
+                    " +20 points",
+                    "Now redirecting to the next room..."
+                    )
+                -BorderColor "Green"  
+                -TextColor "Green" ` -Clear
+
             Start-Sleep -Seconds 2
-            $GameState.Score += 1 # Idk if it's meant to be used like this
+            
+            # TODO: update score
             return $true
         }
         "2" {
@@ -153,17 +177,19 @@ Function Show-Email3 {
 
 Function Show-Hint {
     param (
-        $GameState
+        [object]$GameState
     )
-    Clear-Host
-    # TODO: add hints
-    Write-Host "========================================================"
-    Write-Host "HINT:"
-    Write-Host "Check the sender's email address closely"
-    Write-Host "========================================================"
 
+        Show-TerminalBox
+        - Label "HINT"
+        - Lines @(
+            "Check the sender's email address closely"
+            )
+        -BorderColor "Cyan"  
+        -TextColor "White" -Clear
+  
     $GameState.HintsUsed += 1
-    Start-Sleep -Seconds 6
+    Start-Sleep -Seconds 4
 
     Start-Room $GameState
 }
