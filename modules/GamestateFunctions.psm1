@@ -12,6 +12,18 @@ function Add-Score {
     return $GameState
 }
 
+# Function for removing score for an incorrect answer
+function Remove-Score {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    # Removes 5 points for an incorrect answer
+    $GameState.Score -= 5
+    return $GameState
+}
+
 # Function for setting the current room the player is in
 function Set-CurrentRoom {
     param (
@@ -34,18 +46,6 @@ function Use-Hint {
     )
 
     $GameState.HintsUsed++
-    return $GameState
-}
-
-# Function for removing score for an incorrect answer
-function Remove-Score {
-    param (
-        [Parameter(Mandatory = $true)]
-        [object]$GameState
-    )
-
-    # Removes 5 points for an incorrect answer
-    $GameState.Score -= 5
     return $GameState
 }
 
