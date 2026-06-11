@@ -6,7 +6,7 @@ Function Start-PhishingRoom {
     param (
         [object]$GameState
     )
-
+    Show-PhishingIntro
     while ($true) {
 
         Show-TerminalBox -Label "ROOM 01" -Lines @(
@@ -162,6 +162,8 @@ Function Show-Hint {
     $GameState.HintsUsed += 1
     Start-Sleep -Seconds 4
 
+    Show-PhishingOutro
+    
     return
 }
 

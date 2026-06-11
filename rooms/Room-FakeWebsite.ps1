@@ -1,6 +1,8 @@
 # Starts the fake website room
 Function Start-RoomFakeWebsite ($GameState) {
 
+    Show-FakeWebsiteIntro
+
     # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
@@ -232,6 +234,7 @@ Read-Host "Press Enter to try again"
         } until ($Correct -eq $true)
     }
 
+    Show-FakeWebsiteOutro
     # Display the completion message after all security checks are cleared
     Clear-Host
     Write-Host "=========================================================================="

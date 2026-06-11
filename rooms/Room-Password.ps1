@@ -1,6 +1,7 @@
 # Starts the password room
 Function Start-RoomPassword ($GameState) {
 
+    Show-PasswordIntro
     # Tracks whether the player has created an accepted password
     $PasswordAccepted = $false
 
@@ -85,6 +86,6 @@ Function Start-RoomPassword ($GameState) {
         Read-Host "Press Enter to continue"
 
     } until ($PasswordAccepted -eq $true)
-
+    Show-PasswordOutro
     return $true
 }

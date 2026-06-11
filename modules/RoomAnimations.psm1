@@ -663,7 +663,7 @@ function Show-TrojanOutro {
             Write-Host ((" " * $offset) + $line) -ForegroundColor Yellow
         }
 
-        Start-Sleep -Milliseconds 500
+        Start-Sleep -Milliseconds 700
     }
 
     
