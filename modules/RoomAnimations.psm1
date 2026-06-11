@@ -441,3 +441,78 @@ function PasswordOutro {
 
     Start-Sleep -Milliseconds 2000
 }
+
+function TeamsInviteIntro {
+    $frames = @(
+        @(
+            '+------------------------------------------------+',
+            '| MICROSOFT TEAMS                                 |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Incoming meeting invite                 |',
+            '|                                                |',
+            '|        [ Join meeting ]                        |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| MICROSOFT TEAMS                                 |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Project Sync                            |',
+            '|        Organizer: External User                |',
+            '|                                                |',
+            '|        [ Join meeting ]                        |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| MICROSOFT TEAMS                                 |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Project Sync                            |',
+            '|        Organizer: External User                |',
+            '|        Link: teams-login.verify-meeting.ru     |',
+            '|                                                |',
+            '|        [ Join meeting ]                        |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| SECURITY WARNING                                |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        External invite detected                |',
+            '|        Suspicious meeting link                 |',
+            '|                                                |',
+            '|        [ Do not join ]                         |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "TEAMS INVITE ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 1200
+    }
+
+    $finalOffset = 1
+
+    Write-Host ""
+    Write-Host (" " * $finalOffset + "Suspicious Teams invite detected...") -ForegroundColor Red
+    Write-Host (" " * $finalOffset + "Entering Teams Invite room...") -ForegroundColor Cyan
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 2000
+}
