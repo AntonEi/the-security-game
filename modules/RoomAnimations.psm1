@@ -81,3 +81,88 @@ function FakeWebsiteIntro {
 
     Start-Sleep -Milliseconds 2000
 }
+
+
+function Show-FakeWebsiteOutro {
+    $frames = @(
+        @(
+            '+------------------------------------------------+',
+            '| http://secure-login-bank.com                    |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|  NORDIC TRUST BANK                             |',
+            '|  --------------------------------------------  |',
+            '|                                                |',
+            '|        [ Username ]              WARNING       |',
+            '|        [ Password ]             CERT EXPIRED   |',
+            '|        [  LOGIN   ]             NOT TRUSTED    |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| http://secure-login-bank.com                    |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|  NORDIC TRUST BANK                             |',
+            '|  --------------------------------------------  |',
+            '|                                                |',
+            '|        [ Username ]              ########      |',
+            '|        [ Password ]             # STOP #       |',
+            '|        [  LOGIN   ]              ########      |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| WEBSITE BLOCKED                                 |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|  NORDIC TRUST BANK                             |',
+            '|  --------------------------------------------  |',
+            '|                                                |',
+            '|        [ Username ]              ########      |',
+            '|        [ Password ]             # STOP #       |',
+            '|        [  LOGIN   ]              ########      |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| ROOM CLEARED                                    |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|  NORDIC TRUST BANK                             |',
+            '|  --------------------------------------------  |',
+            '|                                                |',
+            '|        [ Username ]                 OK         |',
+            '|        [ Password ]                /           |',
+            '|        [  LOGIN   ]               /            |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "FAKE WEBSITE ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 1010
+    }
+
+    Write-Host ""
+    Write-Host "FAKE WEBSITE ROOM CLEARED" -ForegroundColor Green
+    Write-Host "Expired certificate noticed. Unsafe login avoided." -ForegroundColor Green
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 2000
+}
+
+Show-FakeWebsiteOutro
