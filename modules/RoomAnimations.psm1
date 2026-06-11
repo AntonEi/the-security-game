@@ -749,3 +749,95 @@ function RansomwareIntro {
 
     Start-Sleep -Milliseconds 1200
 }
+
+function RansomwareOutro {
+    $frames = @(
+        @(
+            '                 _____________',
+            '                /             \',
+            '               /   RANSOM     \',
+            '              |     LOCKED     |',
+            '              |       ___      |',
+            '              |      |###|     |',
+            '              |      |###|     |',
+            '              |______|###|_____|',
+            '',
+            '              RECOVERY STARTED'
+        ),
+        @(
+            '                 _____________',
+            '                /             \',
+            '               /   RANSOM     \',
+            '              |    RECOVERY    |',
+            '              |       ___      |',
+            '              |      |# #|     |',
+            '              |      |# #|     |',
+            '              |______|# #|_____|',
+            '',
+            '              RESTORING FILES...'
+        ),
+        @(
+            '                 _____________',
+            '                /             \',
+            '               /   RANSOM     \',
+            '              |    RECOVERY    |',
+            '              |       ___      |',
+            '              |      |   |     |',
+            '              |      |   |     |',
+            '              |______|___|_____|',
+            '',
+            '              LOCK REMOVED'
+        ),
+        @(
+            '  FILE SYSTEM',
+            '',
+            '  [ family_photos ]       [ invoices ]          [ contracts ]',
+            '  photo_01.jpg.locked     invoice.xlsx.locked   agreement.pdf.locked',
+            '  photo_02.jpg.locked     budget.xlsx.locked    customer_list.csv.locked',
+            '',
+            '  Status: Decrypting files...'
+        ),
+        @(
+            '  FILE SYSTEM',
+            '',
+            '  [ family_photos ]    [ invoices ]       [ contracts ]',
+            '  photo_01.jpg         invoice.xlsx       agreement.pdf',
+            '  photo_02.jpg         budget.xlsx        customer_list.csv',
+            '',
+            '  Status: Files restored'
+        ),
+        @(
+            '                 _____________',
+            '                /             \',
+            '               /   SYSTEM      \',
+            '              |      SAFE      |',
+            '              |                |',
+            '              |      OK        |',
+            '              |                |',
+            '              |________________|',
+            '',
+            '              RANSOMWARE CONTAINED'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "RANSOMWARE ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Green
+        }
+
+        Start-Sleep -Milliseconds 1500
+    }
+
+    Write-Host ""
+    Write-Host "RANSOMWARE ROOM CLEARED" -ForegroundColor Green
+    Write-Host "The ransomware was contained and the files were restored." -ForegroundColor Green
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 1200
+}
