@@ -1,6 +1,9 @@
 Import-Module "$PSScriptRoot\GameState.psm1" -Force
+Import-Module "$PSScriptRoot\GamestateFunctions.psm1" -Force
 
 . "$PSScriptRoot\..\rooms\Room-FakeWebsite.ps1"
+. "$PSScriptRoot\..\rooms\Room-Password.ps1"
+. "$PSScriptRoot\..\rooms\Room-PhishingMail.ps1"
 
 
 function Show-TerminalBox {
@@ -75,6 +78,7 @@ function Show-MainMenu {
 
                 if ($roomCompleted -eq $true) {
                     $gameState = Add-CompletedRoom -GameState $gameState -RoomName "Fake Website"
+                    $gameState.CurrentRoom = 2
                     Save-GameState -GameState $gameState
                 }
 
@@ -120,25 +124,34 @@ function Start-SavedRoom {
     Write-Host "Continuing from room $($GameState.CurrentRoom)..."
 
     switch ($GameState.CurrentRoom) {
-1 {
-    $roomCompleted = Start-RoomFakeWebsite -GameState $GameState
+        1 {
+            $roomCompleted = Start-RoomFakeWebsite -GameState $GameState
 
-    if ($roomCompleted -eq $true) {
-        $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Fake Website"
-        Save-GameState -GameState $GameState
-    }
-}
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Fake Website"
+                $GameState.CurrentRoom = 2
+                Save-GameState -GameState $GameState
+            }
+        }
 
         2 {
-            # Start-RoomPassword -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-RoomPassword -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Password"
+                $GameState.CurrentRoom = 3
+                Save-GameState -GameState $GameState
+            }
         }
 
         3 {
-            # Start-RoomPhishingMail -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-PhishingRoom -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Phishing Mail"
+                $GameState.CurrentRoom = 4
+                Save-GameState -GameState $GameState
+            }
         }
 
         4 {
