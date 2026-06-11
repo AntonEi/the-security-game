@@ -25,9 +25,16 @@ function Remove-Score {
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
+    # Default modifier (future difficulty scaling)
+    $modifier = 1
 
-    # Removes 5 points for an incorrect answer
-    $GameState.Score -= 5
+    switch ($GameState.Difficulty) {
+        "Easy"   { $modifier = 1 }   # future: maybe 0.5
+        "Medium" { $modifier = 1 }   # future: stays 1
+        "Hard"   { $modifier = 1 }   # future: maybe 2
+    }
+
+    $GameState.Score -= (5 * $modifier)
     return $GameState
 }
 
