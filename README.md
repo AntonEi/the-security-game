@@ -13,7 +13,7 @@ Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar. Spelaren n
 
 ---
 
-## Spelet använder (under progress)
+## Spelet använder (in progress)
 - ett terminalbaserat gränssnitt  
 - PowerShell‑moduler för spelstruktur och logik  
 - ett GameState‑objekt som håller reda på spelarens status  
@@ -22,19 +22,20 @@ Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar. Spelaren n
 
 ---
 
-## Installation & Körning (under progress)
+## Installation & Körning (in progress)
 
 ---
 
 ## Team och roller
 - Product Owner: Anton
 - Scrum Master: Gabriella
-- Utvecklare: Aaren, Anna, Carlos och Al Moutaz
+- Utvecklare: Aaren, Anna, och Carlos
 
 ---
 
-## Dokumentation (under progress)
+## Dokumentation (in progress)
 - [Projektets wiki](https://github.com/AntonEi/the-security-game/wiki)
+- [ADKAR-plan](https://github.com/AntonEi/the-security-game/wiki/ADKAR%E2%80%90plan)
 - [Sprint 0 - Uppstart](https://github.com/AntonEi/the-security-game/wiki/Sprint-0-%E2%80%90-Uppstart)
 - [Sprint 1](https://github.com/AntonEi/the-security-game/wiki/Sprint-1)
 - [Sprint 2](https://github.com/AntonEi/the-security-game/wiki/Sprint-2)
