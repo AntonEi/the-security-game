@@ -25,14 +25,18 @@ Function Start-TeamsInviteRoom {
             switch ($choice) {
                 "1" {
                     # Preview the message
-                    Show-Message $GameState
+                    if (Show-Message $GameState) {
+                        return
+                    }
                 }
                 "2" {
                     # Block
+                    Block-Message $GameState
+                    return
                 }
                 "3" {
                     # Accept
-
+                    
                 }
                 "HINT" {
                     Show-Hint $GameState
@@ -66,14 +70,35 @@ Function Show-Message {
         }
         "2" {
             # Block
+            Block-Message $GameState
+            return $true
         }
         "3" {
+            #Go back
             return
         }
         "HINT" {
             Show-Hint
         }
     }
+}
+
+Function Block-Message {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
+                "Good job!",
+                "You avoided the phishing attempt.",
+                "",
+                "Now redirecting to the next room..."
+                ) -BorderColor "Green" -TextColor "Green" -Clear
+
+            Start-Sleep -Seconds 2
+            Add-Score 
+            return $true
 }
 
 Function Show-Hint {
