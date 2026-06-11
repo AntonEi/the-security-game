@@ -516,3 +516,77 @@ function TeamsInviteIntro {
 
     Start-Sleep -Milliseconds 2000
 }
+
+function TeamsInviteOutro {
+    $frames = @(
+        @(
+            '+------------------------------------------------+',
+            '| MICROSOFT TEAMS                                 |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Project Sync                            |',
+            '|        Organizer: External User                |',
+            '|        Link: teams-login.verify-meeting.ru     |',
+            '|                                                |',
+            '|        [ Join meeting ]                        |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| USER ACTION                                     |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Invite inspected                        |',
+            '|        Suspicious link found                   |',
+            '|                                                |',
+            '|        [ Report invite ]                       |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| INVITE BLOCKED                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        ########                                |',
+            '|        # STOP #                                |',
+            '|        ########                                |',
+            '|                                                |',
+            '|        Meeting was not opened                  |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| ROOM CLEARED                                    |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Teams invite identified                 |',
+            '|        Suspicious meeting avoided              |',
+            '|                                                |',
+            '|        Status: SAFE                            |',
+            '+------------------------------------------------+'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "TEAMS INVITE ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 1200
+    }
+
+    Write-Host ""
+    Write-Host "TEAMS INVITE ROOM CLEARED" -ForegroundColor Green
+    Write-Host "The suspicious Teams invite was avoided." -ForegroundColor Green
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 1000
+}
+
