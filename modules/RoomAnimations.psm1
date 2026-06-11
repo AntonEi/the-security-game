@@ -1,4 +1,4 @@
-function FakeWebsiteIntro {
+function Show-FakeWebsiteIntro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -83,7 +83,7 @@ function FakeWebsiteIntro {
 }
 
 
-function FakeWebsiteOutro {
+function Show-FakeWebsiteOutro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -165,7 +165,7 @@ function FakeWebsiteOutro {
     Start-Sleep -Milliseconds 2000
 }
 
-function FishingIntro {
+function Show-PhishingIntro {
     $frames = @(
         @(
             '        O',
@@ -223,7 +223,7 @@ function FishingIntro {
     Start-Sleep -Milliseconds 700
 }
 
-function FishingOutro {
+function Show-PhishingOutro {
     $frames = @(
         @(
             '        O',
@@ -293,7 +293,7 @@ function FishingOutro {
 }
 
 
-function PasswordIntro {
+function Show-PasswordIntro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -369,7 +369,7 @@ function PasswordIntro {
 }
 
 
-function PasswordOutro {
+function Show-PasswordOutro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -442,7 +442,7 @@ function PasswordOutro {
     Start-Sleep -Milliseconds 2000
 }
 
-function TeamsInviteIntro {
+function Show-TeamsInviteIntro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -517,7 +517,7 @@ function TeamsInviteIntro {
     Start-Sleep -Milliseconds 2000
 }
 
-function TeamsInviteOutro {
+function Show-TeamsInviteOutro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -590,7 +590,7 @@ function TeamsInviteOutro {
     Start-Sleep -Milliseconds 1000
 }
 
-function TrojanIntro {
+function Show-TrojanIntro {
     $trojanArt = @(
         "              /\",
         "             /  \",
@@ -623,7 +623,7 @@ function TrojanIntro {
     Start-Sleep -Milliseconds 2200
 }
 
-function TrojanOutro {
+function Show-TrojanOutro {
     $offset = 16
 
     $frames = @(
@@ -675,7 +675,7 @@ function TrojanOutro {
     Start-Sleep -Milliseconds 1500
 }
 
-function RansomwareIntro {
+function Show-RansomwareIntro {
     $frames = @(
         @(
             '  FILE SYSTEM',
@@ -750,7 +750,7 @@ function RansomwareIntro {
     Start-Sleep -Milliseconds 1200
 }
 
-function RansomwareOutro {
+function Show-RansomwareOutro {
     $frames = @(
         @(
             '                 _____________',
