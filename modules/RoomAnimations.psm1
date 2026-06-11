@@ -674,3 +674,78 @@ function TrojanOutro {
 
     Start-Sleep -Milliseconds 1500
 }
+
+function RansomwareIntro {
+    $frames = @(
+        @(
+            '  FILE SYSTEM',
+            '',
+            '  [ family_photos ]    [ invoices ]       [ contracts ]',
+            '  photo_01.jpg         invoice.xlsx       agreement.pdf',
+            '  photo_02.jpg         budget.xlsx        customer_list.csv',
+            '',
+            '  Status: Normal'
+        ),
+        @(
+            '  FILE SYSTEM',
+            '',
+            '  [ family_photos ]    [ invoices ]       [ contracts ]',
+            '  photo_01.jpg         invoice.xlsx       agreement.pdf',
+            '  photo_02.jpg         budget.xlsx        customer_list.csv',
+            '',
+            '  Status: Unknown process detected...'
+        ),
+        @(
+            '  FILE SYSTEM',
+            '',
+            '  [ family_photos ]    [ invoices ]       [ contracts ]',
+            '  photo_01.jpg.locked  invoice.xlsx       agreement.pdf',
+            '  photo_02.jpg         budget.xlsx.locked customer_list.csv',
+            '',
+            '  Status: Encrypting files...'
+        ),
+        @(
+            '  FILE SYSTEM',
+            '',
+            '  [ family_photos ]       [ invoices ]          [ contracts ]',
+            '  photo_01.jpg.locked     invoice.xlsx.locked   agreement.pdf.locked',
+            '  photo_02.jpg.locked     budget.xlsx.locked    customer_list.csv.locked',
+            '',
+            '  Status: Files encrypted'
+        ),
+        @(
+            '                 _____________',
+            '                /             \',
+            '               /   RANSOM     \',
+            '              |     LOCKED     |',
+            '              |       ___      |',
+            '              |      |###|     |',
+            '              |      |###|     |',
+            '              |______|###|_____|',
+            '',
+            '              YOUR FILES ARE LOCKED'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "RANSOMWARE ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Red
+        }
+
+        Start-Sleep -Milliseconds 1500
+    }
+
+    Write-Host ""
+    Write-Host " Ransomware infection detected..." -ForegroundColor Red
+    Write-Host " Files have been encrypted." -ForegroundColor DarkYellow
+    Write-Host " Entering final room..." -ForegroundColor Cyan
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 1200
+}
