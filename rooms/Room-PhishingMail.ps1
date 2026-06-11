@@ -1,5 +1,4 @@
-Import-Module "$PSScriptRoot\..\modules\GamestateFunctions.psm1" -Force
-Import-Module "$PSScriptRoot\..\modules\GameUI.psm1" -Force
+
 
 # Main function for playing the phising room
 # TODO: this probs has to return gamestate object
@@ -168,13 +167,13 @@ Function Show-Hint {
 
 # Just put this here now so that I can test run this function. 
 # When integrated later, just call this function to start the room
-$testGameState = [PSCustomObject]@{
-        PlayerName     = "test"
-        Difficulty     = "Medel"
-        CurrentRoom    = 1
-        Score          = 0
-        HintsUsed      = 0
-        Mistakes       = 0
-        CompletedRooms = @()
-    }
-Start-PhishingRoom $testGameState
+#        $testGameState = [PSCustomObject]@{
+#                PlayerName     = "test"
+#               Difficulty     = "Medel"
+#                CurrentRoom    = 1
+#                Score          = 0
+#                HintsUsed      = 0
+#                Mistakes       = 0
+#                CompletedRooms = @()
+#            }
+#        Start-PhishingRoom $testGameState
