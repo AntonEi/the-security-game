@@ -92,20 +92,61 @@ function Start-RoomTrojan {
             }
 
             Write-Host ""
-            $choice = Read-Host "Choose an option (1-4)"
+            $choice = Read-Host "Choose an option (1-4) or HINT"
 
-            if ($choice.Trim() -eq $question.CorrectAnswer) {
+            if ($choice.Trim().ToUpper() -eq "HINT") {
+                Show-TerminalBox `
+                    -Label "HINT" `
+                    -Lines @($question.Hint) `
+                    -BorderColor "Magenta" `
+                    -TextColor "Magenta" `
+                    -Clear
+
+                Read-Host "Press Enter to try again"
+            }
+            elseif ($choice.Trim() -eq $question.CorrectAnswer) {
                 $answeredCorrectly = $true
-                Write-Host "Correct answer." -ForegroundColor Green
+
+                Show-TerminalBox `
+                    -Label "ACCESS GRANTED" `
+                    -Lines @(
+                    $question.CorrectFeedback
+                ) `
+                    -BorderColor "Green" `
+                    -TextColor "Green" `
+                    -Clear
+
                 Read-Host "Press Enter to continue"
             }
             else {
-                Write-Host "Incorrect answer." -ForegroundColor Red
+                Show-TerminalBox `
+                    -Label "ACCESS DENIED" `
+                    -Lines @(
+                    $question.WrongFeedback
+                ) `
+                    -BorderColor "Red" `
+                    -TextColor "Red" `
+                    -Clear
+
                 Read-Host "Press Enter to try again"
             }
 
         } until ($answeredCorrectly -eq $true)
     }
+
+    Show-TerminalBox `
+        -Label "ROOM CLEARED" `
+        -Lines @(
+        "Trojan threat identified and contained.",
+        "",
+        "You avoided running a malicious file.",
+        "Proceeding to the next room..."
+    ) `
+        -BorderColor "Green" `
+        -TextColor "Green" `
+        -Clear
+
+    Read-Host "Press Enter to continue"
 
     return $true
 }
