@@ -83,7 +83,7 @@ function FakeWebsiteIntro {
 }
 
 
-function Show-FakeWebsiteOutro {
+function FakeWebsiteOutro {
     $frames = @(
         @(
             '+------------------------------------------------+',
@@ -165,4 +165,60 @@ function Show-FakeWebsiteOutro {
     Start-Sleep -Milliseconds 2000
 }
 
-Show-FakeWebsiteOutro
+function FishingIntro {
+    $frames = @(
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          |',
+            '          |',
+            '          J',
+            '',
+            '                     ><(((o>'
+        ),
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          |',
+            '          |',
+            '          J',
+            '',
+            '                 ><(((o>'
+        ),
+        @(
+            '        O',
+            '       /|\',
+            '       / \',
+            '______/___\________________',
+            '          |',
+            '          |',
+            '          J',
+            '',
+            '             ><(((o>'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "FISHING ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Write-Host ""
+        Write-Host "The bait is waiting..." -ForegroundColor DarkCyan
+        Write-Host ("Entering Phishing mail room...") -ForegroundColor DarkYellow
+
+        Start-Sleep -Milliseconds 600
+    }
+
+    Start-Sleep -Milliseconds 700
+}
