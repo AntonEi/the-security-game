@@ -172,6 +172,7 @@ function Show-MainMenu {
     }
 }
 
+# Lets the player choose a difficulty level and keeps asking until a valid option is selected.
 function Select-Difficulty {
     while ($true) {
         Clear-Host
