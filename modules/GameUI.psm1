@@ -82,7 +82,8 @@ function Show-MainMenu {
 
         switch ($choice) {
             "1" {
-                $gameState = New-GameState -PlayerName "Test Player" -Difficulty "Medel"
+                $difficulty = Select-Difficulty
+                $gameState = New-GameState -PlayerName "Test Player" -Difficulty $difficulty
 
                 $rooms = @(
                     @{
@@ -170,6 +171,31 @@ function Show-MainMenu {
     }
 }
 
+function Select-Difficulty {
+    while ($true) {
+        Clear-Host
+
+        Write-Host "Choose difficulty"
+        Write-Host ""
+        Write-Host "1. Easy"
+        Write-Host "2. Medium"
+        Write-Host "3. Hard"
+        Write-Host ""
+
+        $choice = Read-Host "Choose an option"
+
+        switch ($choice) {
+            "1" { return "Easy" }
+            "2" { return "Medium" }
+            "3" { return "Hard" }
+            default {
+                Write-Host "Invalid choice. Please try again." -ForegroundColor Red
+                Start-Sleep -Seconds 2
+            }
+        }
+    }
+}
+
 function Start-SavedRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -234,4 +260,4 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Select-Difficulty
