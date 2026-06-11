@@ -117,7 +117,9 @@ Function Approve-Message {
     Show-TerminalBox -Label "DANGER" -Lines @(
         "This message is a part of a social engineering scheme.",
         "The sender isn't actually your IT department.",
-        "The account has been compromised"
+        "The account has been compromised",
+        "",
+        "Now redirecting to the next room..."
     ) -BorderColor "Red" -TextColor "Red" -Clear
 
     Start-Sleep -Seconds 2
