@@ -65,6 +65,7 @@ function Show-TerminalBox {
     Write-Host ""
 }
 
+# Displays the main menu and handles starting, loading, or exiting the game.
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -198,6 +199,7 @@ function Select-Difficulty {
     }
 }
 
+# Continues a saved game by starting the room stored in GameState.CurrentRoom.
 function Start-SavedRoom {
     param (
         [Parameter(Mandatory = $true)]
