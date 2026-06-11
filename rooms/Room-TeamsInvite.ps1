@@ -36,7 +36,7 @@ Function Start-TeamsInviteRoom {
 
                 }
                 "HINT" {
-
+                    Show-Hint $GameState
                 }
                 default {
                     Write-Host "Invalid choice. Please try again." -ForegroundColor Red
@@ -45,4 +45,19 @@ Function Start-TeamsInviteRoom {
             }    
     }
 
+}
+
+Function Show-Hint {
+    param (
+        [object]$GameState
+    )
+
+        Show-TerminalBox -Label "HINT" -Lines @(
+            "Listen to Microsoft"
+            ) -BorderColor "Cyan" -TextColor "White" -Clear
+  
+    $GameState.HintsUsed += 1
+    Start-Sleep -Seconds 4
+
+    return
 }
