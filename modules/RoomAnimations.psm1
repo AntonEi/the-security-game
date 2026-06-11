@@ -367,3 +367,77 @@ function PasswordIntro {
 
     Start-Sleep -Milliseconds 2000
 }
+
+
+function PasswordOutro {
+    $frames = @(
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD VAULT                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Username: admin                         |',
+            '|        Password: ********                      |',
+            '|                                                |',
+            '|        Strength: [######----]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD VAULT                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Username: admin                         |',
+            '|        Password: ************                  |',
+            '|                                                |',
+            '|        Strength: [########--]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| PASSWORD VAULT                                  |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Username: admin                         |',
+            '|        Password: **************                |',
+            '|                                                |',
+            '|        Strength: [##########]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        ),
+        @(
+            '+------------------------------------------------+',
+            '| ROOM CLEARED                                    |',
+            '+------------------------------------------------+',
+            '|                                                |',
+            '|        Password secured.                       |',
+            '|                                                |',
+            '|        Strength: [##########]                  |',
+            '|                                                |',
+            '+------------------------------------------------+'
+        )
+    )
+
+    foreach ($frame in $frames) {
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "PASSWORD ROOM" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($line in $frame) {
+            Write-Host $line -ForegroundColor Yellow
+        }
+
+        Start-Sleep -Milliseconds 1000
+    }
+
+    Write-Host ""
+    Write-Host "PASSWORD ROOM CLEARED" -ForegroundColor Green
+    Write-Host "The weak password was replaced with a stronger one." -ForegroundColor Green
+    Write-Host ""
+
+    Start-Sleep -Milliseconds 2000
+}
