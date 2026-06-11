@@ -1,5 +1,6 @@
 Import-Module "$PSScriptRoot\GameState.psm1" -Force
 Import-Module "$PSScriptRoot\GamestateFunctions.psm1" -Force
+Import-Module "$PSScriptRoot\RoomAnimations.psm1" -Force
 
 . "$PSScriptRoot\..\rooms\Room-FakeWebsite.ps1"
 . "$PSScriptRoot\..\rooms\Room-Password.ps1"
@@ -90,6 +91,10 @@ function Show-MainMenu {
                         FunctionName = "Start-RoomFakeWebsite"
                     },
                     @{
+                        Name         = "Trojan"
+                        FunctionName = "Start-RoomTrojan"
+                    },
+                    @{
                         Name         = "Password"
                         FunctionName = "Start-RoomPassword"
                     },
@@ -98,16 +103,12 @@ function Show-MainMenu {
                         FunctionName = "Start-PhishingRoom"
                     },
                     @{
-                        Name         = "Ransomware"
-                        FunctionName = "Start-RoomRansomware"
-                    },
-                    @{
                         Name         = "Teams Invite"
                         FunctionName = "Start-RoomTeamsInvite"
                     },
                     @{
-                        Name         = "Trojan"
-                        FunctionName = "Start-RoomTrojan"
+                        Name         = "Ransomware"
+                        FunctionName = "Start-RoomRansomware"
                     }
                 )
 
