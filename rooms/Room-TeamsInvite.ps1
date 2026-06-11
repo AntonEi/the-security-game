@@ -25,7 +25,11 @@ Function Start-TeamsInviteRoom {
             switch ($choice) {
                 "1" {
                     # Preview the message
-                    if (Show-Message $GameState) {
+                    $Action = Show-Message $GameState
+                    if ($Action.Equals($true)) {
+                        return
+                    }
+                    if ($Action.Equals($false)) {
                         return
                     }
                 }
@@ -36,7 +40,8 @@ Function Start-TeamsInviteRoom {
                 }
                 "3" {
                     # Accept
-                    
+                    Approve-Message $GameState
+                    return
                 }
                 "HINT" {
                     Show-Hint $GameState
@@ -67,6 +72,8 @@ Function Show-Message {
     switch ($choice) {
         "1" {
             # Accept
+            Approve-Message $GameState
+            return $false
         }
         "2" {
             # Block
@@ -97,8 +104,26 @@ Function Block-Message {
                 ) -BorderColor "Green" -TextColor "Green" -Clear
 
             Start-Sleep -Seconds 2
-            Add-Score 
+            Add-Score $GameState
             return $true
+}
+
+Function Approve-Message {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    Show-TerminalBox -Label "DANGER" -Lines @(
+        "This message is a part of a social engineering scheme.",
+        "The sender isn't actually your IT department.",
+        "The account has been compromised"
+    ) -BorderColor "Red" -TextColor "Red" -Clear
+
+    Start-Sleep -Seconds 2
+    $GameState.Mistakes += 1
+    Remove-Score $GameState
+    return
 }
 
 Function Show-Hint {
