@@ -25,17 +25,24 @@ function Show-TerminalBox {
         Clear-Host
     }
 
+    $topLeft = [char]0x250C
+    $topRight = [char]0x2510
+    $bottomLeft = [char]0x2514
+    $bottomRight = [char]0x2518
+    $horizontal = [char]0x2500
+    $vertical = [char]0x2502
+
     $maxTextLength = $Width - 4
 
-    $topStart = "┌─[ $Label ]"
+    $topStart = "$topLeft$horizontal[ $Label ]"
     $dashCount = $Width - $topStart.Length - 1
 
     if ($dashCount -lt 0) {
         $dashCount = 0
     }
 
-    $topLine = $topStart + ("─" * $dashCount) + "┐"
-    $bottomLine = "└" + ("─" * ($Width - 2)) + "┘"
+    $topLine = $topStart + ($horizontal.ToString() * $dashCount) + $topRight
+    $bottomLine = $bottomLeft + ($horizontal.ToString() * ($Width - 2)) + $bottomRight
 
     Write-Host $topLine -ForegroundColor $BorderColor
 
@@ -44,7 +51,7 @@ function Show-TerminalBox {
             $line = $line.Substring(0, $maxTextLength - 3) + "..."
         }
 
-        $formattedLine = "│  " + $line.PadRight($maxTextLength) + "│"
+        $formattedLine = "$vertical  " + $line.PadRight($maxTextLength) + $vertical
         Write-Host $formattedLine -ForegroundColor $TextColor
     }
 
