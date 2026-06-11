@@ -1,6 +1,12 @@
 Import-Module "$PSScriptRoot\GameState.psm1" -Force
+Import-Module "$PSScriptRoot\GamestateFunctions.psm1" -Force
 
 . "$PSScriptRoot\..\rooms\Room-FakeWebsite.ps1"
+. "$PSScriptRoot\..\rooms\Room-Password.ps1"
+. "$PSScriptRoot\..\rooms\Room-PhishingMail.ps1"
+. "$PSScriptRoot\..\rooms\Room-Ransomware.ps1"
+. "$PSScriptRoot\..\rooms\Room-TeamsInvite.ps1"
+. "$PSScriptRoot\..\rooms\Room-Trojan.ps1"
 
 
 function Show-TerminalBox {
@@ -78,19 +84,65 @@ function Show-MainMenu {
             "1" {
                 $gameState = New-GameState -PlayerName "Test Player" -Difficulty "Medel"
 
-                $roomCompleted = Start-RoomFakeWebsite -GameState $gameState
+                $rooms = @(
+                    @{
+                        Name         = "Fake Website"
+                        FunctionName = "Start-RoomFakeWebsite"
+                    },
+                    @{
+                        Name         = "Password"
+                        FunctionName = "Start-RoomPassword"
+                    },
+                    @{
+                        Name         = "Phishing Mail"
+                        FunctionName = "Start-PhishingRoom"
+                    },
+                    @{
+                        Name         = "Teams Invite"
+                        FunctionName = "Start-RoomTeamsInvite"
+                    },
+                    @{
+                        Name         = "Trojan"
+                        FunctionName = "Start-RoomTrojan"
+                    },
+                    @{
+                        Name         = "Ransomware"
+                        FunctionName = "Start-RoomRansomware"
+                    }
+                )
 
-                if ($roomCompleted -eq $true) {
-                    $gameState = Add-CompletedRoom -GameState $gameState -RoomName "Fake Website"
-                    Save-GameState -GameState $gameState
+                foreach ($room in $rooms) {
+                    $functionName = $room.FunctionName
+
+                    if (-not (Get-Command $functionName -ErrorAction SilentlyContinue)) {
+                        Show-TerminalBox -Label "ROOM NOT FOUND" -Lines @(
+                            "Could not find room function:",
+                            $functionName,
+                            "",
+                            "Stopping game here."
+                        ) -BorderColor "Yellow" -TextColor "Yellow" -Clear
+
+                        break
+                    }
+
+                    $roomCompleted = & $functionName -GameState $gameState
+
+                    if ($roomCompleted -eq $true) {
+                        $gameState = Add-CompletedRoom -GameState $gameState -RoomName $room.Name
+                        $gameState.CurrentRoom++
+                    }
+                    else {
+                        break
+                    }
                 }
 
-                Write-Host ""
-                Write-Host "Game saved."
-                Write-Host "Score: $($gameState.Score)"
-                Write-Host "Hints used: $($gameState.HintsUsed)"
-                Write-Host "Mistakes: $($gameState.Mistakes)"
-                Write-Host "Completed rooms: $($gameState.CompletedRooms -join ', ')"
+                Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
+                    "Score: $($gameState.Score)",
+                    "Hints used: $($gameState.HintsUsed)",
+                    "Mistakes: $($gameState.Mistakes)",
+                    "Completed rooms: $($gameState.CompletedRooms -join ', ')",
+                    "Current room: $($gameState.CurrentRoom)"
+                ) -BorderColor "Cyan" -TextColor "White" -Clear
 
                 Read-Host "Press Enter to return to menu"
             }
@@ -127,14 +179,14 @@ function Start-SavedRoom {
     Write-Host "Continuing from room $($GameState.CurrentRoom)..."
 
     switch ($GameState.CurrentRoom) {
-1 {
-    $roomCompleted = Start-RoomFakeWebsite -GameState $GameState
+        1 {
+            $roomCompleted = Start-RoomFakeWebsite -GameState $GameState
 
-    if ($roomCompleted -eq $true) {
-        $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Fake Website"
-        Save-GameState -GameState $GameState
-    }
-}
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Fake Website"
+                Save-GameState -GameState $GameState
+            }
+        }
 
         2 {
             # Start-RoomPassword -GameState $GameState

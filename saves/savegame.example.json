@@ -1,9 +1,0 @@
-{
-  "PlayerName": "Ulla",
-  "Difficulty": "Medium",
-  "CurrentRoom": 1,
-  "Score": 280,
-  "HintsUsed": 1,
-  "Mistakes": 4,
-  "CompletedRooms": ["Room-Password", "Room-PhishingMail"]
-}
