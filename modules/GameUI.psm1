@@ -222,9 +222,29 @@ function Start-SavedRoom {
         }
 
         6 {
-            # Start-RoomRansomware -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-RoomRansomware -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Ransomware"
+                $GameState.CurrentRoom = 7
+                Save-GameState -GameState $GameState
+
+                # Issue #16
+                # Show-TerminalBox -Label "GAME COMPLETED" -Lines @(
+                #     "The final room is cleared.",
+                #     "",
+                #     "Final results screen will be added in a separate issue."
+                # ) -BorderColor "Green" -TextColor "Green" -Clear
+            }
+            else {
+                Save-GameState -GameState $GameState
+
+                Show-TerminalBox -Label "ROOM FAILED" -Lines @(
+                    "The ransomware incident was not contained.",
+                    "",
+                    "You can try again from the saved game."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+            }
         }
 
         default {
