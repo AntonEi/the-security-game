@@ -1,5 +1,10 @@
 # Starts the fake website room
-Function Start-RoomFakeWebsite ($GameState) {
+# Returns true when room is cleared
+Function Start-RoomFakeWebsite {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
 
     # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
