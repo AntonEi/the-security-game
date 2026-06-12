@@ -136,15 +136,7 @@ function Show-MainMenu {
                     }
                 }
 
-                Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
-                    "Score: $($gameState.Score)",
-                    "Hints used: $($gameState.HintsUsed)",
-                    "Mistakes: $($gameState.Mistakes)",
-                    "Completed rooms: $($gameState.CompletedRooms -join ', ')",
-                    "Current room: $($gameState.CurrentRoom)"
-                ) -BorderColor "Cyan" -TextColor "White" -Clear
-
-                Read-Host "Press Enter to return to menu"
+                Show-EndScreen -GameState $gameState
             }
 
             "2" {
