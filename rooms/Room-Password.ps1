@@ -32,8 +32,8 @@ Function Start-RoomPassword {
             Write-Host "Hint: A strong password is long, unique, and hard to guess."
             Read-Host "Press Enter to try again"
             continue
-        } else {
-            Test-Password $Password
+        } 
+            $MissingRequirements = Test-Password $Password
 
             # Reject weak passwords and show which requirements are missing
             if ($MissingRequirements.Count -gt 0) {
@@ -63,7 +63,6 @@ Function Start-RoomPassword {
 
             $PasswordAccepted = $true
             Read-Host "Press Enter to continue"
-        }
 
     } until ($PasswordAccepted -eq $true)
 
