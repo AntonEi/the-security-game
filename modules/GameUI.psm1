@@ -251,5 +251,40 @@ function Get-SecurityAssessment {
     }
 }
 
+function Show-EndScreen {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, 
+    $assessment = Get-SecurityAssessment -Score $GameState.Score -Mistakes $GameState.Mistakes
+
+    Show-TerminalBox `
+        -Label "GAME COMPLETE" `
+        -Lines @(
+            "Well done, $($GameState.PlayerName)!",
+            "",
+            "You successfully escaped DARKWEB: TERMINAL LOCKDOWN.",
+            "",
+            "RESULTS:",
+            "Player: $($GameState.PlayerName)",
+            "Difficulty: $($GameState.Difficulty)",
+            "Score: $($GameState.Score)",
+            "Mistakes: $($GameState.Mistakes)",
+            "Hints used: $($GameState.HintsUsed)",
+            "Completed rooms: $($GameState.CompletedRooms.Count)",
+            "",
+            "Security Assessment:",
+            "$assessment",
+            "",
+            "Press Enter to exit the game..."
+        ) `
+        -BorderColor "Cyan" `
+        -TextColor "White" `
+        -Clear
+
+    Read-Host | Out-Null
+    exit
+}
+
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Show-EndScreen
