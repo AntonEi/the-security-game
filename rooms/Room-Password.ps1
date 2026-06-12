@@ -50,6 +50,7 @@ Function Start-RoomPassword {
                 }
 
                 Remove-Score $GameState # Remove points for wrong password
+                Add-Mistake $GameState
 
                 Read-Host "Press Enter to try again"
                 continue
