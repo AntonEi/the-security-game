@@ -29,7 +29,7 @@ Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar. Spelaren n
 ## Team och roller
 - Product Owner: Anton
 - Scrum Master: Gabriella
-- Utvecklare: Aaren, Anna, och Carlos
+- Utvecklare: Aaren, Anna och Carlos
 
 ---
 
@@ -39,3 +39,4 @@ Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar. Spelaren n
 - [Sprint 0 - Uppstart](https://github.com/AntonEi/the-security-game/wiki/Sprint-0-%E2%80%90-Uppstart)
 - [Sprint 1](https://github.com/AntonEi/the-security-game/wiki/Sprint-1)
 - [Sprint 2](https://github.com/AntonEi/the-security-game/wiki/Sprint-2)
+- [Sprint 3](https://github.com/AntonEi/the-security-game/wiki/Sprint-3)
