@@ -74,6 +74,8 @@ Function Start-RoomPassword {
                 Write-Host "- $Requirement"
             }
 
+            Remove-Score $GameState # Remove points for wrong password
+
             Read-Host "Press Enter to try again"
             continue
         }
@@ -89,6 +91,8 @@ Function Start-RoomPassword {
         Read-Host "Press Enter to continue"
 
     } until ($PasswordAccepted -eq $true)
+
+    Add-Score $GameState # Add points for correct password
 
     return $true
 }
