@@ -43,7 +43,7 @@ Function Start-RoomPassword {
                     "The password does not meet all requirements.",
                     "",
                     "Missing requirements:"
-                ) -Clear
+                ) -BorderColor "Red" -TextColor "Red" -Clear
 
                 foreach ($Requirement in $MissingRequirements) {
                     Write-Host "- $Requirement"
@@ -61,7 +61,7 @@ Function Start-RoomPassword {
                 "The password meets all security requirements.",
                 "",
                 "The lock opens."
-            ) -Clear
+            ) -BorderColor "Green" -TextColor "Green" -Clear
 
             $PasswordAccepted = $true
             Read-Host "Press Enter to continue"
