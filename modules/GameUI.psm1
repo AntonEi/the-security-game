@@ -234,4 +234,22 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
+function Get-SecurityAssessment {
+    param(
+        [int]$Score,
+        [int]$Mistakes
+    )
+
+    if ($Score -ge 210) {
+        return "Strong security awareness. You identified threats confidently and made safe decisions."
+    }
+    elseif ($Score -ge 110) {
+        return "Good understanding of security risks. With a bit more practice, you'll be fully prepared."
+    }
+    else {
+        return "You're building your security awareness. Reviewing the scenarios will help strengthen your skills."
+    }
+}
+
+
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, 
