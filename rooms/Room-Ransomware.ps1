@@ -41,7 +41,7 @@ function Start-RoomRansomware {
         switch ($choice.Trim()) {
             "1" {
                 $GameState.Mistakes += 1
-                $GameState.Score -= 10
+                $GameState.Score -= 5
 
                 Show-TerminalBox -Label "WRONG ACTION" -Lines @(
                     "Paying the ransom is not the right first action.",
@@ -51,7 +51,7 @@ function Start-RoomRansomware {
                     "",
                     "Try again.",
                     "",
-                    "-10 points",
+                    "-5 points",
                     "+1 mistake"
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
@@ -92,7 +92,7 @@ function Start-RoomRansomware {
 
             "3" {
                 $GameState.Mistakes += 1
-                $GameState.Score -= 10
+                $GameState.Score -= 5
 
                 Show-TerminalBox -Label "WRONG ACTION" -Lines @(
                     "Sending files to a colleague can spread the infection.",
@@ -102,7 +102,7 @@ function Start-RoomRansomware {
                     "",
                     "Try again.",
                     "",
-                    "-10 points",
+                    "-5 points",
                     "+1 mistake"
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
@@ -112,7 +112,7 @@ function Start-RoomRansomware {
 
             "4" {
                 $GameState.Mistakes += 1
-                $GameState.Score -= 10
+                $GameState.Score -= 5
 
                 Show-TerminalBox -Label "WRONG ACTION" -Lines @(
                     "Restarting the computer does not solve ransomware.",
@@ -122,7 +122,7 @@ function Start-RoomRansomware {
                     "",
                     "Try again.",
                     "",
-                    "-10 points",
+                    "-5 points",
                     "+1 mistake"
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
@@ -132,7 +132,7 @@ function Start-RoomRansomware {
 
             default {
                 $GameState.Mistakes += 1
-                $GameState.Score -= 10
+                $GameState.Score -= 5
 
                 Show-TerminalBox -Label "INVALID CHOICE" -Lines @(
                     "Invalid choice.",
@@ -141,7 +141,7 @@ function Start-RoomRansomware {
                     "",
                     "Try again.",
                     "",
-                    "-10 points",
+                    "-5 points",
                     "+1 mistake"
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
