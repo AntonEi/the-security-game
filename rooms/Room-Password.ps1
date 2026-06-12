@@ -1,5 +1,9 @@
 # Starts the password room
-Function Start-RoomPassword ($GameState) {
+Function Start-RoomPassword {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
 
     # Tracks whether the player has created an accepted password
     $PasswordAccepted = $false
