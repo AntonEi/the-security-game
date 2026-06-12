@@ -1,4 +1,5 @@
 # Starts the password room
+# Returns true when room is cleared
 Function Start-RoomPassword {
     param (
         [Parameter(Mandatory = $true)]
@@ -31,68 +32,81 @@ Function Start-RoomPassword {
             Write-Host "Hint: A strong password is long, unique, and hard to guess."
             Read-Host "Press Enter to try again"
             continue
-        }
+        } else {
+            Test-Password $Password
 
-        # Stores all password requirements that are not met
-        $MissingRequirements = @()
+            # Reject weak passwords and show which requirements are missing
+            if ($MissingRequirements.Count -gt 0) {
 
-        # Check if password is at least 12 characters long
-        if ($Password.Length -lt 12) {
-            $MissingRequirements += "At least 12 characters"
-        }
+                Show-TerminalBox -Label "PASSWORD REJECTED" -Lines @(
+                    "The password does not meet all requirements.",
+                    "",
+                    "Missing requirements:"
+                ) -Clear
 
-        # Check if password contains at least one uppercase letter
-        if ($Password -notmatch "[A-Z]") {
-            $MissingRequirements += "At least one uppercase letter"
-        }
+                foreach ($Requirement in $MissingRequirements) {
+                    Write-Host "- $Requirement"
+                }
 
-        # Check if password contains at least one lowercase letter
-        if ($Password -notmatch "[a-z]") {
-            $MissingRequirements += "At least one lowercase letter"
-        }
+                Remove-Score $GameState # Remove points for wrong password
 
-        # Check if password contains at least one number
-        if ($Password -notmatch "\d") {
-            $MissingRequirements += "At least one number"
-        }
-
-        # Check if password contains at least one special character
-        if ($Password -notmatch "[^a-zA-Z0-9]") {
-            $MissingRequirements += "At least one special character"
-        }
-
-        # Reject weak passwords and show which requirements are missing
-        if ($MissingRequirements.Count -gt 0) {
-
-            Show-TerminalBox -Label "PASSWORD REJECTED" -Lines @(
-                "The password does not meet all requirements.",
-                "",
-                "Missing requirements:"
-            ) -Clear
-
-            foreach ($Requirement in $MissingRequirements) {
-                Write-Host "- $Requirement"
+                Read-Host "Press Enter to try again"
+                continue
             }
 
-            Remove-Score $GameState # Remove points for wrong password
+            # Accept the password when all requirements are met
+            Show-TerminalBox -Label "PASSWORD ACCEPTED" -Lines @(
+                "The password meets all security requirements.",
+                "",
+                "The lock opens."
+            ) -Clear
 
-            Read-Host "Press Enter to try again"
-            continue
+            $PasswordAccepted = $true
+            Read-Host "Press Enter to continue"
         }
-
-        # Accept the password when all requirements are met
-        Show-TerminalBox -Label "PASSWORD ACCEPTED" -Lines @(
-            "The password meets all security requirements.",
-            "",
-            "The lock opens."
-        ) -Clear
-
-        $PasswordAccepted = $true
-        Read-Host "Press Enter to continue"
 
     } until ($PasswordAccepted -eq $true)
 
     Add-Score $GameState # Add points for correct password
 
     return $true
+}
+
+# Checks if password meets requirements
+# Returns object with requirements that aren't met (or empty obj if all are met)
+Function Test-Password {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$Password
+    )
+
+    # Stores all password requirements that are not met
+    $MissingRequirements = @()
+
+    # Check if password is at least 12 characters long
+    if ($Password.Length -lt 12) {
+        $MissingRequirements += "At least 12 characters"
+    }
+
+    # Check if password contains at least one uppercase letter
+    if ($Password -notmatch "[A-Z]") {
+        $MissingRequirements += "At least one uppercase letter"
+    }
+
+    # Check if password contains at least one lowercase letter
+    if ($Password -notmatch "[a-z]") {
+        $MissingRequirements += "At least one lowercase letter"
+    }
+
+    # Check if password contains at least one number
+    if ($Password -notmatch "\d") {
+        $MissingRequirements += "At least one number"
+    }
+
+    # Check if password contains at least one special character
+    if ($Password -notmatch "[^a-zA-Z0-9]") {
+        $MissingRequirements += "At least one special character"
+    }
+
+    return $MissingRequirements
 }
