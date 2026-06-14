@@ -1,0 +1,11 @@
+﻿{
+    "PlayerName":  "Test Player",
+    "Difficulty":  "Medel",
+    "CurrentRoom":  2,
+    "Score":  0,
+    "HintsUsed":  0,
+    "Mistakes":  0,
+    "CompletedRooms":  [
+                           "Fake Website"
+                       ]
+}
