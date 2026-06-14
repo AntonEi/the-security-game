@@ -7,20 +7,30 @@ Function Start-TeamsInviteRoom {
     )
 
     while ($true) {
-        Show-TerminalBox -Label "ROOM 0X" -Lines @( # TODO: idk what room number this actually is
-            "You open up teams, and notice a new message request.",
-            "",
-            "from: itservisprovider@onmicrosoft.com",
-            "Service Internet provider (Extrernal) wants to chat with you!",
-            "! This person is from outside your organisation",
-            "Messages from unknown or unexpected people could be spam or phising attempts.",
-            "Never share your account information or authorize sign-in requests over chat.",
-            "To be safe, preview their messages",
-            "",
-            "What will you do?"
-            ) -BorderColor "Cyan" -TextColor "White" -Clear
+        Show-TerminalBox -Label "TEAMS MESSAGE REQUEST" -Lines @(
+        "You open Teams and see a new message request.",
+        "",
+        "----------------------------------------",
+        "FROM: itservisprovider@onmicrosoft.com",
+        "DISPLAY: Service Internet Provider (External)",
+        "----------------------------------------",
+        "",
+        "⚠ This user is outside your organization",
+        "⚠ Unknown messages may be phishing attempts",
+        "",
+        "Security advice:",
+        "- Never share login details",
+        "- Do not approve sign-in requests blindly",
+        "",
+        "What will you do?"
+        ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-            $choice = Read-Host "1: preview the message, 2: block, 3: accept, or HINT"
+            Write-Host "1: Preview message (inspect sender details)"
+            Write-Host "2: Block sender (mark as suspicious)"
+            Write-Host "3: Accept request (trust sender)"
+            Write-Host "or HINT"
+
+$choice = Read-Host "Choose an option"
 
             switch ($choice) {
                 "1" {
