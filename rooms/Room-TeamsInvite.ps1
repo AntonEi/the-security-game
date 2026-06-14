@@ -3,7 +3,7 @@
 Function Start-TeamsInviteRoom {
     param (
         [Parameter(Mandatory = $true)]
-        [object]$GameState
+        [object]$GameState 
     )
 
     while ($true) {
@@ -36,10 +36,10 @@ $choice = Read-Host "Choose an option"
                 "1" {
                     # Preview the message
                     $Action = Show-Message $GameState
-                    if ($Action.Equals($true)) {
+                    if ($Action -eq $true) {
                         return
                     }
-                    if ($Action.Equals($false)) {
+                    if ($Action -eq $false) {
                         return
                     }
                 }
@@ -95,7 +95,7 @@ Function Show-Message {
             return
         }
         "HINT" {
-            Show-Hint
+            Show-Hint $GameState
         }
     }
 }
@@ -114,7 +114,7 @@ Function Block-Message {
                 ) -BorderColor "Green" -TextColor "Green" -Clear
 
             Start-Sleep -Seconds 2
-            Add-Score $GameState
+            Add-Score -GameState $GameState
             return $true
 }
 
