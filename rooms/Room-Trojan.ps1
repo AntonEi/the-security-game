@@ -8,7 +8,7 @@ function Start-RoomTrojan {
 
     Show-TrojanIntro
 
-    # Stores all questions for the room in one array.
+# Stores all questions for the room in one array.
 # Each question contains the text, answer options, correct answer, hint, and feedback.
     $questions = @(
         [PSCustomObject]@{
