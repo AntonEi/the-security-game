@@ -16,8 +16,7 @@ if ($i -eq 1) {
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "Security Alert!"
         ""
-        "A portal requires your admin login, but your"
-        "browser flags the connection."
+        "A portal requires your admin login, but your browser flags the connection."
         ""
         "You inspect the SSL/TLS certificate. It says:"
         ""

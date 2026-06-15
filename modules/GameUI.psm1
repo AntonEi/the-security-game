@@ -19,7 +19,7 @@ function Show-TerminalBox {
         [AllowEmptyString()]
         [string[]]$Lines,
 
-        [int]$Width = 58,
+        [int]$Width = 90,
 
         [string]$BorderColor = "Cyan",
 
