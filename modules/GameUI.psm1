@@ -147,6 +147,27 @@ function Show-MainMenu {
                     if ($roomCompleted -eq $true) {
                         $gameState = Add-CompletedRoom -GameState $gameState -RoomName $room.Name
                         $gameState.CurrentRoom++
+
+                        Show-TerminalBox -Label "NEXT ROOM" -Lines @(
+                            "Room completed: $($room.Name)",
+                            "",
+                            "Press Enter to continue to the next room.",
+                            "Type 2 to save the game first."
+                        ) -BorderColor "Cyan" -TextColor "White" -Clear
+
+                        $nextChoice = Read-Host "Choose"
+
+                        if ($nextChoice.Trim() -eq "2") {
+                            Save-GameState -GameState $gameState
+
+                            Show-TerminalBox -Label "GAME SAVED" -Lines @(
+                                "Your progress has been saved.",
+                                "",
+                                "You will continue from room $($gameState.CurrentRoom)."
+                            ) -BorderColor "Green" -TextColor "Green" -Clear
+
+                            Read-Host "Press Enter to continue"
+                        }
                     }
                     else {
                         break
@@ -226,35 +247,43 @@ function Start-SavedRoom {
         }
 
         2 {
-            $roomCompleted = Start-RoomPassword -GameState $GameState
+            $roomCompleted = Start-RoomTrojan -GameState $GameState
 
             if ($roomCompleted -eq $true) {
-                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Password"
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Trojan"
                 $GameState.CurrentRoom = 3
                 Save-GameState -GameState $GameState
             }
         }
 
         3 {
-            $roomCompleted = Start-PhishingRoom -GameState $GameState
+            $roomCompleted = Start-RoomPassword -GameState $GameState
 
             if ($roomCompleted -eq $true) {
-                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Phishing Mail"
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Password"
                 $GameState.CurrentRoom = 4
                 Save-GameState -GameState $GameState
             }
         }
 
         4 {
-            # Start-RoomTeamsInvite -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-PhishingRoom -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Phishing Mail"
+                $GameState.CurrentRoom = 5
+                Save-GameState -GameState $GameState
+            }
         }
 
         5 {
-            # Start-RoomTrojan -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-RoomTeamsInvite -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Teams Invite"
+                $GameState.CurrentRoom = 6
+                Save-GameState -GameState $GameState
+            }
         }
 
         6 {
@@ -265,12 +294,7 @@ function Start-SavedRoom {
                 $GameState.CurrentRoom = 7
                 Save-GameState -GameState $GameState
 
-                # Issue #16
-                # Show-TerminalBox -Label "GAME COMPLETED" -Lines @(
-                #     "The final room is cleared.",
-                #     "",
-                #     "Final results screen will be added in a separate issue."
-                # ) -BorderColor "Green" -TextColor "Green" -Clear
+                Show-EndScreen -GameState $GameState
             }
             else {
                 Save-GameState -GameState $GameState
@@ -281,6 +305,10 @@ function Start-SavedRoom {
                     "You can try again from the saved game."
                 ) -BorderColor "Red" -TextColor "Red" -Clear
             }
+        }
+
+        7 {
+            Show-EndScreen -GameState $GameState
         }
 
         default {

@@ -1,6 +1,5 @@
 # Main function for playing the teams invite room
 
-Function Start-TeamsInviteRoom {
 Function Start-RoomTeamsInvite {
     param (
         [Parameter(Mandatory = $true)]
