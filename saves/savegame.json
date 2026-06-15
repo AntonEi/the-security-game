@@ -1,11 +1,14 @@
 ﻿{
-    "PlayerName":  "Test Player",
-    "Difficulty":  "Medel",
-    "CurrentRoom":  2,
-    "Score":  0,
-    "HintsUsed":  0,
+    "PlayerName":  "Anton",
+    "Difficulty":  "Medium",
+    "CurrentRoom":  5,
+    "Score":  40,
+    "HintsUsed":  5,
     "Mistakes":  0,
     "CompletedRooms":  [
-                           "Fake Website"
+                           "Fake Website",
+                           "Trojan",
+                           "Password",
+                           "Phishing Mail"
                        ]
 }

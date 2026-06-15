@@ -1,9 +1,15 @@
+# Starts the Trojan room.
+# The player must answer all Trojan-related security checks correctly to clear the room.
 function Start-RoomTrojan {
     param (
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
 
+    Show-TrojanIntro
+
+# Stores all questions for the room in one array.
+# Each question contains the text, answer options, correct answer, hint, and feedback.
     $questions = @(
         [PSCustomObject]@{
             Label           = "TROJAN CHECK 1 OF 3"
@@ -95,6 +101,8 @@ function Start-RoomTrojan {
             $choice = Read-Host "Choose an option (1-4) or HINT"
 
             if ($choice.Trim().ToUpper() -eq "HINT") {
+                $GameState = Use-Hint -GameState $GameState
+                
                 Show-TerminalBox `
                     -Label "HINT" `
                     -Lines @($question.Hint) `
@@ -133,18 +141,7 @@ function Start-RoomTrojan {
 
         } until ($answeredCorrectly -eq $true)
     }
-
-    Show-TerminalBox `
-        -Label "ROOM CLEARED" `
-        -Lines @(
-        "Trojan threat identified and contained.",
-        "",
-        "You avoided running a malicious file.",
-        "Proceeding to the next room..."
-    ) `
-        -BorderColor "Green" `
-        -TextColor "Green" `
-        -Clear
+    Show-TrojanOutro
 
     Read-Host "Press Enter to continue"
 

@@ -6,6 +6,8 @@ Function Start-RoomFakeWebsite {
         [object]$GameState
     )
 
+    Show-FakeWebsiteIntro
+
     # Run four security checks until each one is answered correctly
     for ($i = 1; $i -le 4; $i++) {
 
