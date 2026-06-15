@@ -29,9 +29,9 @@ function Remove-Score {
     $modifier = 1
 
     switch ($GameState.Difficulty) {
-        "Easy"   { $modifier = 1 }   # future: maybe 0.5
+        "Easy"   { $modifier = 0 }   # future: maybe 0.5
         "Medium" { $modifier = 1 }   # future: stays 1
-        "Hard"   { $modifier = 1 }   # future: maybe 2
+        "Hard"   { $modifier = 2 }   # future: maybe 2
     }
 
     $GameState.Score -= (5 * $modifier)
