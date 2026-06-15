@@ -6,15 +6,19 @@ Function Start-PhishingRoom {
     param (
         [object]$GameState
     )
-
+    Show-PhishingIntro
     while ($true) {
 
         Show-TerminalBox -Label "ROOM 01" -Lines @(
-            "Before you is a mailbox, filled with 3 emails:",
-            "1 -  Important notice",
+            "Your mailbox contains 3 suspicious emails.",
+            "Inspect each message carefully.",
+            "Only one email is legitimate.",
+            "Find it and click the correct link."
+            ""
+            "1 - Important notice",
             "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13..",
             "3 - Someone tried to log in to your account"
-            ) -BorderColor "Cyan" -TextColor "White" -Clear
+        ) -BorderColor "Cyan" -TextColor "White" -Clear
 
 
         $choice = Read-Host "Choose an email to view (1-3) or HINT"
@@ -30,7 +34,8 @@ Function Start-PhishingRoom {
             "3" {
                 # Email 3
                 if (Show-Email3 $GameState) {
-                    return
+                    Show-PhishingOutro
+                    return $true
                 }
             }
             "HINT" {
@@ -54,11 +59,14 @@ Function Show-Email1 {
         "Important notice",
         "From: support@gooogle.com",
         "",
-        "Due to inactivity, your account will soon be DEACTIVATED !!",
-        "Click this link to prevent deactivation"
-        ) -BorderColor "Cyan" -TextColor "White" -Clear
+        "Due to inactivity, your account will soon", 
+        "be DEACTIVATED !!",
+        "Click the link below to prevent deactivation:",
+        "",
+        "http://google-account-security-verify.com"
+    ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-    $choice = Read-Host "Click the link (1) or go back (2)"
+    $choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
     switch ($choice) {
         "1" {
             Show-TerminalBox -Label "DANGER" -Lines @(
@@ -66,7 +74,7 @@ Function Show-Email1 {
                 "The account has been compromised",
                 "",
                 " -5 points"
-                ) -BorderColor "Red" -TextColor "Red" -Clear
+            ) -BorderColor "Red" -TextColor "Red" -Clear
 
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
@@ -89,10 +97,12 @@ Function Show-Email2 {
         "From: dms@gmail.com",
         "",
         "Your domain renewal for company.com has failed.",
-        "Click the link below to prevent removal"
-        ) -BorderColor "Cyan" -TextColor "White" -Clear
+        "Click the link below to prevent removal",
+        "",
+        "http://teams-security-update-login.com"
+    ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-    $choice = Read-Host "Click the link (1) or go back (2)"
+    $choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
     switch ($choice) {
         "1" {
             Show-TerminalBox -Label "DANGER" -Lines @(
@@ -100,7 +110,7 @@ Function Show-Email2 {
                 "The account has been compromised",
                 "",
                 " -5 points"
-                ) -BorderColor "Red" -TextColor "Red" -Clear
+            ) -BorderColor "Red" -TextColor "Red" -Clear
 
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
@@ -124,20 +134,23 @@ Function Show-Email3 {
         "",
         "We just noticed a failed login attempt for your",
         "Doodle account",
-        "Not you? Click this link to change your",
-        "account password"
-        ) -BorderColor "Cyan" -TextColor "White" -Clear
+        "Not you? Use the link below to change your",
+        "account password:",
+        "",
+        "https://doodle-account-security.com/reset"
+    ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-    $choice = Read-Host "Click the link (1) or go back (2)"
+    $choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
     switch ($choice) {
         "1" {
             Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
                 "Good job!",
-                "The link you clicked on saved your account from a hacker.",
+                "The link you clicked on saved your account",
+                "from a hacker.",
                 "",
                 " +20 points",
                 "Now redirecting to the next room..."
-                ) -BorderColor "Green" -TextColor "Green" -Clear
+            ) -BorderColor "Green" -TextColor "Green" -Clear
 
             Start-Sleep -Seconds 2
             
@@ -155,13 +168,15 @@ Function Show-Hint {
         [object]$GameState
     )
 
-        Show-TerminalBox -Label "HINT" -Lines @(
-            "Check the sender's email address closely"
-            ) -BorderColor "Cyan" -TextColor "White" -Clear
+    Show-TerminalBox -Label "HINT" -Lines @(
+        "Check the sender's email address closely"
+    ) -BorderColor "Cyan" -TextColor "White" -Clear
   
     $GameState.HintsUsed += 1
     Start-Sleep -Seconds 4
 
+    Show-PhishingOutro
+    
     return
 }
 
@@ -169,7 +184,7 @@ Function Show-Hint {
 # When integrated later, just call this function to start the room
 #        $testGameState = [PSCustomObject]@{
 #                PlayerName     = "test"
-#               Difficulty     = "Medel"
+#               Difficulty     = "Medium"
 #                CurrentRoom    = 1
 #                Score          = 0
 #                HintsUsed      = 0
