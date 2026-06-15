@@ -13,7 +13,7 @@ Function Start-PhishingRoom {
             "Your mailbox contains 3 suspicious emails.",
             "Inspect each message carefully.",
             "Only one email is legitimate.",
-            "Find it and click the correct link."
+            "Find it and click the correct link.",
             ""
             "1 - Important notice",
             "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13..",
