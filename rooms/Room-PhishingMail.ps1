@@ -1,7 +1,7 @@
 
 
 # Main function for playing the phising room
-# TODO: this probs has to return gamestate object
+# Returns true when cleared
 Function Start-PhishingRoom {
     param (
         [object]$GameState
@@ -30,7 +30,8 @@ Function Start-PhishingRoom {
                 Show-Email2 $GameState
             }
             "3" {
-                if (Show-Email3 $GameState) {
+                # Call on Show-Email3, and if player clears room show outro and return
+                if (Show-Email3 $GameState) { 
                     Show-PhishingOutro
                     return $true
                 }
@@ -46,6 +47,7 @@ Function Start-PhishingRoom {
     }
 }
 
+# Shows email 1 and lets user click link, use hint or go back
 Function Show-Email1 {
     param (
         [object]$GameState
@@ -79,6 +81,7 @@ Function Show-Email1 {
     }
 }
 
+# Shows email 2 and lets user click link, use hint or go back
 Function Show-Email2 {
     param (
         [object]$GameState
@@ -112,6 +115,7 @@ Function Show-Email2 {
     }
 }
 
+# Shows email 3 and lets user click link, use hint or go back
 Function Show-Email3 {
     param (
         [object]$GameState
@@ -147,6 +151,7 @@ Function Show-Email3 {
     }
 }
 
+# Shows, and uses, a hint 
 Function Show-Hint {
     param (
         [object]$GameState
