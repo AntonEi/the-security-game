@@ -121,52 +121,55 @@ Function Start-SecurityCheck2 {
         [object]$GameState
     )
 
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "You are analyzing a link sent to the finance team."
-        ""
-        "https://sediment.com.financial-portal.net/login" 
-        ""
-        "Is this website legitimate for your company (sediment.com)?"
+    while ($true) {
 
-     ) -Clear   
+        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+            "You are analyzing a link sent to the finance team."
+            ""
+            "https://sediment.com.financial-portal.net/login" 
+            ""
+            "Is this website legitimate for your company (sediment.com)?"
 
-    Write-Host "1. Yes, because 'sediment.com' is written at the beginning."
-    Write-Host "2. It is a secure connection so it must be safe."
-    Write-Host "3. No, the actual main domain is 'financial-portal.net'."
-    Write-Host "4. No, the link is too short to be dangerous."
-    Write-Host ""
+        ) -Clear   
 
-    $Val = Read-Host "Enter your choice (1-4) or HINT"
+        Write-Host "1. Yes, because 'sediment.com' is written at the beginning."
+        Write-Host "2. It is a secure connection so it must be safe."
+        Write-Host "3. No, the actual main domain is 'financial-portal.net'."
+        Write-Host "4. No, the link is too short to be dangerous."
+        Write-Host ""
 
-    # Handle hint request, correct answer, and incorrect answers
-    if ($Val.Trim().ToUpper() -eq "HINT") {
-        Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
-        Read-Host "Press Enter to try again"
-    }
-    elseif ($Val.Trim() -eq "3") {
-        Write-Host "You are correct!" 
-        Read-Host "Press Enter to continue"
-        return $true
-    }
+        $Val = Read-Host "Enter your choice (1-4) or HINT"
 
-    # Give feedback based on the selected incorrect answer
-    else {
-        switch ($Val.Trim()) {
-            "1" {
-                Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
-            }
-            "2" {
-                Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
-            }
-            "4" {
-                Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
-            }
-            default {
-                Write-Host "Invalid choice." 
-            }
+        # Handle hint request, correct answer, and incorrect answers
+        if ($Val.Trim().ToUpper() -eq "HINT") {
+            Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
+            Read-Host "Press Enter to try again"
+        }
+        elseif ($Val.Trim() -eq "3") {
+            Write-Host "You are correct!" 
+            Read-Host "Press Enter to continue"
+            return $true
         }
 
-        Read-Host "Press Enter to try again"
+        # Give feedback based on the selected incorrect answer
+        else {
+            switch ($Val.Trim()) {
+                "1" {
+                    Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
+                }
+                "2" {
+                    Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
+                }
+                "4" {
+                    Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
+                }
+                default {
+                    Write-Host "Invalid choice." 
+                }
+            }
+
+            Read-Host "Press Enter to try again"
+        }
     }
 }
 
@@ -178,55 +181,57 @@ Function Start-SecurityCheck3 {
         [object]$GameState
     )
 
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
-        ""
-        "When you open it, a popup says: 'To view this document, please enable Macros/Scripts'."
-        ""
-        "What should your security instinct tell you about this document?"
+    while ($true) {
+        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+            "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
+            ""
+            "When you open it, a popup says: 'To view this document, please enable Macros/Scripts'."
+            ""
+            "What should your security instinct tell you about this document?"
 
-    ) -Clear
+        ) -Clear
 
-    Write-Host "1. Enable them; it's a common requirement for office documents."
-    Write-Host "2. Enable them only if the sender is verified by email."
-    Write-Host "3. Decline; standard PDF files do not require active macros."
-    Write-Host "4. Disable your antivirus temporarily to view the content."
-    Write-Host ""
+        Write-Host "1. Enable them; it's a common requirement for office documents."
+        Write-Host "2. Enable them only if the sender is verified by email."
+        Write-Host "3. Decline; standard PDF files do not require active macros."
+        Write-Host "4. Disable your antivirus temporarily to view the content."
+        Write-Host ""
 
-    $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Val = Read-Host "Enter your choice (1-4) or HINT"
 
-    # Handle hint request, correct answer, and incorrect answers
-    if ($Val.Trim().ToUpper() -eq "HINT") {
-        Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
-        Read-Host "Press Enter to try again"
-    }
-    elseif ($Val.Trim() -eq "3") {
-        Write-Host "You are correct!" 
-        Read-Host "Press Enter to continue"
-        return $true
-    }
-                
-    # Give feedback based on the selected incorrect answer
-    else {
-        switch ($Val.Trim()) {
-            "1" {
-                Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
-            }
-
-            "2" {
-                Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
-            }
-
-            "4" {
-                Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
-            }
-
-            default {
-                Write-Host "Invalid choice." 
-            }
+        # Handle hint request, correct answer, and incorrect answers
+        if ($Val.Trim().ToUpper() -eq "HINT") {
+            Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
+            Read-Host "Press Enter to try again"
         }
+        elseif ($Val.Trim() -eq "3") {
+            Write-Host "You are correct!" 
+            Read-Host "Press Enter to continue"
+            return $true
+        }
+                    
+        # Give feedback based on the selected incorrect answer
+        else {
+            switch ($Val.Trim()) {
+                "1" {
+                    Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
+                }
 
-        Read-Host "Press Enter to try again"
+                "2" {
+                    Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
+                }
+
+                "4" {
+                    Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
+                }
+
+                default {
+                    Write-Host "Invalid choice." 
+                }
+            }
+
+            Read-Host "Press Enter to try again"
+        }
     }
 }
 
@@ -236,54 +241,56 @@ Function Start-SecurityCheck4 {
         [object]$GameState
     )
 
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "You land on an internal login page. The address bar displays:"
-        ""
-        "http://secure-login.sediment.com" 
-        ""
-        "What is the primary security concern here?"
+    while ($true) {
+        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+            "You land on an internal login page. The address bar displays:"
+            ""
+            "http://secure-login.sediment.com" 
+            ""
+            "What is the primary security concern here?"
 
-    ) -Clear
+        ) -Clear
 
-    Write-Host "1. The site name is too long."
-    Write-Host "2. HTTP is unencrypted, exposing your credentials."
-    Write-Host "3. It uses a secure protocol but the port is blocked."
-    Write-Host "4. Nothing; it is an internal page so it does not need encryption."
-    Write-Host ""
+        Write-Host "1. The site name is too long."
+        Write-Host "2. HTTP is unencrypted, exposing your credentials."
+        Write-Host "3. It uses a secure protocol but the port is blocked."
+        Write-Host "4. Nothing; it is an internal page so it does not need encryption."
+        Write-Host ""
 
-    $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Val = Read-Host "Enter your choice (1-4) or HINT"
 
-    # Handle hint requests, correct answers, and incorrect answers
-    if ($Val.Trim().ToUpper() -eq "HINT") {
-        Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
-        Read-Host "Press Enter to try again"
-    }
-    elseif ($Val.Trim() -eq "2") {
-        Write-Host "You are correct!" 
-        Read-Host "Press Enter to continue"
-        return $true
-    }
-
-    # Give feedback based on the selected incorrect answer
-    else {
-        switch ($Val.Trim()) {
-            "1" {
-                Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
-            }
-
-            "3" {
-                Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
-            }
-
-            "4" {
-                Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
-            }
-
-            default {
-                Write-Host "Invalid choice." 
-            }
+        # Handle hint requests, correct answers, and incorrect answers
+        if ($Val.Trim().ToUpper() -eq "HINT") {
+            Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
+            Read-Host "Press Enter to try again"
+        }
+        elseif ($Val.Trim() -eq "2") {
+            Write-Host "You are correct!" 
+            Read-Host "Press Enter to continue"
+            return $true
         }
 
-        Read-Host "Press Enter to try again"   
+        # Give feedback based on the selected incorrect answer
+        else {
+            switch ($Val.Trim()) {
+                "1" {
+                    Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
+                }
+
+                "3" {
+                    Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
+                }
+
+                "4" {
+                    Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
+                }
+
+                default {
+                    Write-Host "Invalid choice." 
+                }
+            }
+
+            Read-Host "Press Enter to try again"   
+        }
     }
 }
