@@ -55,7 +55,7 @@ Function Start-SecurityCheck1 {
     )
 
     while ($true) {
-        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        Show-TerminalBox -Label "SECURITY CHECK 1 OF 4" -Lines @(
             "Security Alert!"
             ""
             "A portal requires your admin login, but your browser flags the connection."
@@ -76,24 +76,9 @@ Function Start-SecurityCheck1 {
         Write-Host "4. The website is just performing a scheduled database backup."
         Write-Host ""
 
-        $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Choice = Read-Host "Enter your choice (1-4) or HINT"
 
-    # Handle hint request, correct answer, and incorrect answers
-    if ($Val.Trim().ToUpper() -eq "HINT") {
-        Use-Hint $GameState
-        Write-Host "[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." 
-        Read-Host "Press Enter to try again"
-    }
-    elseif ($Val.Trim() -eq "3") {
-        Add-Score $GameState
-        Write-Host "You are correct!" 
-        Read-Host "Press Enter to continue"
-        return $true
-    }
-
-        # Give feedback based on the selected incorrect answer
-        else {
-            switch ($Val.Trim()) {
+        switch ($Choice) {
             "1" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
@@ -104,19 +89,29 @@ Function Start-SecurityCheck1 {
                 Add-Mistake $GameState
                 Write-Host "Incorrect. Strong encryption is not the problem. The problem is that the certificate cannot be trusted." 
             }
+            "3" {
+                Add-Score $GameState
+                Write-Host "You are correct!" 
+                Read-Host "Press Enter to continue"
+                return $true
+            }
             "4" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
                 Write-Host "Incorrect. Database backups have nothing to do with certificate validation or website trust." 
             }
+            "HINT" {
+                Use-Hint $GameState
+                Write-Host "[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." 
+                Read-Host "Press Enter to try again"
+            }
             default {
                 Write-Host "Invalid choice." 
             }
         }
-
+        
         Read-Host "Press Enter to try again"
         continue
-        }
     }
 }
 
@@ -130,7 +125,7 @@ Function Start-SecurityCheck2 {
 
     while ($true) {
 
-        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        Show-TerminalBox -Label "SECURITY CHECK 2 OF 4" -Lines @(
             "You are analyzing a link sent to the finance team."
             ""
             "https://sediment.com.financial-portal.net/login" 
@@ -197,7 +192,7 @@ Function Start-SecurityCheck3 {
     )
 
     while ($true) {
-        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        Show-TerminalBox -Label "SECURITY CHECK 3 OF 4" -Lines @(
             "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
             ""
             "When you open it, a popup says: 'To view this document, please enable Macros/Scripts'."
@@ -265,7 +260,7 @@ Function Start-SecurityCheck4 {
     )
 
     while ($true) {
-        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        Show-TerminalBox -Label "SECURITY CHECK 4 OF 4" -Lines @(
             "You land on an internal login page. The address bar displays:"
             ""
             "http://secure-login.sediment.com" 
