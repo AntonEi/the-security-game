@@ -43,11 +43,11 @@ Function Start-RoomTeamsInvite {
             "2" {
                 # Block
                 Block-Message $GameState
+                return $true
             }
             "3" {
                 # Accept
                 Approve-Message $GameState
-                return $true
             }
             "HINT" {
                 Show-Hint $GameState
