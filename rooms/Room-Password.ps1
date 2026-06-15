@@ -30,9 +30,9 @@ Function Start-RoomPassword {
 
         # Give the player a hint without ending the room
         if ($Password.Trim().ToUpper() -eq "HINT") {
+            $GameState = Use-Hint -GameState $GameState
             Write-Host "Hint: A strong password is long, unique, and hard to guess."
             Read-Host "Press Enter to try again"
-            Use-Hint $GameState
             continue
         } 
             $MissingRequirements = Test-Password $Password

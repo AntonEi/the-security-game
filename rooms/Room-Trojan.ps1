@@ -101,6 +101,8 @@ function Start-RoomTrojan {
             $choice = Read-Host "Choose an option (1-4) or HINT"
 
             if ($choice.Trim().ToUpper() -eq "HINT") {
+                $GameState = Use-Hint -GameState $GameState
+                
                 Show-TerminalBox `
                     -Label "HINT" `
                     -Lines @($question.Hint) `

@@ -17,7 +17,7 @@ function Start-RoomRansomware {
         $stopwatch.Stop()
 
         if ($choice.Trim().ToUpper() -eq "HINT") {
-            $GameState.HintsUsed += 1
+            $GameState = Use-Hint -GameState $GameState
             Show-RansomwareHint -TimeLimit $timeLimit
             continue
         }

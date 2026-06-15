@@ -166,7 +166,7 @@ Function Show-Hint {
         "Check the sender's email address closely"
     ) -BorderColor "Cyan" -TextColor "White" -Clear
   
-    $GameState.HintsUsed += 1
+    $GameState = Use-Hint -GameState $GameState
     Start-Sleep -Seconds 4
     
     return
