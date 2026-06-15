@@ -1,6 +1,6 @@
 # Main function for playing the teams invite room
 
-Function Start-TeamsInviteRoom {
+Function Start-RoomTeamsInvite {
     param (
         [Parameter(Mandatory = $true)]
         [object]$GameState 
@@ -46,12 +46,12 @@ $choice = Read-Host "Choose an option"
                 "2" {
                     # Block
                     Block-Message $GameState
-                    return
+                    return $true
                 }
                 "3" {
                     # Accept
                     Approve-Message $GameState
-                    return
+                    return $false
                 }
                 "HINT" {
                     Show-Hint $GameState
@@ -135,7 +135,7 @@ Function Approve-Message {
     Start-Sleep -Seconds 2
     $GameState.Mistakes += 1
     Remove-Score $GameState
-    return
+    return $false
 }
 
 Function Show-Hint {
