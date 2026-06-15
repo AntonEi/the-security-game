@@ -1,7 +1,7 @@
 function New-GameState {
     param (
         [string]$PlayerName = "",
-        [string]$Difficulty = "Medel"
+        [string]$Difficulty = "Medium"
     )
 
     return [PSCustomObject]@{

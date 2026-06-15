@@ -6,7 +6,9 @@ function Start-RoomTrojan {
         [object]$GameState
     )
 
-# Stores all questions for the room in one array.
+    Show-TrojanIntro
+
+    # Stores all questions for the room in one array.
 # Each question contains the text, answer options, correct answer, hint, and feedback.
     $questions = @(
         [PSCustomObject]@{
@@ -137,18 +139,7 @@ function Start-RoomTrojan {
 
         } until ($answeredCorrectly -eq $true)
     }
-
-    Show-TerminalBox `
-        -Label "ROOM CLEARED" `
-        -Lines @(
-        "Trojan threat identified and contained.",
-        "",
-        "You avoided running a malicious file.",
-        "Proceeding to the next room..."
-    ) `
-        -BorderColor "Green" `
-        -TextColor "Green" `
-        -Clear
+    Show-TrojanOutro
 
     Read-Host "Press Enter to continue"
 

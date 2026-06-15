@@ -1,5 +1,6 @@
 Import-Module "$PSScriptRoot\GameState.psm1" -Force
 Import-Module "$PSScriptRoot\GamestateFunctions.psm1" -Force
+Import-Module "$PSScriptRoot\RoomAnimations.psm1" -Force
 
 . "$PSScriptRoot\..\rooms\Room-FakeWebsite.ps1"
 . "$PSScriptRoot\..\rooms\Room-Password.ps1"
@@ -65,6 +66,7 @@ function Show-TerminalBox {
     Write-Host ""
 }
 
+# Displays the main menu and handles starting, loading, or exiting the game.
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -82,12 +84,17 @@ function Show-MainMenu {
 
         switch ($choice) {
             "1" {
-                $gameState = New-GameState -PlayerName "Test Player" -Difficulty "Medel"
+                $difficulty = Select-Difficulty
+                $gameState = New-GameState -PlayerName "Test Player" -Difficulty $difficulty
 
                 $rooms = @(
                     @{
                         Name         = "Fake Website"
                         FunctionName = "Start-RoomFakeWebsite"
+                    },
+                    @{
+                        Name         = "Trojan"
+                        FunctionName = "Start-RoomTrojan"
                     },
                     @{
                         Name         = "Password"
@@ -98,16 +105,12 @@ function Show-MainMenu {
                         FunctionName = "Start-PhishingRoom"
                     },
                     @{
-                        Name         = "Ransomware"
-                        FunctionName = "Start-RoomRansomware"
-                    },
-                    @{
                         Name         = "Teams Invite"
                         FunctionName = "Start-RoomTeamsInvite"
                     },
                     @{
-                        Name         = "Trojan"
-                        FunctionName = "Start-RoomTrojan"
+                        Name         = "Ransomware"
+                        FunctionName = "Start-RoomRansomware"
                     }
                 )
 
@@ -136,15 +139,7 @@ function Show-MainMenu {
                     }
                 }
 
-                Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
-                    "Score: $($gameState.Score)",
-                    "Hints used: $($gameState.HintsUsed)",
-                    "Mistakes: $($gameState.Mistakes)",
-                    "Completed rooms: $($gameState.CompletedRooms -join ', ')",
-                    "Current room: $($gameState.CurrentRoom)"
-                ) -BorderColor "Cyan" -TextColor "White" -Clear
-
-                Read-Host "Press Enter to return to menu"
+                Show-EndScreen -GameState $gameState
             }
 
             "2" {
@@ -170,6 +165,33 @@ function Show-MainMenu {
     }
 }
 
+# Lets the player choose a difficulty level and keeps asking until a valid option is selected.
+function Select-Difficulty {
+    while ($true) {
+        Clear-Host
+
+        Write-Host "Choose difficulty"
+        Write-Host ""
+        Write-Host "1. Easy"
+        Write-Host "2. Medium"
+        Write-Host "3. Hard"
+        Write-Host ""
+
+        $choice = Read-Host "Choose an option"
+
+        switch ($choice) {
+            "1" { return "Easy" }
+            "2" { return "Medium" }
+            "3" { return "Hard" }
+            default {
+                Write-Host "Invalid choice. Please try again." -ForegroundColor Red
+                Start-Sleep -Seconds 2
+            }
+        }
+    }
+}
+
+# Continues a saved game by starting the room stored in GameState.CurrentRoom.
 function Start-SavedRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -222,9 +244,29 @@ function Start-SavedRoom {
         }
 
         6 {
-            # Start-RoomRansomware -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-RoomRansomware -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Ransomware"
+                $GameState.CurrentRoom = 7
+                Save-GameState -GameState $GameState
+
+                # Issue #16
+                # Show-TerminalBox -Label "GAME COMPLETED" -Lines @(
+                #     "The final room is cleared.",
+                #     "",
+                #     "Final results screen will be added in a separate issue."
+                # ) -BorderColor "Green" -TextColor "Green" -Clear
+            }
+            else {
+                Save-GameState -GameState $GameState
+
+                Show-TerminalBox -Label "ROOM FAILED" -Lines @(
+                    "The ransomware incident was not contained.",
+                    "",
+                    "You can try again from the saved game."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+            }
         }
 
         default {
@@ -234,4 +276,57 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
+function Get-SecurityAssessment {
+    param(
+        [int]$Score,
+        [int]$Mistakes
+    )
+
+    if ($Score -ge 210) {
+        return "Strong security awareness. You identified threats confidently and made safe decisions."
+    }
+    elseif ($Score -ge 110) {
+        return "Good understanding of security risks. With a bit more practice, you'll be fully prepared."
+    }
+    else {
+        return "You're building your security awareness. Reviewing the scenarios will help strengthen your skills."
+    }
+}
+
+function Show-EndScreen {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    $assessment = Get-SecurityAssessment -Score $GameState.Score -Mistakes $GameState.Mistakes
+
+    Show-TerminalBox `
+        -Label "GAME COMPLETE" `
+        -Lines @(
+            "Well done, $($GameState.PlayerName)!",
+            "",
+            "You successfully escaped DARKWEB: TERMINAL LOCKDOWN.",
+            "",
+            "RESULTS:",
+            "Player: $($GameState.PlayerName)",
+            "Difficulty: $($GameState.Difficulty)",
+            "Score: $($GameState.Score)",
+            "Mistakes: $($GameState.Mistakes)",
+            "Hints used: $($GameState.HintsUsed)",
+            "Completed rooms: $($GameState.CompletedRooms.Count)",
+            "",
+            "Security Assessment:",
+            "$assessment",
+            "",
+            "Press Enter to exit the game..."
+        ) `
+        -BorderColor "Cyan" `
+        -TextColor "White" `
+        -Clear
+
+    Read-Host | Out-Null
+    exit
+}
+
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Show-EndScreen

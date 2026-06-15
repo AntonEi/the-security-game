@@ -4,26 +4,51 @@
 
 
 ## Product Vision
-Vår vision är att skapa ett engagerande och lärorikt terminalbaserat Escape Room‑spel som ökar medvetenheten om IT‑säkerhet på ett roligt, lättillgängligt och interaktivt sätt. 
+Vår vision är att skapa ett engagerande och lärorikt terminalbaserat Escape Room‑spel som ökar medvetenheten om IT‑säkerhet på ett roligt, lättillgängligt och interaktivt sätt. Spelet ska ge spelaren praktisk erfarenhet av att identifiera hot, fatta säkra beslut och förstå grundläggande säkerhetsprinciper.
 
 ---
 
 ## Projektbeskrivning
-Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar. Spelaren navigerar genom terminalen, löser pussel, svarar på frågor och lär sig grundläggande säkerhetsprinciper genom interaktivt spelande.
+Spelet består av flera rum med IT‑säkerhetsrelaterade utmaningar.
+Spelaren navigerar genom terminalen, löser pussel, svarar på frågor och möter realistiska scenarier som:
+- social engineering
+- svaga lösenord
+- certifikat och falska hemsidor
+- ransomware
+- skadliga bilagor
+- misstänkta Teams‑inbjudningar
+
+Varje rum testar en specifik säkerhetsprincip och bidrar till spelarens totala poäng.
 
 ---
 
-## Spelet använder (in progress)
-- ett terminalbaserat gränssnitt  
-- PowerShell‑moduler för spelstruktur och logik  
-- ett GameState‑objekt som håller reda på spelarens status  
-- en meny för att starta, ladda och avsluta spelet  
-- flera rum med IT‑säkerhetsutmaningar  
+## Spelet använder
+- ett terminalbaserat gränssnitt i PowerShell
+- modulbaserad struktur för UI, speldata och rum
+- ett GameState‑objekt som håller reda på:
+   - poäng
+   - hints
+   - svårighetsgrad
+   - spelarnamn
+   - avklarade rum
+- en meny för att starta nytt spel, ladda sparat spel eller avsluta
+- flera rum med interaktiva IT‑säkerhetsutmaningar
+- en slutskärm med säkerhetsbedömning baserat på spelarens prestation
 
 ---
 
-## Installation & Körning (in progress)
-
+## Installation & Körning 
+1. **Öppna PowerShell**
+  - Tryck på Windows‑tangenten
+  - Skriv PowerShell
+  - Starta Windows PowerShell eller PowerShell 7
+2. **Klona projektet**
+```git clone https://github.com/AntonEi/the-security-game.git```
+3. **Gå in i projektmappen**
+```cd the-security-game```
+4. **Kör spelet**
+```.\Start-TheSecurityGame.ps1```
+   
 ---
 
 ## Team och roller
