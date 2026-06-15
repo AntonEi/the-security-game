@@ -84,8 +84,22 @@ function Show-MainMenu {
 
         switch ($choice) {
             "1" {
+                Clear-Host
+
+                Show-TerminalBox -Label "PLAYER SETUP" -Lines @(
+                    "Before the game starts,",
+                    "enter your player name."
+                ) -BorderColor "Cyan" -TextColor "White" -Clear
+
+                $playerName = Read-Host "Enter player name"
+
+                while ([string]::IsNullOrWhiteSpace($playerName)) {
+                    Write-Host "Player name cannot be empty." -ForegroundColor Red
+                    $playerName = Read-Host "Enter player name"
+                }
+
                 $difficulty = Select-Difficulty
-                $gameState = New-GameState -PlayerName "Test Player" -Difficulty $difficulty
+                $gameState = New-GameState -PlayerName $playerName -Difficulty $difficulty
 
                 $rooms = @(
                     @{
@@ -304,23 +318,23 @@ function Show-EndScreen {
     Show-TerminalBox `
         -Label "GAME COMPLETE" `
         -Lines @(
-            "Well done, $($GameState.PlayerName)!",
-            "",
-            "You successfully escaped DARKWEB: TERMINAL LOCKDOWN.",
-            "",
-            "RESULTS:",
-            "Player: $($GameState.PlayerName)",
-            "Difficulty: $($GameState.Difficulty)",
-            "Score: $($GameState.Score)",
-            "Mistakes: $($GameState.Mistakes)",
-            "Hints used: $($GameState.HintsUsed)",
-            "Completed rooms: $($GameState.CompletedRooms.Count)",
-            "",
-            "Security Assessment:",
-            "$assessment",
-            "",
-            "Press Enter to exit the game..."
-        ) `
+        "Well done, $($GameState.PlayerName)!",
+        "",
+        "You successfully escaped DARKWEB: TERMINAL LOCKDOWN.",
+        "",
+        "RESULTS:",
+        "Player: $($GameState.PlayerName)",
+        "Difficulty: $($GameState.Difficulty)",
+        "Score: $($GameState.Score)",
+        "Mistakes: $($GameState.Mistakes)",
+        "Hints used: $($GameState.HintsUsed)",
+        "Completed rooms: $($GameState.CompletedRooms.Count)",
+        "",
+        "Security Assessment:",
+        "$assessment",
+        "",
+        "Press Enter to exit the game..."
+    ) `
         -BorderColor "Cyan" `
         -TextColor "White" `
         -Clear
