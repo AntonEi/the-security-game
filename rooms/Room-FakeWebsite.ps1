@@ -80,6 +80,7 @@ Function Start-SecurityCheck1 {
 
     # Handle hint request, correct answer, and incorrect answers
     if ($Val.Trim().ToUpper() -eq "HINT") {
+        Use-Hint $GameState
         Write-Host "[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." 
         Read-Host "Press Enter to try again"
     }
@@ -148,6 +149,7 @@ Function Start-SecurityCheck2 {
 
         # Handle hint request, correct answer, and incorrect answers
         if ($Val.Trim().ToUpper() -eq "HINT") {
+            Use-Hint $GameState
             Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
             Read-Host "Press Enter to try again"
         }
@@ -214,6 +216,7 @@ Function Start-SecurityCheck3 {
 
         # Handle hint request, correct answer, and incorrect answers
         if ($Val.Trim().ToUpper() -eq "HINT") {
+            Use-Hint $GameState
             Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
             Read-Host "Press Enter to try again"
         }
@@ -281,6 +284,7 @@ Function Start-SecurityCheck4 {
 
         # Handle hint requests, correct answers, and incorrect answers
         if ($Val.Trim().ToUpper() -eq "HINT") {
+            Use-Hint $GameState
             Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
             Read-Host "Press Enter to try again"
         }
