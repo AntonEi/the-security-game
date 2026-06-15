@@ -261,48 +261,37 @@ Function Start-SecurityCheck4 {
         Write-Host "4. Nothing; it is an internal page so it does not need encryption."
         Write-Host ""
 
-        $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Choice = Read-Host "Enter your choice (1-4) or HINT"
 
-        # Handle hint requests, correct answers, and incorrect answers
-        if ($Val.Trim().ToUpper() -eq "HINT") {
-            Use-Hint $GameState
-            Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
-            Read-Host "Press Enter to try again"
-        }
-        elseif ($Val.Trim() -eq "2") {
-            Add-Score $GameState
-            Write-Host "You are correct!" 
-            Read-Host "Press Enter to continue"
-            return $true
-        }
-
-        # Give feedback based on the selected incorrect answer
-        else {
-            switch ($Val.Trim()) {
-                "1" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
-                }
-
-                "3" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
-                }
-
-                "4" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
-                }
-
-                default {
-                    Write-Host "Invalid choice." 
-                }
+        switch ($Choice) {
+            "1" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
             }
-
-            Read-Host "Press Enter to try again"   
+            "2" {
+                Add-Score $GameState
+                Write-Host "You are correct!" 
+                Read-Host "Press Enter to continue"
+                return $true
+            }
+            "3" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
+            }
+            "4" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
+            }
+            "HINT" {
+                Use-Hint $GameState
+                Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
+                Read-Host "Press Enter to try again" 
+            }
         }
+
+        Read-Host "Press Enter to try again"   
     }
 }
