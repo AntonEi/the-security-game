@@ -22,15 +22,17 @@ Function Start-PhishingRoom {
             "1" {
                 # Email 1
                 Show-Email1 $GameState
+                Remove-Score $GameState
             }
             "2" {
                 # Email 2
                 Show-Email2 $GameState
+                Remove-Score $GameState
             }
             "3" {
                 # Email 3
                 if (Show-Email3 $GameState) {
-                    return
+                    return $true
                 }
             }
             "HINT" {
