@@ -1,3 +1,6 @@
+# Shows the intro animation for the Fake Website room.
+# The animation presents a fake login page and highlights certificate warnings.
+
 function Show-FakeWebsiteIntro {
     $frames = @(
         @(
@@ -83,6 +86,8 @@ function Show-FakeWebsiteIntro {
 }
 
 
+# Shows the outro animation for the Fake Website room.
+# The animation blocks the unsafe website and confirms that the room was cleared.
 function Show-FakeWebsiteOutro {
     $frames = @(
         @(
@@ -165,6 +170,9 @@ function Show-FakeWebsiteOutro {
     Start-Sleep -Milliseconds 2000
 }
 
+# Shows the intro animation for the Phishing room.
+# The animation introduces the phishing theme by showing a fishing hook and bait.
+
 function Show-PhishingIntro {
     $frames = @(
         @(
@@ -222,6 +230,9 @@ function Show-PhishingIntro {
 
     Start-Sleep -Milliseconds 700
 }
+
+# Shows the outro animation for the Phishing room.
+# The animation shows the player avoiding the bait and clearing the phishing challenge.
 
 function Show-PhishingOutro {
     $frames = @(
@@ -292,7 +303,8 @@ function Show-PhishingOutro {
     Start-Sleep -Milliseconds 1000
 }
 
-
+# Shows the intro animation for the Password room.
+# The animation displays weak password examples before entering the password challenge.
 function Show-PasswordIntro {
     $frames = @(
         @(
@@ -368,7 +380,8 @@ function Show-PasswordIntro {
     Start-Sleep -Milliseconds 2000
 }
 
-
+# Shows the outro animation for the Password room.
+# The animation shows the password becoming stronger and confirms the room was cleared.
 function Show-PasswordOutro {
     $frames = @(
         @(
@@ -442,6 +455,8 @@ function Show-PasswordOutro {
     Start-Sleep -Milliseconds 2000
 }
 
+# Shows the intro animation for the Teams Invite room.
+# The animation presents a suspicious external Teams invite before the challenge starts.
 function Show-TeamsInviteIntro {
     $frames = @(
         @(
@@ -517,6 +532,8 @@ function Show-TeamsInviteIntro {
     Start-Sleep -Milliseconds 2000
 }
 
+# Shows the outro animation for the Teams Invite room.
+# The animation shows the suspicious invite being inspected, blocked, and avoided.
 function Show-TeamsInviteOutro {
     $frames = @(
         @(
@@ -590,6 +607,8 @@ function Show-TeamsInviteOutro {
     Start-Sleep -Milliseconds 1000
 }
 
+# Shows the intro animation for the Trojan room.
+# The animation moves a disguised executable file into view before the Trojan challenge starts.
 function Show-TrojanIntro {
     $trojanArt = @(
         "              /\",
@@ -623,6 +642,8 @@ function Show-TrojanIntro {
     Start-Sleep -Milliseconds 2200
 }
 
+# Shows the outro animation for the Trojan room.
+# The animation removes the suspicious file and confirms that the Trojan threat was contained.
 function Show-TrojanOutro {
     $offset = 16
 
@@ -675,6 +696,8 @@ function Show-TrojanOutro {
     Start-Sleep -Milliseconds 1500
 }
 
+# Shows the intro animation for the Ransomware room.
+# The animation shows files being encrypted and introduces the final ransomware challenge.
 function Show-RansomwareIntro {
     $frames = @(
         @(
@@ -716,7 +739,7 @@ function Show-RansomwareIntro {
         @(
             '                 _____________',
             '                /             \',
-            '               /   RANSOM     \',
+            '               /   RANSOM      \',
             '              |     LOCKED     |',
             '              |       ___      |',
             '              |      |###|     |',
@@ -750,12 +773,14 @@ function Show-RansomwareIntro {
     Start-Sleep -Milliseconds 1200
 }
 
+# Shows the outro animation for the Ransomware room.
+# The animation shows recovery starting, files being restored, and the ransomware being contained.
 function Show-RansomwareOutro {
     $frames = @(
         @(
             '                 _____________',
             '                /             \',
-            '               /   RANSOM     \',
+            '               /   RANSOM      \',
             '              |     LOCKED     |',
             '              |       ___      |',
             '              |      |###|     |',
@@ -767,7 +792,7 @@ function Show-RansomwareOutro {
         @(
             '                 _____________',
             '                /             \',
-            '               /   RANSOM     \',
+            '               /   RANSOM      \',
             '              |    RECOVERY    |',
             '              |       ___      |',
             '              |      |# #|     |',
@@ -779,7 +804,7 @@ function Show-RansomwareOutro {
         @(
             '                 _____________',
             '                /             \',
-            '               /   RANSOM     \',
+            '               /   RANSOM      \',
             '              |    RECOVERY    |',
             '              |       ___      |',
             '              |      |   |     |',

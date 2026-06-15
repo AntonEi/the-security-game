@@ -1,6 +1,6 @@
 function New-GameState {
     param (
-        [string]$PlayerName = "",
+        [string]$PlayerName = "Player",
         [string]$Difficulty = "Medium"
     )
 
@@ -79,6 +79,8 @@ function Import-SavedGame {
     Write-Host "Saved game found." -ForegroundColor Green
     Write-Host "Welcome back, $($gameState.PlayerName)."
     Write-Host "You continue from room $($gameState.CurrentRoom)."
+
+    Start-Sleep -Seconds 5
 
     return $gameState
 }

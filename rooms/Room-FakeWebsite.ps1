@@ -56,7 +56,7 @@ Function Start-SecurityCheck1 {
             ""
             "You inspect the SSL/TLS certificate. It says:"
             ""
-            "   Issued to: internal.sediment.com" 
+            "   Issued to: internal.company.com" 
             "   Issued by: Unknown CA / Self-Signed" 
             "   Validity: EXPIRED 2025-12-31" 
             ""

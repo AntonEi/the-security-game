@@ -9,7 +9,8 @@ Import-Module "$PSScriptRoot\RoomAnimations.psm1" -Force
 . "$PSScriptRoot\..\rooms\Room-TeamsInvite.ps1"
 . "$PSScriptRoot\..\rooms\Room-Trojan.ps1"
 
-
+# Displays a formatted terminal box with a label, text lines, colors, and optional screen clearing.
+# It builds the box using Unicode border characters and adjusts text so it fits inside the selected width.
 function Show-TerminalBox {
     param (
         [Parameter(Mandatory = $true)]
@@ -32,12 +33,12 @@ function Show-TerminalBox {
         Clear-Host
     }
 
-    $topLeft = [char]0x250C
-    $topRight = [char]0x2510
-    $bottomLeft = [char]0x2514
-    $bottomRight = [char]0x2518
-    $horizontal = [char]0x2500
-    $vertical = [char]0x2502
+    $topLeft = [char]0x250C # ┌
+    $topRight = [char]0x2510 # ┐
+    $bottomLeft = [char]0x2514 # └
+    $bottomRight = [char]0x2518 # ┘
+    $horizontal = [char]0x2500 # ─
+    $vertical = [char]0x2502 # │
 
     $maxTextLength = $Width - 4
 
@@ -66,7 +67,8 @@ function Show-TerminalBox {
     Write-Host ""
 }
 
-# Displays the main menu and handles starting, loading, or exiting the game.
+# Shows the main menu and controls the main game flow.
+# It starts a new game, loads a saved game, runs each room in order, saves progress, and exits when selected.
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -228,7 +230,8 @@ function Select-Difficulty {
     }
 }
 
-# Continues a saved game by starting the room stored in GameState.CurrentRoom.
+# Continues a saved game from the room number stored in GameState.CurrentRoom.
+# After a room is completed, it updates completed rooms, moves to the next room, saves progress, and shows the end screen when finished.
 function Start-SavedRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -320,6 +323,9 @@ function Start-SavedRoom {
     }
 }
 
+# Returns a final security assessment based on the player's score.
+# Higher scores give stronger feedback, while lower scores encourage more practice.
+
 function Get-SecurityAssessment {
     param(
         [int]$Score,
@@ -337,6 +343,9 @@ function Get-SecurityAssessment {
     }
 }
 
+
+# Displays the final results screen when the game is completed.
+# It shows player stats, security assessment, completed rooms, and then exits the game.
 function Show-EndScreen {
     param(
         [Parameter(Mandatory = $true)]
