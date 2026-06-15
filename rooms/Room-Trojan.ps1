@@ -8,8 +8,8 @@ function Start-RoomTrojan {
 
     Show-TrojanIntro
 
-# Stores all questions for the room in one array.
-# Each question contains the text, answer options, correct answer, hint, and feedback.
+    # Stores all questions for the room in one array.
+    # Each question contains the text, answer options, correct answer, hint, and feedback.
     $questions = @(
         [PSCustomObject]@{
             Label           = "TROJAN CHECK 1 OF 3"
@@ -102,7 +102,7 @@ function Start-RoomTrojan {
 
             if ($choice.Trim().ToUpper() -eq "HINT") {
                 $GameState = Use-Hint -GameState $GameState
-                
+
                 Show-TerminalBox `
                     -Label "HINT" `
                     -Lines @($question.Hint) `
@@ -114,6 +114,7 @@ function Start-RoomTrojan {
             }
             elseif ($choice.Trim() -eq $question.CorrectAnswer) {
                 $answeredCorrectly = $true
+                $GameState = Add-Score -GameState $GameState
 
                 Show-TerminalBox `
                     -Label "ACCESS GRANTED" `
@@ -127,6 +128,9 @@ function Start-RoomTrojan {
                 Read-Host "Press Enter to continue"
             }
             else {
+                $GameState = Remove-Score -GameState $GameState
+                $GameState = Add-Mistake -GameState $GameState
+
                 Show-TerminalBox `
                     -Label "ACCESS DENIED" `
                     -Lines @(

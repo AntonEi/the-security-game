@@ -42,8 +42,8 @@ function Start-RoomRansomware {
 
         switch ($choice.Trim()) {
             "1" {
-                $GameState.Mistakes += 1
-                $GameState.Score -= 5
+                $GameState = Add-Mistake -GameState $GameState
+                $GameState = Remove-Score -GameState $GameState
 
                 Show-TerminalBox -Label "WRONG ACTION" -Lines @(
                     "Paying the ransom is not the right first action.",
@@ -62,7 +62,7 @@ function Start-RoomRansomware {
             }
 
             "2" {
-                $GameState.Score += 20
+                $GameState = Add-Score -GameState $GameState
 
                 Show-TerminalBox -Label "CORRECT ACTION" -Lines @(
                     "Correct.",
@@ -95,8 +95,8 @@ function Start-RoomRansomware {
             }
 
             "3" {
-                $GameState.Mistakes += 1
-                $GameState.Score -= 5
+                $GameState = Add-Mistake -GameState $GameState
+                $GameState = Remove-Score -GameState $GameState
 
                 Show-TerminalBox -Label "WRONG ACTION" -Lines @(
                     "Sending files to a colleague can spread the infection.",
@@ -115,8 +115,8 @@ function Start-RoomRansomware {
             }
 
             "4" {
-                $GameState.Mistakes += 1
-                $GameState.Score -= 5
+                $GameState = Add-Mistake -GameState $GameState
+                $GameState = Remove-Score -GameState $GameState
 
                 Show-TerminalBox -Label "WRONG ACTION" -Lines @(
                     "Restarting the computer does not solve ransomware.",

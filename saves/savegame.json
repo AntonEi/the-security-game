@@ -1,14 +1,12 @@
 ﻿{
-    "PlayerName":  "Anton",
+    "PlayerName":  "a",
     "Difficulty":  "Medium",
-    "CurrentRoom":  5,
-    "Score":  40,
-    "HintsUsed":  5,
-    "Mistakes":  0,
+    "CurrentRoom":  3,
+    "Score":  115,
+    "HintsUsed":  1,
+    "Mistakes":  5,
     "CompletedRooms":  [
                            "Fake Website",
-                           "Trojan",
-                           "Password",
-                           "Phishing Mail"
+                           "Trojan"
                        ]
 }
