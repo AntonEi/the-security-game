@@ -12,7 +12,6 @@ Function Start-RoomFakeWebsite {
         $Correct = $false
         
         do {
-
             switch ($i) {
                 "1" {
                     # Security check 1: identify risks with an expired self-signed certificate
@@ -85,6 +84,7 @@ Function Start-SecurityCheck1 {
         Read-Host "Press Enter to try again"
     }
     elseif ($Val.Trim() -eq "3") {
+        Add-Score $GameState
         Write-Host "You are correct!" 
         Read-Host "Press Enter to continue"
         return $true
@@ -146,6 +146,7 @@ Function Start-SecurityCheck2 {
             Read-Host "Press Enter to try again"
         }
         elseif ($Val.Trim() -eq "3") {
+            Add-Score $GameState
             Write-Host "You are correct!" 
             Read-Host "Press Enter to continue"
             return $true
@@ -205,6 +206,7 @@ Function Start-SecurityCheck3 {
             Read-Host "Press Enter to try again"
         }
         elseif ($Val.Trim() -eq "3") {
+            Add-Score $GameState
             Write-Host "You are correct!" 
             Read-Host "Press Enter to continue"
             return $true
@@ -265,6 +267,7 @@ Function Start-SecurityCheck4 {
             Read-Host "Press Enter to try again"
         }
         elseif ($Val.Trim() -eq "2") {
+            Add-Score $GameState
             Write-Host "You are correct!" 
             Read-Host "Press Enter to continue"
             return $true
