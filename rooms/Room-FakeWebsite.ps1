@@ -21,54 +21,8 @@ if ($i -eq 1) {
 
 # Security check 2: identify a phishing URL disguised as a trusted company domain
 elseif ($i -eq 2) {
-
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "You are analyzing a link sent to the finance team."
-        ""
-        "https://sediment.com.financial-portal.net/login" 
-        ""
-        "Is this website legitimate for your company (sediment.com)?"
-
-     ) -Clear   
-
-    Write-Host "1. Yes, because 'sediment.com' is written at the beginning."
-    Write-Host "2. It is a secure connection so it must be safe."
-    Write-Host "3. No, the actual main domain is 'financial-portal.net'."
-    Write-Host "4. No, the link is too short to be dangerous."
-    Write-Host ""
-
-                $Val = Read-Host "Enter your choice (1-4) or HINT"
-
-                # Handle hint request, correct answer, and incorrect answers
-                if ($Val.Trim().ToUpper() -eq "HINT") {
-                    Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
-                    Read-Host "Press Enter to try again"
-                }
-                elseif ($Val.Trim() -eq "3") {
-                    Write-Host "You are correct!" 
-                    $Correct = $true
-                    Read-Host "Press Enter to continue"
-                }
-
-                # Give feedback based on the selected incorrect answer
-                else {
-    switch ($Val.Trim()) {
-        "1" {
-            Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
-        }
-        "2" {
-            Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
-        }
-        "4" {
-            Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
-        }
-        default {
-            Write-Host "Invalid choice." 
-        }
-    }
-
-Read-Host "Press Enter to try again"
-}
+    $Correct = Start-SecurityCheck2 $GameState
+    
 }
 
 # Security check 3: identify a suspicious document requesting macros or scripts    
@@ -197,7 +151,7 @@ Read-Host "Press Enter to try again"
 }
 
 # Does the first security check
-# Returns when completed
+# Returns true when completed
 Function Start-SecurityCheck1 {
     param (
         [Parameter(Mandatory = $true)]
@@ -226,7 +180,7 @@ Function Start-SecurityCheck1 {
         Write-Host "4. The website is just performing a scheduled database backup."
         Write-Host ""
 
-                    $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Val = Read-Host "Enter your choice (1-4) or HINT"
 
     # Handle hint request, correct answer, and incorrect answers
     if ($Val.Trim().ToUpper() -eq "HINT") {
@@ -259,5 +213,62 @@ Function Start-SecurityCheck1 {
         Read-Host "Press Enter to try again"
         continue
         }
+    }
+}
+
+# Does the second security check
+# Returns true when completed
+Function Start-SecurityCheck2 {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+    
+    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        "You are analyzing a link sent to the finance team."
+        ""
+        "https://sediment.com.financial-portal.net/login" 
+        ""
+        "Is this website legitimate for your company (sediment.com)?"
+
+     ) -Clear   
+
+    Write-Host "1. Yes, because 'sediment.com' is written at the beginning."
+    Write-Host "2. It is a secure connection so it must be safe."
+    Write-Host "3. No, the actual main domain is 'financial-portal.net'."
+    Write-Host "4. No, the link is too short to be dangerous."
+    Write-Host ""
+
+    $Val = Read-Host "Enter your choice (1-4) or HINT"
+
+    # Handle hint request, correct answer, and incorrect answers
+    if ($Val.Trim().ToUpper() -eq "HINT") {
+        Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
+        Read-Host "Press Enter to try again"
+    }
+    elseif ($Val.Trim() -eq "3") {
+        Write-Host "You are correct!" 
+        Read-Host "Press Enter to continue"
+        return $true
+    }
+
+    # Give feedback based on the selected incorrect answer
+    else {
+        switch ($Val.Trim()) {
+            "1" {
+                Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
+            }
+            "2" {
+                Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
+            }
+            "4" {
+                Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
+            }
+            default {
+                Write-Host "Invalid choice." 
+            }
+        }
+
+        Read-Host "Press Enter to try again"
     }
 }
