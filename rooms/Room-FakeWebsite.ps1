@@ -70,7 +70,7 @@ Function Start-SecurityCheck1 {
 
         ) -Clear
 
-        Write-Host "1. None. Since it is issued to 'sediment.com' it is safe to proceed."
+        Write-Host "1. None. Since it is issued to 'company.com' it is safe to proceed."
         Write-Host "2. The encryption is too strong for your current browser version."
         Write-Host "3. An expired, self-signed certificate means the connection is untrusted and could be intercepted."
         Write-Host "4. The website is just performing a scheduled database backup."
@@ -82,23 +82,33 @@ Function Start-SecurityCheck1 {
             "1" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. The certificate is self-signed and expired. A familiar company name alone does not prove a site is trustworthy." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "The certificate is self-signed and expired.",
+                "A familiar company name alone does not prove a site is trustworthy."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "2" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Strong encryption is not the problem. The problem is that the certificate cannot be trusted." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Strong encryption is not the problem.",
+                "The problem is that the certificate cannot be trusted."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "3" {
                 Add-Score $GameState
-                Write-Host "You are correct!" 
+                Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
+                "You are correct!"
+                ) -BorderColor "Green" -TextColor "Green" -Clear
                 Read-Host "Press Enter to continue"
                 return $true
             }
             "4" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Database backups have nothing to do with certificate validation or website trust." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Database backups have nothing to do with certificate validation or website trust."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "HINT" {
                 Use-Hint $GameState
@@ -146,23 +156,33 @@ Function Start-SecurityCheck2 {
             "1" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Attackers often place trusted company names in subdomains.",
+                "The real domain here is financial-portal.net."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "2" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "A secure connection does not automatically mean the website belongs to the organization you trust."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "3" {
                 Add-Score $GameState
-                Write-Host "You are correct!" 
+                Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
+                "You are correct!"
+                ) -BorderColor "Green" -TextColor "Green" -Clear
                 Read-Host "Press Enter to continue"
                 return $true
             } 
             "4" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "The length of a URL does not determine whether it is malicious.",
+                "The domain ownership is what matters."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "HINT" {
                 Use-Hint $GameState
@@ -208,23 +228,31 @@ Function Start-SecurityCheck3 {
             "1" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Enabling macros or scripts can allow malicious code to run on your computer."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "2" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "3" {
                 Add-Score $GameState
-                Write-Host "You are correct!" 
+                Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
+                "You are correct!"
+                ) -BorderColor "Green" -TextColor "Green" -Clear
                 Read-Host "Press Enter to continue"
                 return $true
             }
             "4" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Disabling antivirus removes an important layer of protection and can make malware infections more likely."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "HINT" {
                 Use-Hint $GameState
@@ -267,23 +295,33 @@ Function Start-SecurityCheck4 {
             "1" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "The length of a website address does not determine whether it is secure."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "2" {
                 Add-Score $GameState
-                Write-Host "You are correct!" 
+                Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
+                "You are correct!"
+                ) -BorderColor "Green" -TextColor "Green" -Clear
                 Read-Host "Press Enter to continue"
                 return $true
             }
             "3" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "The main issue is not the port or protocol configuration",
+                "The problem is that HTTP does not encrypt data."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "4" {
                 Remove-Score $GameState
                 Add-Mistake $GameState
-                Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
+                Show-TerminalBox -Label "INCORRECT" -Lines @(
+                "Internal websites should still use HTTPS.",
+                "Usernames and passwords can otherwise be intercepted on the network."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
             }
             "HINT" {
                 Use-Hint $GameState
