@@ -61,7 +61,6 @@ Function Start-SecurityCheck1 {
             "   Validity: EXPIRED 2025-12-31" 
             ""
             "What is the main danger here?" 
-
         ) -Clear
 
         Write-Host "1. None. Since it is issued to 'company.com' it is safe to proceed."

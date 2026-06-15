@@ -103,89 +103,14 @@ function Show-MainMenu {
                 $difficulty = Select-Difficulty
                 $gameState = New-GameState -PlayerName $playerName -Difficulty $difficulty
 
-                $rooms = @(
-                    @{
-                        Name         = "Fake Website"
-                        FunctionName = "Start-RoomFakeWebsite"
-                    },
-                    @{
-                        Name         = "Trojan"
-                        FunctionName = "Start-RoomTrojan"
-                    },
-                    @{
-                        Name         = "Password"
-                        FunctionName = "Start-RoomPassword"
-                    },
-                    @{
-                        Name         = "Phishing Mail"
-                        FunctionName = "Start-PhishingRoom"
-                    },
-                    @{
-                        Name         = "Teams Invite"
-                        FunctionName = "Start-RoomTeamsInvite"
-                    },
-                    @{
-                        Name         = "Ransomware"
-                        FunctionName = "Start-RoomRansomware"
-                    }
-                )
-
-                foreach ($room in $rooms) {
-                    $functionName = $room.FunctionName
-
-                    if (-not (Get-Command $functionName -ErrorAction SilentlyContinue)) {
-                        Show-TerminalBox -Label "ROOM NOT FOUND" -Lines @(
-                            "Could not find room function:",
-                            $functionName,
-                            "",
-                            "Stopping game here."
-                        ) -BorderColor "Yellow" -TextColor "Yellow" -Clear
-
-                        break
-                    }
-
-                    $roomCompleted = & $functionName -GameState $gameState
-
-                    if ($roomCompleted -eq $true) {
-                        $gameState = Add-CompletedRoom -GameState $gameState -RoomName $room.Name
-                        $gameState.CurrentRoom++
-
-                        if ($gameState.CurrentRoom -le $rooms.Count) {
-                            Show-TerminalBox -Label "NEXT ROOM" -Lines @(
-                                "Room completed: $($room.Name)",
-                                "",
-                                "Press Enter to continue to the next room.",
-                                "Type 2 to save the game first."
-                            ) -BorderColor "Cyan" -TextColor "White" -Clear
-
-                            $nextChoice = Read-Host "Choose"
-
-                            if ($nextChoice.Trim() -eq "2") {
-                                Save-GameState -GameState $gameState
-
-                                Show-TerminalBox -Label "GAME SAVED" -Lines @(
-                                    "Your progress has been saved.",
-                                    "",
-                                    "You will continue from room $($gameState.CurrentRoom)."
-                                ) -BorderColor "Green" -TextColor "Green" -Clear
-
-                                Read-Host "Press Enter to continue"
-                            }
-                        }
-                    }
-                    else {
-                        break
-                    }
-                }
-
-                Show-EndScreen -GameState $gameState
+                Start-GameFlow -GameState $gameState
             }
 
             "2" {
                 $gameState = Import-SavedGame
 
                 if ($null -ne $gameState) {
-                    Start-SavedRoom -GameState $gameState
+                    Start-GameFlow -GameState $gameState
                 }
 
                 Read-Host "Press Enter to return to menu"
@@ -228,6 +153,93 @@ function Select-Difficulty {
             }
         }
     }
+}
+
+# Runs the game rooms from the current room stored in GameState.
+# Used by both new games and loaded games so they follow the same flow.
+function Start-GameFlow {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    $rooms = @(
+        @{
+            Name         = "Fake Website"
+            FunctionName = "Start-RoomFakeWebsite"
+        },
+        @{
+            Name         = "Trojan"
+            FunctionName = "Start-RoomTrojan"
+        },
+        @{
+            Name         = "Password"
+            FunctionName = "Start-RoomPassword"
+        },
+        @{
+            Name         = "Phishing Mail"
+            FunctionName = "Start-PhishingRoom"
+        },
+        @{
+            Name         = "Teams Invite"
+            FunctionName = "Start-RoomTeamsInvite"
+        },
+        @{
+            Name         = "Ransomware"
+            FunctionName = "Start-RoomRansomware"
+        }
+    )
+
+    for ($i = $GameState.CurrentRoom - 1; $i -lt $rooms.Count; $i++) {
+        $room = $rooms[$i]
+        $functionName = $room.FunctionName
+
+        if (-not (Get-Command $functionName -ErrorAction SilentlyContinue)) {
+            Show-TerminalBox -Label "ROOM NOT FOUND" -Lines @(
+                "Could not find room function:",
+                $functionName,
+                "",
+                "Stopping game here."
+            ) -BorderColor "Yellow" -TextColor "Yellow" -Clear
+
+            break
+        }
+
+        $roomCompleted = & $functionName -GameState $GameState
+
+        if ($roomCompleted -eq $true) {
+            $GameState = Add-CompletedRoom -GameState $GameState -RoomName $room.Name
+            $GameState.CurrentRoom = $i + 2
+
+            if ($GameState.CurrentRoom -le $rooms.Count) {
+                Show-TerminalBox -Label "NEXT ROOM" -Lines @(
+                    "Room completed: $($room.Name)",
+                    "",
+                    "Press Enter to continue to the next room.",
+                    "Type 2 to save the game first."
+                ) -BorderColor "Cyan" -TextColor "White" -Clear
+
+                $nextChoice = Read-Host "Choose"
+
+                if ($nextChoice.Trim() -eq "2") {
+                    Save-GameState -GameState $GameState
+
+                    Show-TerminalBox -Label "GAME SAVED" -Lines @(
+                        "Your progress has been saved.",
+                        "",
+                        "You will continue from room $($GameState.CurrentRoom)."
+                    ) -BorderColor "Green" -TextColor "Green" -Clear
+
+                    Read-Host "Press Enter to continue"
+                }
+            }
+        }
+        else {
+            break
+        }
+    }
+
+    Show-EndScreen -GameState $GameState
 }
 
 # Continues a saved game from the room number stored in GameState.CurrentRoom.
@@ -382,4 +394,4 @@ function Show-EndScreen {
     exit
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Show-EndScreen
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Start-GameFlow, Show-EndScreen

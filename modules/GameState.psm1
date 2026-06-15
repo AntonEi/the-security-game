@@ -80,7 +80,7 @@ function Import-SavedGame {
     Write-Host "Welcome back, $($gameState.PlayerName)."
     Write-Host "You continue from room $($gameState.CurrentRoom)."
 
-    Start-Sleep -Seconds 5
+    Start-Sleep -Seconds 3
 
     return $gameState
 }
