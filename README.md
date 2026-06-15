@@ -27,7 +27,8 @@ Varje rum testar en specifik säkerhetsprincip och bidrar till spelarens totala 
 - modulbaserad struktur för UI, speldata och rum
 - ett GameState‑objekt som håller reda på:
    - poäng
-   - hints
+   - använda hints
+   - misstag
    - svårighetsgrad
    - spelarnamn
    - avklarade rum
