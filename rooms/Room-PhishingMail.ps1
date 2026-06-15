@@ -9,7 +9,7 @@ Function Start-PhishingRoom {
     Show-PhishingIntro
     while ($true) {
 
-        Show-TerminalBox -Label "ROOM 01" -Lines @(
+        Show-TerminalBox -Label "EMAIL INBOX" -Lines @(
             "Your mailbox contains 3 suspicious emails.",
             "Inspect each message carefully.",
             "Only one email is legitimate.",
@@ -55,8 +55,7 @@ Function Show-Email1 {
         "Important notice",
         "From: support@gooogle.com",
         "",
-        "Due to inactivity, your account will soon", 
-        "be DEACTIVATED !!",
+        "Due to inactivity, your account will soon be DEACTIVATED !!", 
         "Click the link below to prevent deactivation:",
         "",
         "http://google-account-security-verify.com"
@@ -67,9 +66,7 @@ Function Show-Email1 {
         "1" {
             Show-TerminalBox -Label "DANGER" -Lines @(
                 "You have clicked on a phishing link!",
-                "The account has been compromised",
-                "",
-                " -5 points"
+                "The account has been compromised"
             ) -BorderColor "Red" -TextColor "Red" -Clear
 
             Start-Sleep -Seconds 2
@@ -102,9 +99,7 @@ Function Show-Email2 {
         "1" {
             Show-TerminalBox -Label "DANGER" -Lines @(
                 "You have clicked on a phishing link!",
-                "The account has been compromised",
-                "",
-                " -5 points"
+                "The account has been compromised"
             ) -BorderColor "Red" -TextColor "Red" -Clear
 
             Start-Sleep -Seconds 2
@@ -139,11 +134,7 @@ Function Show-Email3 {
         "1" {
             Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
                 "Good job!",
-                "The link you clicked on saved your account",
-                "from a hacker.",
-                "",
-                " +20 points",
-                "Now redirecting to the next room..."
+                "The link you clicked on saved your account from a hacker."
             ) -BorderColor "Green" -TextColor "Green" -Clear
 
             Start-Sleep -Seconds 2
