@@ -94,12 +94,18 @@ Function Start-SecurityCheck1 {
         else {
             switch ($Val.Trim()) {
             "1" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
                 Write-Host "Incorrect. The certificate is self-signed and expired. A familiar company name alone does not prove a site is trustworthy." 
             }
             "2" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
                 Write-Host "Incorrect. Strong encryption is not the problem. The problem is that the certificate cannot be trusted." 
             }
             "4" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
                 Write-Host "Incorrect. Database backups have nothing to do with certificate validation or website trust." 
             }
             default {
@@ -156,12 +162,18 @@ Function Start-SecurityCheck2 {
         else {
             switch ($Val.Trim()) {
                 "1" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
                 }
                 "2" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
                 }
                 "4" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
                 }
                 default {
@@ -216,14 +228,20 @@ Function Start-SecurityCheck3 {
         else {
             switch ($Val.Trim()) {
                 "1" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
                 }
 
                 "2" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
                 }
 
                 "4" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
                 }
 
@@ -277,14 +295,20 @@ Function Start-SecurityCheck4 {
         else {
             switch ($Val.Trim()) {
                 "1" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
                 }
 
                 "3" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
                 }
 
                 "4" {
+                    Remove-Score $GameState
+                    Add-Mistake $GameState
                     Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
                 }
 
