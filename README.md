@@ -28,7 +28,7 @@ Varje rum testar en specifik säkerhetsprincip och bidrar till spelarens totala 
 - ett GameState‑objekt som håller reda på:
    - poäng
    - använda hints
-   - misstag
+   - antal misstag
    - svårighetsgrad
    - spelarnamn
    - avklarade rum
