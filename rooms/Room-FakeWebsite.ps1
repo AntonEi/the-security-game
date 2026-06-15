@@ -128,13 +128,13 @@ Function Start-SecurityCheck2 {
         Show-TerminalBox -Label "SECURITY CHECK 2 OF 4" -Lines @(
             "You are analyzing a link sent to the finance team."
             ""
-            "https://sediment.com.financial-portal.net/login" 
+            "https://company.com.financial-portal.net/login" 
             ""
-            "Is this website legitimate for your company (sediment.com)?"
+            "Is this website legitimate for your company (company.com)?"
 
         ) -Clear   
 
-        Write-Host "1. Yes, because 'sediment.com' is written at the beginning."
+        Write-Host "1. Yes, because 'company.com' is written at the beginning."
         Write-Host "2. It is a secure connection so it must be safe."
         Write-Host "3. No, the actual main domain is 'financial-portal.net'."
         Write-Host "4. No, the link is too short to be dangerous."
@@ -202,49 +202,40 @@ Function Start-SecurityCheck3 {
         Write-Host "4. Disable your antivirus temporarily to view the content."
         Write-Host ""
 
-        $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Choice = Read-Host "Enter your choice (1-4) or HINT"
 
-        # Handle hint request, correct answer, and incorrect answers
-        if ($Val.Trim().ToUpper() -eq "HINT") {
-            Use-Hint $GameState
-            Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
-            Read-Host "Press Enter to try again"
-        }
-        elseif ($Val.Trim() -eq "3") {
-            Add-Score $GameState
-            Write-Host "You are correct!" 
-            Read-Host "Press Enter to continue"
-            return $true
-        }
-                    
-        # Give feedback based on the selected incorrect answer
-        else {
-            switch ($Val.Trim()) {
-                "1" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
-                }
-
-                "2" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
-                }
-
-                "4" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
-                }
-
-                default {
-                    Write-Host "Invalid choice." 
-                }
+        switch ($Choice) {
+            "1" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
             }
-
-            Read-Host "Press Enter to try again"
+            "2" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
+            }
+            "3" {
+                Add-Score $GameState
+                Write-Host "You are correct!" 
+                Read-Host "Press Enter to continue"
+                return $true
+            }
+            "4" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
+            }
+            "HINT" {
+                Use-Hint $GameState
+                Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
+                Read-Host "Press Enter to try again"
+            }
+            default {
+                Write-Host "Invalid choice." 
+            }
         }
+        Read-Host "Press Enter to try again"
     }
 }
 
@@ -258,7 +249,7 @@ Function Start-SecurityCheck4 {
         Show-TerminalBox -Label "SECURITY CHECK 4 OF 4" -Lines @(
             "You land on an internal login page. The address bar displays:"
             ""
-            "http://secure-login.sediment.com" 
+            "http://secure-login.company.com" 
             ""
             "What is the primary security concern here?"
 
