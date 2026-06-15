@@ -6,6 +6,8 @@ Function Start-RoomTeamsInvite {
         [object]$GameState 
     )
 
+    Show-TeamsInviteIntro
+
     while ($true) {
         Show-TerminalBox -Label "TEAMS MESSAGE REQUEST" -Lines @(
         "You open Teams and see a new message request.",
@@ -114,6 +116,7 @@ Function Block-Message {
                 ) -BorderColor "Green" -TextColor "Green" -Clear
 
             Start-Sleep -Seconds 2
+            Show-TeamsInviteOutro
             Add-Score -GameState $GameState
             return $true
 }

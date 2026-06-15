@@ -7,8 +7,10 @@ function Start-RoomRansomware {
 
     $timeLimit = Get-RansomwareTimeLimit -Difficulty $GameState.Difficulty
 
+    Show-RansomwareIntro
+
     while ($true) {
-        Show-RansomwareIntro -TimeLimit $timeLimit
+        Show-RansomwareScenario -TimeLimit $timeLimit
 
         $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
         $choice = Read-Host "Choose an option (1-4) or HINT"
@@ -86,6 +88,8 @@ function Start-RoomRansomware {
                 ) -BorderColor "Green" -TextColor "Green" -Clear
 
                 Read-Host "Press Enter to continue"
+
+                Show-RansomwareOutro
 
                 return $true
             }
@@ -167,7 +171,7 @@ function Get-RansomwareTimeLimit {
 }
 
 # Shows the ransomware scenario and the available choices.
-function Show-RansomwareIntro {
+function Show-RansomwareScenario {
     param (
         [int]$TimeLimit
     )
@@ -180,7 +184,7 @@ function Show-RansomwareIntro {
         '        /!\',
         '       / ! \',
         '      /_____\',
-        "      SYSTEM ALERT",
+        "    SYSTEM ALERT",
         "",
         "A message appears on screen:",
         "",
@@ -215,5 +219,5 @@ function Show-RansomwareHint {
 
     Read-Host "Press Enter to continue"
 
-    Show-RansomwareIntro -TimeLimit $TimeLimit
+    Show-RansomwareScenario -TimeLimit $TimeLimit
 }
