@@ -66,6 +66,7 @@ function Show-TerminalBox {
     Write-Host ""
 }
 
+# Displays the main menu and handles starting, loading, or exiting the game.
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -83,7 +84,8 @@ function Show-MainMenu {
 
         switch ($choice) {
             "1" {
-                $gameState = New-GameState -PlayerName "Test Player" -Difficulty "Medel"
+                $difficulty = Select-Difficulty
+                $gameState = New-GameState -PlayerName "Test Player" -Difficulty $difficulty
 
                 $rooms = @(
                     @{
@@ -138,6 +140,7 @@ function Show-MainMenu {
                 }
 
                 Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
+                    "Difficulty: $($gameState.Difficulty)",
                     "Score: $($gameState.Score)",
                     "Hints used: $($gameState.HintsUsed)",
                     "Mistakes: $($gameState.Mistakes)",
@@ -171,6 +174,33 @@ function Show-MainMenu {
     }
 }
 
+# Lets the player choose a difficulty level and keeps asking until a valid option is selected.
+function Select-Difficulty {
+    while ($true) {
+        Clear-Host
+
+        Write-Host "Choose difficulty"
+        Write-Host ""
+        Write-Host "1. Easy"
+        Write-Host "2. Medium"
+        Write-Host "3. Hard"
+        Write-Host ""
+
+        $choice = Read-Host "Choose an option"
+
+        switch ($choice) {
+            "1" { return "Easy" }
+            "2" { return "Medium" }
+            "3" { return "Hard" }
+            default {
+                Write-Host "Invalid choice. Please try again." -ForegroundColor Red
+                Start-Sleep -Seconds 2
+            }
+        }
+    }
+}
+
+# Continues a saved game by starting the room stored in GameState.CurrentRoom.
 function Start-SavedRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -223,9 +253,29 @@ function Start-SavedRoom {
         }
 
         6 {
-            # Start-RoomRansomware -GameState $GameState
-            Write-Host "Room navigation for this room is not implemented yet." -ForegroundColor Yellow
-            Write-Host "Current room from save file: $($GameState.CurrentRoom)"
+            $roomCompleted = Start-RoomRansomware -GameState $GameState
+
+            if ($roomCompleted -eq $true) {
+                $GameState = Add-CompletedRoom -GameState $GameState -RoomName "Ransomware"
+                $GameState.CurrentRoom = 7
+                Save-GameState -GameState $GameState
+
+                # Issue #16
+                # Show-TerminalBox -Label "GAME COMPLETED" -Lines @(
+                #     "The final room is cleared.",
+                #     "",
+                #     "Final results screen will be added in a separate issue."
+                # ) -BorderColor "Green" -TextColor "Green" -Clear
+            }
+            else {
+                Save-GameState -GameState $GameState
+
+                Show-TerminalBox -Label "ROOM FAILED" -Lines @(
+                    "The ransomware incident was not contained.",
+                    "",
+                    "You can try again from the saved game."
+                ) -BorderColor "Red" -TextColor "Red" -Clear
+            }
         }
 
         default {
@@ -235,4 +285,4 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Select-Difficulty

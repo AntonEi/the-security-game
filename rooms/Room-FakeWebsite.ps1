@@ -20,7 +20,7 @@ if ($i -eq 1) {
         ""
         "You inspect the SSL/TLS certificate. It says:"
         ""
-        "   Issued to: internal.sediment.com" 
+        "   Issued to: internal.company.com" 
         "   Issued by: Unknown CA / Self-Signed" 
         "   Validity: EXPIRED 2025-12-31" 
         ""
@@ -74,13 +74,13 @@ elseif ($i -eq 2) {
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "You are analyzing a link sent to the finance team."
         ""
-        "https://sediment.com.financial-portal.net/login" 
+        "https://company.com.financial-portal.net/login" 
         ""
-        "Is this website legitimate for your company (sediment.com)?"
+        "Is this website legitimate for your company (company.com)?"
 
      ) -Clear   
 
-    Write-Host "1. Yes, because 'sediment.com' is written at the beginning."
+    Write-Host "1. Yes, because 'company.com' is written at the beginning."
     Write-Host "2. It is a secure connection so it must be safe."
     Write-Host "3. No, the actual main domain is 'financial-portal.net'."
     Write-Host "4. No, the link is too short to be dangerous."
