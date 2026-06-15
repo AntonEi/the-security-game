@@ -15,69 +15,17 @@ Function Start-RoomFakeWebsite {
             
 # Security check 1: identify risks with an expired self-signed certificate
 if ($i -eq 1) {
-
     $Correct = Start-SecurityCheck1 $GameState
 }
 
 # Security check 2: identify a phishing URL disguised as a trusted company domain
 elseif ($i -eq 2) {
     $Correct = Start-SecurityCheck2 $GameState
-    
 }
 
 # Security check 3: identify a suspicious document requesting macros or scripts    
 elseif ($i -eq 3) {
-
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
-        ""
-        "When you open it, a popup says: 'To view this document, please enable Macros/Scripts'."
-        ""
-        "What should your security instinct tell you about this document?"
-
-    ) -Clear
-
-    Write-Host "1. Enable them; it's a common requirement for office documents."
-    Write-Host "2. Enable them only if the sender is verified by email."
-    Write-Host "3. Decline; standard PDF files do not require active macros."
-    Write-Host "4. Disable your antivirus temporarily to view the content."
-    Write-Host ""
-
-                $Val = Read-Host "Enter your choice (1-4) or HINT"
-
-                # Handle hint request, correct answer, and incorrect answers
-                if ($Val.Trim().ToUpper() -eq "HINT") {
-                    Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
-                    Read-Host "Press Enter to try again"
-                }
-                elseif ($Val.Trim() -eq "3") {
-                    Write-Host "You are correct!" 
-                    $Correct = $true
-                    Read-Host "Press Enter to continue"
-                }
-                
-                # Give feedback based on the selected incorrect answer
-                else {
-    switch ($Val.Trim()) {
-        "1" {
-            Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
-        }
-
-        "2" {
-            Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
-        }
-
-        "4" {
-            Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
-        }
-
-        default {
-            Write-Host "Invalid choice." 
-        }
-    }
-
-Read-Host "Press Enter to try again"
-}
+    $Correct = Start-SecurityCheck3 $GameState
 }
 
 # Security check 4: identify the risk of using HTTP on a login page
@@ -223,7 +171,7 @@ Function Start-SecurityCheck2 {
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
-    
+
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "You are analyzing a link sent to the finance team."
         ""
@@ -264,6 +212,66 @@ Function Start-SecurityCheck2 {
             "4" {
                 Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
             }
+            default {
+                Write-Host "Invalid choice." 
+            }
+        }
+
+        Read-Host "Press Enter to try again"
+    }
+}
+
+# Does the third security check
+# Returns true when completed
+Function Start-SecurityCheck3 {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+    
+    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
+        ""
+        "When you open it, a popup says: 'To view this document, please enable Macros/Scripts'."
+        ""
+        "What should your security instinct tell you about this document?"
+
+    ) -Clear
+
+    Write-Host "1. Enable them; it's a common requirement for office documents."
+    Write-Host "2. Enable them only if the sender is verified by email."
+    Write-Host "3. Decline; standard PDF files do not require active macros."
+    Write-Host "4. Disable your antivirus temporarily to view the content."
+    Write-Host ""
+
+    $Val = Read-Host "Enter your choice (1-4) or HINT"
+
+    # Handle hint request, correct answer, and incorrect answers
+    if ($Val.Trim().ToUpper() -eq "HINT") {
+        Write-Host "[HINT] Macros are automated scripts. A simple document shouldn't need them to display text."
+        Read-Host "Press Enter to try again"
+    }
+    elseif ($Val.Trim() -eq "3") {
+        Write-Host "You are correct!" 
+        Read-Host "Press Enter to continue"
+        return $true
+    }
+                
+    # Give feedback based on the selected incorrect answer
+    else {
+        switch ($Val.Trim()) {
+            "1" {
+                Write-Host "Incorrect. Enabling macros or scripts can allow malicious code to run on your computer." 
+            }
+
+            "2" {
+                Write-Host "Incorrect. Even if the sender appears legitimate, a normal PDF should not require macros or scripts to display its contents." 
+            }
+
+            "4" {
+                Write-Host "Incorrect. Disabling antivirus removes an important layer of protection and can make malware infections more likely." 
+            }
+
             default {
                 Write-Host "Invalid choice." 
             }
