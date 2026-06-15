@@ -14,7 +14,7 @@ Function Start-PhishingRoom {
             "Inspect each message carefully.",
             "Only one email is legitimate.",
             "Find it and click the correct link.",
-            ""
+            "",
             "1 - Important notice",
             "2 - [External] [Urgent]: Domain Renewal Failure - Mon 13..",
             "3 - Someone tried to log in to your account"
@@ -22,27 +22,21 @@ Function Start-PhishingRoom {
 
 
         $choice = Read-Host "Choose an email to view (1-3) or HINT"
-        switch ($choice) {
-            "1" {
-                # Email 1
-                Show-Email1 $GameState
-                Remove-Score $GameState
-            }
-            "2" {
-                # Email 2
-                Show-Email2 $GameState
-                Remove-Score $GameState
-            }
-            "3" {
-                # Email 3
-                if (Show-Email3 $GameState) {
+            switch ($choice) {
+                "1" {
+                    Show-Email1 $GameState
+                }
+                "2" {
+                    Show-Email2 $GameState
+                }
+                "3" {
+                    if (Show-Email3 $GameState) {
                     Show-PhishingOutro
                     return $true
                 }
             }
             "HINT" {
-                # Hint
-                Show-Hint $GameState
+            Show-Hint $GameState
             }
             default {
                 Write-Host "Invalid choice. Please try again." -ForegroundColor Red
@@ -80,8 +74,7 @@ Function Show-Email1 {
 
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
-            # TODO: update score here (once that function is created)
-            # TODO: add a thing about why its a phising mail?? like multi choice
+            Remove-Score $GameState
         }
         "2" {
             return
@@ -116,8 +109,7 @@ Function Show-Email2 {
 
             Start-Sleep -Seconds 2
             $GameState.Mistakes += 1
-            # TODO: update score here (once that function is created)
-            # TODO: add a thing about why its a phising mail?? like multi choice
+            Remove-Score $GameState
         }
         "2" {
             return
@@ -156,7 +148,7 @@ Function Show-Email3 {
 
             Start-Sleep -Seconds 2
             
-            # TODO: update score
+            Add-Score $GameState
             return $true
         }
         "2" {
@@ -176,8 +168,6 @@ Function Show-Hint {
   
     $GameState.HintsUsed += 1
     Start-Sleep -Seconds 4
-
-    Show-PhishingOutro
     
     return
 }
