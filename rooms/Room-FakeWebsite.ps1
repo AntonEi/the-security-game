@@ -235,13 +235,6 @@ Read-Host "Press Enter to try again"
     }
 
     Show-FakeWebsiteOutro
-    # Display the completion message after all security checks are cleared
-    Clear-Host
-    Write-Host "=========================================================================="
-    Write-Host " STAGE CLEARED: Well done! All 4 security checks bypassed successfully!" 
-    Write-Host "=========================================================================="
-
-    Read-Host "You can now proceed to the next room. Press Enter to continue"
 
     return $true
 }

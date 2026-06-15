@@ -148,25 +148,27 @@ function Show-MainMenu {
                         $gameState = Add-CompletedRoom -GameState $gameState -RoomName $room.Name
                         $gameState.CurrentRoom++
 
-                        Show-TerminalBox -Label "NEXT ROOM" -Lines @(
-                            "Room completed: $($room.Name)",
-                            "",
-                            "Press Enter to continue to the next room.",
-                            "Type 2 to save the game first."
-                        ) -BorderColor "Cyan" -TextColor "White" -Clear
-
-                        $nextChoice = Read-Host "Choose"
-
-                        if ($nextChoice.Trim() -eq "2") {
-                            Save-GameState -GameState $gameState
-
-                            Show-TerminalBox -Label "GAME SAVED" -Lines @(
-                                "Your progress has been saved.",
+                        if ($gameState.CurrentRoom -le $rooms.Count) {
+                            Show-TerminalBox -Label "NEXT ROOM" -Lines @(
+                                "Room completed: $($room.Name)",
                                 "",
-                                "You will continue from room $($gameState.CurrentRoom)."
-                            ) -BorderColor "Green" -TextColor "Green" -Clear
+                                "Press Enter to continue to the next room.",
+                                "Type 2 to save the game first."
+                            ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-                            Read-Host "Press Enter to continue"
+                            $nextChoice = Read-Host "Choose"
+
+                            if ($nextChoice.Trim() -eq "2") {
+                                Save-GameState -GameState $gameState
+
+                                Show-TerminalBox -Label "GAME SAVED" -Lines @(
+                                    "Your progress has been saved.",
+                                    "",
+                                    "You will continue from room $($gameState.CurrentRoom)."
+                                ) -BorderColor "Green" -TextColor "Green" -Clear
+
+                                Read-Host "Press Enter to continue"
+                            }
                         }
                     }
                     else {
