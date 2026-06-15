@@ -59,7 +59,7 @@ Varje rum testar en specifik säkerhetsprincip och bidrar till spelarens totala 
 
 ---
 
-## Dokumentation (in progress)
+## Dokumentation 
 - [Projektets wiki](https://github.com/AntonEi/the-security-game/wiki)
 - [ADKAR-plan](https://github.com/AntonEi/the-security-game/wiki/ADKAR%E2%80%90plan)
 - [ITIL-Continual Improvement & Service Desk](https://github.com/AntonEi/the-security-game/wiki/ITIL-%E2%80%90-Continual-Improvement-&-Service-Desk)
@@ -67,3 +67,4 @@ Varje rum testar en specifik säkerhetsprincip och bidrar till spelarens totala 
 - [Sprint 1](https://github.com/AntonEi/the-security-game/wiki/Sprint-1)
 - [Sprint 2](https://github.com/AntonEi/the-security-game/wiki/Sprint-2)
 - [Sprint 3](https://github.com/AntonEi/the-security-game/wiki/Sprint-3)
+- [Sprint 4](https://github.com/AntonEi/the-security-game/wiki/Sprint-4)
