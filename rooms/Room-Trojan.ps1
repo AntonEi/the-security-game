@@ -1,3 +1,5 @@
+# Starts the Trojan room.
+# The player must answer all Trojan-related security checks correctly to clear the room.
 function Start-RoomTrojan {
     param (
         [Parameter(Mandatory = $true)]
@@ -6,6 +8,8 @@ function Start-RoomTrojan {
 
     Show-TrojanIntro
 
+# Stores all questions for the room in one array.
+# Each question contains the text, answer options, correct answer, hint, and feedback.
     $questions = @(
         [PSCustomObject]@{
             Label           = "TROJAN CHECK 1 OF 3"
