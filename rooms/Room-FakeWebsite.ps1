@@ -13,76 +13,25 @@ Function Start-RoomFakeWebsite {
         
         do {
             
-# Security check 1: identify risks with an expired self-signed certificate
-if ($i -eq 1) {
-    $Correct = Start-SecurityCheck1 $GameState
-}
-
-# Security check 2: identify a phishing URL disguised as a trusted company domain
-elseif ($i -eq 2) {
-    $Correct = Start-SecurityCheck2 $GameState
-}
-
-# Security check 3: identify a suspicious document requesting macros or scripts    
-elseif ($i -eq 3) {
-    $Correct = Start-SecurityCheck3 $GameState
-}
-
-# Security check 4: identify the risk of using HTTP on a login page
-elseif ($i -eq 4) {
-
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "You land on an internal login page. The address bar displays:"
-        ""
-        "http://secure-login.sediment.com" 
-        ""
-        "What is the primary security concern here?"
-
-    ) -Clear
-
-    Write-Host "1. The site name is too long."
-    Write-Host "2. HTTP is unencrypted, exposing your credentials."
-    Write-Host "3. It uses a secure protocol but the port is blocked."
-    Write-Host "4. Nothing; it is an internal page so it does not need encryption."
-    Write-Host ""
-
-                $Val = Read-Host "Enter your choice (1-4) or HINT"
-
-                # Handle hint requests, correct answers, and incorrect answers
-                if ($Val.Trim().ToUpper() -eq "HINT") {
-                    Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
-                    Read-Host "Press Enter to try again"
-                }
-                elseif ($Val.Trim() -eq "2") {
-                    Write-Host "You are correct!" 
-                    $Correct = $true
-                    Read-Host "Press Enter to continue"
-                }
-
-            # Give feedback based on the selected incorrect answer
-            else {
-    switch ($Val.Trim()) {
-        "1" {
-            Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
+        # Security check 1: identify risks with an expired self-signed certificate
+        if ($i -eq 1) {
+            $Correct = Start-SecurityCheck1 $GameState
         }
 
-        "3" {
-            Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
+        # Security check 2: identify a phishing URL disguised as a trusted company domain
+        elseif ($i -eq 2) {
+            $Correct = Start-SecurityCheck2 $GameState
         }
 
-        "4" {
-            Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
+        # Security check 3: identify a suspicious document requesting macros or scripts    
+        elseif ($i -eq 3) {
+            $Correct = Start-SecurityCheck3 $GameState
         }
 
-        default {
-            Write-Host "Invalid choice." 
+        # Security check 4: identify the risk of using HTTP on a login page
+        elseif ($i -eq 4) {
+            $Correct = Start-SecurityCheck4 $GameState
         }
-    }
-
-Read-Host "Press Enter to try again"   
-}
-}
-
         # Repeat the current security check until the player answers correctly
         } until ($Correct -eq $true)
     }
@@ -228,7 +177,7 @@ Function Start-SecurityCheck3 {
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
-    
+
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "A PDF invoice named 'Invoice_2026_Final.pdf' downloads from a portal."
         ""
@@ -278,5 +227,63 @@ Function Start-SecurityCheck3 {
         }
 
         Read-Host "Press Enter to try again"
+    }
+}
+
+Function Start-SecurityCheck4 {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+    
+    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+        "You land on an internal login page. The address bar displays:"
+        ""
+        "http://secure-login.sediment.com" 
+        ""
+        "What is the primary security concern here?"
+
+    ) -Clear
+
+    Write-Host "1. The site name is too long."
+    Write-Host "2. HTTP is unencrypted, exposing your credentials."
+    Write-Host "3. It uses a secure protocol but the port is blocked."
+    Write-Host "4. Nothing; it is an internal page so it does not need encryption."
+    Write-Host ""
+
+    $Val = Read-Host "Enter your choice (1-4) or HINT"
+
+    # Handle hint requests, correct answers, and incorrect answers
+    if ($Val.Trim().ToUpper() -eq "HINT") {
+        Write-Host "[HINT] HTTPS encrypts your data. The S means secure. Without HTTPS, passwords can be read by others on the network." 
+        Read-Host "Press Enter to try again"
+    }
+    elseif ($Val.Trim() -eq "2") {
+        Write-Host "You are correct!" 
+        Read-Host "Press Enter to continue"
+        return $true
+    }
+
+    # Give feedback based on the selected incorrect answer
+    else {
+        switch ($Val.Trim()) {
+            "1" {
+                Write-Host "Incorrect. The length of a website address does not determine whether it is secure." 
+            }
+
+            "3" {
+                Write-Host "Incorrect. The main issue is not the port or protocol configuration. The problem is that HTTP does not encrypt data." 
+            }
+
+            "4" {
+                Write-Host "Incorrect. Internal websites should still use HTTPS. Usernames and passwords can otherwise be intercepted on the network." 
+            }
+
+            default {
+                Write-Host "Invalid choice." 
+            }
+        }
+
+        Read-Host "Press Enter to try again"   
     }
 }
