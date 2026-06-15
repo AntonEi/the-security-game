@@ -12,26 +12,26 @@ Function Start-RoomFakeWebsite {
         $Correct = $false
         
         do {
+
+            switch ($i) {
+                "1" {
+                    # Security check 1: identify risks with an expired self-signed certificate
+                    $Correct = Start-SecurityCheck1 $GameState
+                }
+                "2" {
+                    # Security check 2: identify a phishing URL disguised as a trusted company domain
+                    $Correct = Start-SecurityCheck2 $GameState
+                }
+                "3" {
+                    # Security check 3: identify a suspicious document requesting macros or scripts
+                    $Correct = Start-SecurityCheck3 $GameState
+                } 
+                "4" {
+                    # Security check 4: identify the risk of using HTTP on a login page
+                    $Correct = Start-SecurityCheck4 $GameState
+                }
+            }
             
-        # Security check 1: identify risks with an expired self-signed certificate
-        if ($i -eq 1) {
-            $Correct = Start-SecurityCheck1 $GameState
-        }
-
-        # Security check 2: identify a phishing URL disguised as a trusted company domain
-        elseif ($i -eq 2) {
-            $Correct = Start-SecurityCheck2 $GameState
-        }
-
-        # Security check 3: identify a suspicious document requesting macros or scripts    
-        elseif ($i -eq 3) {
-            $Correct = Start-SecurityCheck3 $GameState
-        }
-
-        # Security check 4: identify the risk of using HTTP on a login page
-        elseif ($i -eq 4) {
-            $Correct = Start-SecurityCheck4 $GameState
-        }
         # Repeat the current security check until the player answers correctly
         } until ($Correct -eq $true)
     }
@@ -235,7 +235,7 @@ Function Start-SecurityCheck4 {
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
-    
+
     Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
         "You land on an internal login page. The address bar displays:"
         ""
