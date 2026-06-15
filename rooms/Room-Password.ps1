@@ -6,6 +6,7 @@ Function Start-RoomPassword {
         [object]$GameState
     )
 
+    Show-PasswordIntro
     # Tracks whether the player has created an accepted password
     $PasswordAccepted = $false
 

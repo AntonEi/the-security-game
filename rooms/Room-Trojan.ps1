@@ -4,6 +4,8 @@ function Start-RoomTrojan {
         [object]$GameState
     )
 
+    Show-TrojanIntro
+
     $questions = @(
         [PSCustomObject]@{
             Label           = "TROJAN CHECK 1 OF 3"
@@ -133,18 +135,7 @@ function Start-RoomTrojan {
 
         } until ($answeredCorrectly -eq $true)
     }
-
-    Show-TerminalBox `
-        -Label "ROOM CLEARED" `
-        -Lines @(
-        "Trojan threat identified and contained.",
-        "",
-        "You avoided running a malicious file.",
-        "Proceeding to the next room..."
-    ) `
-        -BorderColor "Green" `
-        -TextColor "Green" `
-        -Clear
+    Show-TrojanOutro
 
     Read-Host "Press Enter to continue"
 
