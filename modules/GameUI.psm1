@@ -139,16 +139,7 @@ function Show-MainMenu {
                     }
                 }
 
-                Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
-                    "Difficulty: $($gameState.Difficulty)",
-                    "Score: $($gameState.Score)",
-                    "Hints used: $($gameState.HintsUsed)",
-                    "Mistakes: $($gameState.Mistakes)",
-                    "Completed rooms: $($gameState.CompletedRooms -join ', ')",
-                    "Current room: $($gameState.CurrentRoom)"
-                ) -BorderColor "Cyan" -TextColor "White" -Clear
-
-                Read-Host "Press Enter to return to menu"
+                Show-EndScreen -GameState $gameState
             }
 
             "2" {
@@ -285,4 +276,57 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Select-Difficulty
+function Get-SecurityAssessment {
+    param(
+        [int]$Score,
+        [int]$Mistakes
+    )
+
+    if ($Score -ge 210) {
+        return "Strong security awareness. You identified threats confidently and made safe decisions."
+    }
+    elseif ($Score -ge 110) {
+        return "Good understanding of security risks. With a bit more practice, you'll be fully prepared."
+    }
+    else {
+        return "You're building your security awareness. Reviewing the scenarios will help strengthen your skills."
+    }
+}
+
+function Show-EndScreen {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    $assessment = Get-SecurityAssessment -Score $GameState.Score -Mistakes $GameState.Mistakes
+
+    Show-TerminalBox `
+        -Label "GAME COMPLETE" `
+        -Lines @(
+            "Well done, $($GameState.PlayerName)!",
+            "",
+            "You successfully escaped DARKWEB: TERMINAL LOCKDOWN.",
+            "",
+            "RESULTS:",
+            "Player: $($GameState.PlayerName)",
+            "Difficulty: $($GameState.Difficulty)",
+            "Score: $($GameState.Score)",
+            "Mistakes: $($GameState.Mistakes)",
+            "Hints used: $($GameState.HintsUsed)",
+            "Completed rooms: $($GameState.CompletedRooms.Count)",
+            "",
+            "Security Assessment:",
+            "$assessment",
+            "",
+            "Press Enter to exit the game..."
+        ) `
+        -BorderColor "Cyan" `
+        -TextColor "White" `
+        -Clear
+
+    Read-Host | Out-Null
+    exit
+}
+
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Show-EndScreen
