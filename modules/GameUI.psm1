@@ -65,6 +65,7 @@ function Show-TerminalBox {
     Write-Host ""
 }
 
+# Displays the main menu and handles starting, loading, or exiting the game.
 function Show-MainMenu {
     while ($true) {
         Clear-Host
@@ -82,7 +83,8 @@ function Show-MainMenu {
 
         switch ($choice) {
             "1" {
-                $gameState = New-GameState -PlayerName "Test Player" -Difficulty "Medel"
+                $difficulty = Select-Difficulty
+                $gameState = New-GameState -PlayerName "Test Player" -Difficulty $difficulty
 
                 $rooms = @(
                     @{
@@ -137,6 +139,7 @@ function Show-MainMenu {
                 }
 
                 Show-TerminalBox -Label "GAME SESSION ENDED" -Lines @(
+                    "Difficulty: $($gameState.Difficulty)",
                     "Score: $($gameState.Score)",
                     "Hints used: $($gameState.HintsUsed)",
                     "Mistakes: $($gameState.Mistakes)",
@@ -170,6 +173,33 @@ function Show-MainMenu {
     }
 }
 
+# Lets the player choose a difficulty level and keeps asking until a valid option is selected.
+function Select-Difficulty {
+    while ($true) {
+        Clear-Host
+
+        Write-Host "Choose difficulty"
+        Write-Host ""
+        Write-Host "1. Easy"
+        Write-Host "2. Medium"
+        Write-Host "3. Hard"
+        Write-Host ""
+
+        $choice = Read-Host "Choose an option"
+
+        switch ($choice) {
+            "1" { return "Easy" }
+            "2" { return "Medium" }
+            "3" { return "Hard" }
+            default {
+                Write-Host "Invalid choice. Please try again." -ForegroundColor Red
+                Start-Sleep -Seconds 2
+            }
+        }
+    }
+}
+
+# Continues a saved game by starting the room stored in GameState.CurrentRoom.
 function Start-SavedRoom {
     param (
         [Parameter(Mandatory = $true)]
@@ -254,4 +284,4 @@ function Start-SavedRoom {
     }
 }
 
-Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom
+Export-ModuleMember -Function Show-MainMenu, Show-TerminalBox, Start-SavedRoom, Select-Difficulty

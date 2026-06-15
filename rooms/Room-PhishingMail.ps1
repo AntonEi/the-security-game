@@ -169,7 +169,7 @@ Function Show-Hint {
 # When integrated later, just call this function to start the room
 #        $testGameState = [PSCustomObject]@{
 #                PlayerName     = "test"
-#               Difficulty     = "Medel"
+#               Difficulty     = "Medium"
 #                CurrentRoom    = 1
 #                Score          = 0
 #                HintsUsed      = 0
