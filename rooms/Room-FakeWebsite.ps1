@@ -16,59 +16,7 @@ Function Start-RoomFakeWebsite {
 # Security check 1: identify risks with an expired self-signed certificate
 if ($i -eq 1) {
 
-    Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
-        "Security Alert!"
-        ""
-        "A portal requires your admin login, but your browser flags the connection."
-        ""
-        "You inspect the SSL/TLS certificate. It says:"
-        ""
-        "   Issued to: internal.sediment.com" 
-        "   Issued by: Unknown CA / Self-Signed" 
-        "   Validity: EXPIRED 2025-12-31" 
-        ""
-        "What is the main danger here?" 
-
-    ) -Clear
-
-    Write-Host "1. None. Since it is issued to 'sediment.com' it is safe to proceed."
-    Write-Host "2. The encryption is too strong for your current browser version."
-    Write-Host "3. An expired, self-signed certificate means the connection is untrusted and could be intercepted."
-    Write-Host "4. The website is just performing a scheduled database backup."
-    Write-Host ""
-
-                $Val = Read-Host "Enter your choice (1-4) or HINT"
-
-# Handle hint request, correct answer, and incorrect answers
-if ($Val.Trim().ToUpper() -eq "HINT") {
-    Write-Host "[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." 
-    Read-Host "Press Enter to try again"
-}
-elseif ($Val.Trim() -eq "3") {
-    Write-Host "You are correct!" 
-    $Correct = $true
-    Read-Host "Press Enter to continue"
-}
-
-    # Give feedback based on the selected incorrect answer
-    else {
-        switch ($Val.Trim()) {
-        "1" {
-            Write-Host "Incorrect. The certificate is self-signed and expired. A familiar company name alone does not prove a site is trustworthy." 
-        }
-        "2" {
-            Write-Host "Incorrect. Strong encryption is not the problem. The problem is that the certificate cannot be trusted." 
-        }
-        "4" {
-            Write-Host "Incorrect. Database backups have nothing to do with certificate validation or website trust." 
-        }
-        default {
-            Write-Host "Invalid choice." 
-        }
-    }
-
-Read-Host "Press Enter to try again"
-}
+    $Correct = Start-SecurityCheck1 $GameState
 }
 
 # Security check 2: identify a phishing URL disguised as a trusted company domain
@@ -246,4 +194,70 @@ Read-Host "Press Enter to try again"
     Read-Host "You can now proceed to the next room. Press Enter to continue"
 
     return $true
+}
+
+# Does the first security check
+# Returns when completed
+Function Start-SecurityCheck1 {
+    param (
+        [Parameter(Mandatory = $true)]
+        [object]$GameState
+    )
+
+    while ($true) {
+        Show-TerminalBox -Label "SECURITY CHECK $i OF 4" -Lines @(
+            "Security Alert!"
+            ""
+            "A portal requires your admin login, but your browser flags the connection."
+            ""
+            "You inspect the SSL/TLS certificate. It says:"
+            ""
+            "   Issued to: internal.sediment.com" 
+            "   Issued by: Unknown CA / Self-Signed" 
+            "   Validity: EXPIRED 2025-12-31" 
+            ""
+            "What is the main danger here?" 
+
+        ) -Clear
+
+        Write-Host "1. None. Since it is issued to 'sediment.com' it is safe to proceed."
+        Write-Host "2. The encryption is too strong for your current browser version."
+        Write-Host "3. An expired, self-signed certificate means the connection is untrusted and could be intercepted."
+        Write-Host "4. The website is just performing a scheduled database backup."
+        Write-Host ""
+
+                    $Val = Read-Host "Enter your choice (1-4) or HINT"
+
+    # Handle hint request, correct answer, and incorrect answers
+    if ($Val.Trim().ToUpper() -eq "HINT") {
+        Write-Host "[HINT] Legitimate corporate sites use certificates from verified Authorities (CAs) and never let them expire." 
+        Read-Host "Press Enter to try again"
+    }
+    elseif ($Val.Trim() -eq "3") {
+        Write-Host "You are correct!" 
+        Read-Host "Press Enter to continue"
+        return $true
+    }
+
+        # Give feedback based on the selected incorrect answer
+        else {
+            switch ($Val.Trim()) {
+            "1" {
+                Write-Host "Incorrect. The certificate is self-signed and expired. A familiar company name alone does not prove a site is trustworthy." 
+            }
+            "2" {
+                Write-Host "Incorrect. Strong encryption is not the problem. The problem is that the certificate cannot be trusted." 
+            }
+            "4" {
+                Write-Host "Incorrect. Database backups have nothing to do with certificate validation or website trust." 
+            }
+            default {
+                Write-Host "Invalid choice." 
+            }
+        }
+
+        Read-Host "Press Enter to try again"
+        continue
+        }
+    }
 }
