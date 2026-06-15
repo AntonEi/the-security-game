@@ -21,22 +21,22 @@ Function Start-PhishingRoom {
         ) -BorderColor "Cyan" -TextColor "White" -Clear
 
 
-        $choice = Read-Host "Choose an email to view (1-3) or HINT"
-            switch ($choice) {
-                "1" {
-                    Show-Email1 $GameState
-                }
-                "2" {
-                    Show-Email2 $GameState
-                }
-                "3" {
-                    if (Show-Email3 $GameState) {
+        $Choice = Read-Host "Choose an email to view (1-3) or HINT"
+        switch ($Choice) {
+            "1" {
+                Show-Email1 $GameState
+            }
+            "2" {
+                Show-Email2 $GameState
+            }
+            "3" {
+                if (Show-Email3 $GameState) {
                     Show-PhishingOutro
                     return $true
                 }
             }
             "HINT" {
-            Show-Hint $GameState
+                Show-Hint $GameState
             }
             default {
                 Write-Host "Invalid choice. Please try again." -ForegroundColor Red
@@ -61,17 +61,17 @@ Function Show-Email1 {
         "http://google-account-security-verify.com"
     ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-    $choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
-    switch ($choice) {
+    $Choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
+    switch ($Choice) {
         "1" {
             Show-TerminalBox -Label "DANGER" -Lines @(
                 "You have clicked on a phishing link!",
                 "The account has been compromised"
             ) -BorderColor "Red" -TextColor "Red" -Clear
 
-            Start-Sleep -Seconds 2
-            $GameState.Mistakes += 1
+            Add-Mistake $GameState
             Remove-Score $GameState
+            Read-Host "Press Enter to try again"
         }
         "2" {
             return
@@ -94,17 +94,17 @@ Function Show-Email2 {
         "http://teams-security-update-login.com"
     ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-    $choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
-    switch ($choice) {
+    $Choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
+    switch ($Choice) {
         "1" {
             Show-TerminalBox -Label "DANGER" -Lines @(
                 "You have clicked on a phishing link!",
                 "The account has been compromised"
             ) -BorderColor "Red" -TextColor "Red" -Clear
 
-            Start-Sleep -Seconds 2
-            $GameState.Mistakes += 1
+            Add-Mistake $GameState
             Remove-Score $GameState
+            Read-Host "Press Enter to try again"
         }
         "2" {
             return
@@ -129,17 +129,16 @@ Function Show-Email3 {
         "https://doodle-account-security.com/reset"
     ) -BorderColor "Cyan" -TextColor "White" -Clear
 
-    $choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
-    switch ($choice) {
+    $Choice = Read-Host "Choose (1) to click the link or (2) to return to the mailbox"
+    switch ($Choice) {
         "1" {
             Show-TerminalBox -Label "ROOM CLEARED!" -Lines @(
                 "Good job!",
                 "The link you clicked on saved your account from a hacker."
             ) -BorderColor "Green" -TextColor "Green" -Clear
-
-            Start-Sleep -Seconds 2
             
             Add-Score $GameState
+            Read-Host "Press Enter to continue"
             return $true
         }
         "2" {
@@ -157,9 +156,8 @@ Function Show-Hint {
         "Check the sender's email address closely"
     ) -BorderColor "Cyan" -TextColor "White" -Clear
   
-    $GameState = Use-Hint -GameState $GameState
-    Start-Sleep -Seconds 4
-    
+    Use-Hint $GameState
+    Read-Host "Press Enter to continue"
     return
 }
 
