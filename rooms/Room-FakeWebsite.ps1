@@ -140,46 +140,41 @@ Function Start-SecurityCheck2 {
         Write-Host "4. No, the link is too short to be dangerous."
         Write-Host ""
 
-        $Val = Read-Host "Enter your choice (1-4) or HINT"
+        $Choice = Read-Host "Enter your choice (1-4) or HINT"
 
-        # Handle hint request, correct answer, and incorrect answers
-        if ($Val.Trim().ToUpper() -eq "HINT") {
-            Use-Hint $GameState
-            Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
-            Read-Host "Press Enter to try again"
-        }
-        elseif ($Val.Trim() -eq "3") {
-            Add-Score $GameState
-            Write-Host "You are correct!" 
-            Read-Host "Press Enter to continue"
-            return $true
-        }
-
-        # Give feedback based on the selected incorrect answer
-        else {
-            switch ($Val.Trim()) {
-                "1" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
-                }
-                "2" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
-                }
-                "4" {
-                    Remove-Score $GameState
-                    Add-Mistake $GameState
-                    Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
-                }
-                default {
-                    Write-Host "Invalid choice." 
-                }
+        Switch ($Choice) {
+            "1" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. Attackers often place trusted company names in subdomains. The real domain here is financial-portal.net." 
             }
-
-            Read-Host "Press Enter to try again"
+            "2" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. A secure connection does not automatically mean the website belongs to the organization you trust." 
+            }
+            "3" {
+                Add-Score $GameState
+                Write-Host "You are correct!" 
+                Read-Host "Press Enter to continue"
+                return $true
+            } 
+            "4" {
+                Remove-Score $GameState
+                Add-Mistake $GameState
+                Write-Host "Incorrect. The length of a URL does not determine whether it is malicious. The domain ownership is what matters." 
+            }
+            "HINT" {
+                Use-Hint $GameState
+                Write-Host "[HINT] In a URL, the true domain is the part just before the .com/.net. Everything before that is just a subdomain." 
+                Read-Host "Press Enter to try again"
+            }
+            default {
+                Write-Host "Invalid choice." 
+            }
         }
+
+        Read-Host "Press Enter to try again"
     }
 }
 
