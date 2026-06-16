@@ -91,12 +91,12 @@ Function Test-Password {
     }
 
     # Check if password contains at least one uppercase letter
-    if ($Password -notmatch "[A-Z]") {
+    if ($Password -cnotmatch "[A-Z]") {
         $MissingRequirements += "At least one uppercase letter"
     }
 
     # Check if password contains at least one lowercase letter
-    if ($Password -notmatch "[a-z]") {
+    if ($Password -cnotmatch "[a-z]") {
         $MissingRequirements += "At least one lowercase letter"
     }
 
