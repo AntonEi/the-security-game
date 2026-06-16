@@ -85,18 +85,6 @@ function Start-RoomRansomware {
 
                 Read-Host "Press Enter to continue"
 
-                # Placeholder until the final results screen is implemented in issue #16.
-                Show-TerminalBox -Label "FINAL ROOM CLEARED" -Lines @(
-                    "Ransomware incident contained.",
-                    "",
-                    "You made the correct first response:",
-                    "isolate the device and contact IT.",
-                    "",
-                    "Final results screen will be handled in a separate issue."
-                ) -BorderColor "Green" -TextColor "Green" -Clear
-
-                Read-Host "Press Enter to continue"
-
                 Show-RansomwareOutro
 
                 return $true
@@ -143,8 +131,8 @@ function Start-RoomRansomware {
             }
 
             default {
-                $GameState.Mistakes += 1
-                $GameState.Score -= 5
+                $GameState = Add-Mistake -GameState $GameState
+                $GameState = Remove-Score -GameState $GameState
 
                 Show-TerminalBox -Label "INVALID CHOICE" -Lines @(
                     "Invalid choice.",
