@@ -16,15 +16,12 @@ function Start-RoomRansomware {
         $choice = Read-Host "Choose an option (1-4) or HINT"
         $stopwatch.Stop()
 
-        if ($choice.Trim().ToUpper() -eq "HINT") {
-            $GameState = Use-Hint -GameState $GameState
-            Show-RansomwareHint -TimeLimit $timeLimit
-            continue
-        }
+        $choice = $choice.Trim()
 
+        # Check the time limit before handling hints or answers.
         if ($stopwatch.Elapsed.TotalSeconds -gt $timeLimit) {
-            $GameState.Mistakes += 1
-            $GameState.Score -= 10
+            $GameState = Add-Mistake -GameState $GameState
+            $GameState = Remove-Score -GameState $GameState
 
             Show-TerminalBox -Label "FILES ENCRYPTED" -Lines @(
                 "Your files have been encrypted.",
@@ -32,7 +29,7 @@ function Start-RoomRansomware {
                 "You took too long to react.",
                 "The ransomware spread before the device was isolated.",
                 "",
-                "-10 points",
+                "-5 points",
                 "+1 mistake"
             ) -BorderColor "Red" -TextColor "Red" -Clear
 
@@ -40,7 +37,18 @@ function Start-RoomRansomware {
             return $false
         }
 
-        switch ($choice.Trim()) {
+        # Ignore an accidental empty Enter press.
+        if ([string]::IsNullOrWhiteSpace($choice)) {
+            continue
+        }
+
+        if ($choice.ToUpper() -eq "HINT") {
+            $GameState = Use-Hint -GameState $GameState
+            Show-RansomwareHint
+            continue
+        }
+
+        switch ($choice) {
             "1" {
                 $GameState = Add-Mistake -GameState $GameState
                 $GameState = Remove-Score -GameState $GameState
@@ -73,18 +81,6 @@ function Start-RoomRansomware {
                     "This helps prevent the ransomware from spreading.",
                     "",
                     "+20 points"
-                ) -BorderColor "Green" -TextColor "Green" -Clear
-
-                Read-Host "Press Enter to continue"
-
-                # Placeholder until the final results screen is implemented in issue #16.
-                Show-TerminalBox -Label "FINAL ROOM CLEARED" -Lines @(
-                    "Ransomware incident contained.",
-                    "",
-                    "You made the correct first response:",
-                    "isolate the device and contact IT.",
-                    "",
-                    "Final results screen will be handled in a separate issue."
                 ) -BorderColor "Green" -TextColor "Green" -Clear
 
                 Read-Host "Press Enter to continue"
@@ -135,8 +131,8 @@ function Start-RoomRansomware {
             }
 
             default {
-                $GameState.Mistakes += 1
-                $GameState.Score -= 5
+                $GameState = Add-Mistake -GameState $GameState
+                $GameState = Remove-Score -GameState $GameState
 
                 Show-TerminalBox -Label "INVALID CHOICE" -Lines @(
                     "Invalid choice.",
