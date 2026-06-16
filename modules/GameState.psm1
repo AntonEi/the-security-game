@@ -34,7 +34,7 @@ function Save-GameState {
         Set-Content -Path $SavePath -Encoding UTF8
 }
 
-function Load-GameState {
+function import-GameState {
     param (
         [string]$SavePath = "$PSScriptRoot/../saves/savegame.json"
     )
