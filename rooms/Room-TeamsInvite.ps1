@@ -51,6 +51,7 @@ Function Start-RoomTeamsInvite {
             }
             "HINT" {
                 Show-Hint $GameState
+                continue
             }
             default {
                 Write-Host "Invalid choice. Please try again." -ForegroundColor Red
