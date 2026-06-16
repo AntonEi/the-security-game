@@ -27,10 +27,7 @@ function Start-RoomRansomware {
                 "Your files have been encrypted.",
                 "",
                 "You took too long to react.",
-                "The ransomware spread before the device was isolated.",
-                "",
-                "-5 points",
-                "+1 mistake"
+                "The ransomware spread before the device was isolated."
             ) -BorderColor "Red" -TextColor "Red" -Clear
 
             Read-Host "Press Enter to continue"
@@ -59,10 +56,7 @@ function Start-RoomRansomware {
                     "Payment does not guarantee recovery.",
                     "It can also encourage further attacks.",
                     "",
-                    "Try again.",
-                    "",
-                    "-5 points",
-                    "+1 mistake"
+                    "Try again."
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
                 Read-Host "Press Enter to try again"
@@ -100,10 +94,7 @@ function Start-RoomRansomware {
                     "Suspicious or encrypted files should not be shared.",
                     "The incident should be reported instead.",
                     "",
-                    "Try again.",
-                    "",
-                    "-5 points",
-                    "+1 mistake"
+                    "Try again."
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
                 Read-Host "Press Enter to try again"
@@ -121,9 +112,7 @@ function Start-RoomRansomware {
                     "The safest action is to isolate and report.",
                     "",
                     "Try again.",
-                    "",
-                    "-5 points",
-                    "+1 mistake"
+                    ""
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
                 Read-Host "Press Enter to try again"
@@ -139,10 +128,7 @@ function Start-RoomRansomware {
                     "",
                     "In a real incident, unclear action wastes time.",
                     "",
-                    "Try again.",
-                    "",
-                    "-5 points",
-                    "+1 mistake"
+                    "Try again."
                 ) -BorderColor "Red" -TextColor "Red" -Clear
 
                 Read-Host "Press Enter to try again"

@@ -1,11 +1,15 @@
 ﻿{
     "PlayerName":  "a",
     "Difficulty":  "Hard",
-    "CurrentRoom":  2,
-    "Score":  80,
+    "CurrentRoom":  6,
+    "Score":  0,
     "HintsUsed":  0,
-    "Mistakes":  0,
+    "Mistakes":  20,
     "CompletedRooms":  [
-                           "Fake Website"
+                           "Fake Website",
+                           "Trojan",
+                           "Password",
+                           "Phishing Mail",
+                           "Teams Invite"
                        ]
 }
