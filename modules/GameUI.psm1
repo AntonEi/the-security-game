@@ -134,12 +134,16 @@ function Select-Difficulty {
     while ($true) {
         Clear-Host
 
-        Write-Host "Choose difficulty"
-        Write-Host ""
-        Write-Host "1. Easy"
-        Write-Host "2. Medium"
-        Write-Host "3. Hard"
-        Write-Host ""
+        Show-TerminalBox -Label "DIFFICULTY" -Lines @(
+            "Choose difficulty",
+            "",
+            "1. Easy   - More time and a more forgiving experience.",
+            "2. Medium - Standard time and normal difficulty.",
+            "3. Hard   - Less time and a more stressful experience.",
+            "",
+            "The difficulty affects time pressure and scoring during the game."
+        ) -BorderColor "Cyan" -TextColor "White" -Clear
+
 
         $choice = Read-Host "Choose an option"
 
