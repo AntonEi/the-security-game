@@ -65,12 +65,12 @@ Function Start-RoomTeamsInvite {
 # Previews the message request
 # Returns true if player blocks message requests (and thus clears room)
 Function Show-Message {
-     param (
+    param (
         [Parameter(Mandatory = $true)]
         [object]$GameState
     )
 
-    Show-TerminalBox -Label "MESSAGE PREVIEW" -Lines @( 
+    Show-TerminalBox -Label "MESSAGE PREVIEW" -Lines @(
         "Hi, this is the IT Department.",
         "We see an issue with your account."
     ) -BorderColor "Cyan" -TextColor "White" -Clear
@@ -78,24 +78,33 @@ Function Show-Message {
     Write-Host "What will you do?"
     $Choice = Read-Host "1: Accept, 2: Block, 3: Go back, or HINT"
 
-    switch ($Choice) {
+    switch ($Choice.Trim().ToUpper()) {
         "1" {
             # Accept
-            Approve-Message $GameState
-            return
+            $null = Approve-Message -GameState $GameState
+            return $false
         }
+
         "2" {
             # Block
-            Block-Message $GameState
+            $null = Block-Message -GameState $GameState
             return $true
         }
+
         "3" {
-            #Go back
-            return
+            # Go back
+            return $false
         }
+
         "HINT" {
-            Show-Hint $GameState
-            return
+            $null = Show-Hint -GameState $GameState
+            return $false
+        }
+
+        default {
+            Write-Host "Invalid choice. Please try again." -ForegroundColor Red
+            Start-Sleep -Seconds 2
+            return $false
         }
     }
 }
@@ -142,14 +151,14 @@ Function Approve-Message {
 # Shows, and uses, a hint
 Function Show-Hint {
     param (
+        [Parameter(Mandatory = $true)]
         [object]$GameState
     )
 
     Show-TerminalBox -Label "HINT" -Lines @(
         "Listen to Microsoft"
     ) -BorderColor "Cyan" -TextColor "White" -Clear
-  
-    Use-Hint $GameState
-    Read-Host "Press Enter to continue"
-    return
+
+    $GameState = Use-Hint -GameState $GameState
+    $null = Read-Host "Press Enter to continue"
 }
