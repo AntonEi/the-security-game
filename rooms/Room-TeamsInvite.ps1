@@ -94,6 +94,7 @@ Function Show-Message {
         }
         "HINT" {
             Show-Hint $GameState
+            return
         }
     }
 }
