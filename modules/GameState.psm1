@@ -69,7 +69,7 @@ function Add-CompletedRoom {
 }
 
 function Import-SavedGame {
-    $gameState = Load-GameState
+    $gameState = import-GameState
 
     if ($null -eq $gameState) {
         Write-Host "No saved game found." -ForegroundColor Yellow
@@ -85,4 +85,4 @@ function Import-SavedGame {
     return $gameState
 }
 
-Export-ModuleMember -Function New-GameState, Save-GameState, Load-GameState, Import-SavedGame, Add-CompletedRoom
+Export-ModuleMember -Function New-GameState, Save-GameState, import-GameState, Import-SavedGame, Add-CompletedRoom
